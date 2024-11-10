@@ -40,6 +40,9 @@ const productController = {
             nextPage: page + 1,
             pages: pageArr // 1 -> totalPages
         });
+    },
+    getProductDetail :(req,res)=>{
+        res.render('product');
     }
 };
 
