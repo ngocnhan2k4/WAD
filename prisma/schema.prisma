@@ -12,4 +12,8 @@ model User {
   username   String?   @unique
   password   String?
   type String?
+  socialId String? @unique
+  fullName String?
+  verified Boolean? @default(false)
+  verificationToken String?
 }
