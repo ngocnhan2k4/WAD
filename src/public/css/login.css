@@ -1,0 +1,45 @@
+.annouce-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    gap: 20px;
+    border-radius: 0.25rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+.annouce-wrap_true {
+    transition: 1.5s;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+}
+.annouce-img {
+    width: 50px;
+}
+.annouce {
+    font-size: 1rem;
+}
+#submit {
+    margin-top: 30px !important;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.github_btn {
+    background-color: #1f2328;
+}
+.form {
+    margin-bottom: 40px;
+}
+@media (max-width: 575.98px) {
+    .contain {
+        padding: 0;
+    }
+}

@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
 //chưa cần mã hóa
 const User = require("../app/services/userService");
@@ -115,6 +116,31 @@ passport.use(
         }
     )
 );
+passport.use(
+    "github",
+    new GitHubStrategy(
+        {
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: "http://localhost:4000/auth/github/callback",
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                let user = await User.findUserBySocialId(profile.id);
+                if (!user) {
+                    user = await User.createUserGithub(
+                        profile.displayName,
+                        profile.id
+                    );
+                }
+                return done(null, user); // Trả về thông tin người dùng đã xác thực
+            } catch (error) {
+                return done(error, false, { message: error.message }); // Trả về lỗi nếu có
+            }
+        }
+    )
+);
+
 passport.serializeUser((user, done) => {
     // Log user để kiểm tra
     done(null, user.id);

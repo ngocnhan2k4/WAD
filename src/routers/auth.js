@@ -6,6 +6,8 @@ router.use("/signuplocal", authController.signUpLocal);
 router.use("/verify/:token", authController.verify);
 router.use("/google/callback", authController.googleCallBack);
 router.use("/google", authController.googleSignup);
+router.use("/github/callback", authController.githubCallBack);
+router.use("/github", authController.githubSignup);
 router.use("/logout", authController.logout);
 router.use("/login", authController.loginLocal);
 router.use("/forgot", authController.forgotPassword);

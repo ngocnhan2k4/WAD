@@ -1,0 +1,63 @@
+.form__wrap {
+    position: relative;
+    margin-bottom: 32px !important;
+}
+.error {
+    position: absolute;
+    color: red;
+    font-size: 0.8rem;
+    visibility: hidden;
+    opacity: 0;
+    bottom: -25px;
+}
+.error_true {
+    visibility: visible;
+    opacity: 1;
+}
+.annouce_verify-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    gap: 20px;
+    border-radius: 0.25rem;
+    align-items: center;
+    margin-top: 1rem;
+    background-color: #ecdecb;
+}
+.annouce_verify-wrap_true {
+    transition: 1s;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+}
+.annouce_warning-img {
+    width: 50px;
+}
+.annouce_verify {
+    font-size: 1rem;
+    color: #5a3e07;
+}
+#submit {
+    margin-top: 30px !important;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.github_btn {
+    background-color: #1f2328;
+}
+.form {
+    margin-bottom: 40px;
+}
+@media (max-width: 575.98px) {
+    .contain {
+        padding: 0;
+    }
+}

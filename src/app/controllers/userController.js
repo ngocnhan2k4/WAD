@@ -6,16 +6,10 @@ const userController = {
         res.json(users);
     },
     login: (req, res) => {
-        res.render("login");
+        res.render("login", { page_style: "/css/login.css" });
     },
     register: (req, res) => {
-        console.log("Register", req.session);
-        if (req.Authenticated) {
-            res.redirect("/user");
-        } else {
-            console.log("Chưa login");
-        }
-        res.render("register");
+        res.render("register", { page_style: "/css/signup.css" });
     },
 };
 

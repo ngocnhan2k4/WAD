@@ -35,6 +35,16 @@ const User = {
             },
         });
     },
+    createUserGithub: (fullName, socialId) => {
+        return prisma.User.create({
+            data: {
+                fullName: fullName,
+                type: "github",
+                socialId: socialId,
+                verified: true,
+            },
+        });
+    },
     findUserBySocialId: (id) =>
         prisma.User.findUnique({
             where: {

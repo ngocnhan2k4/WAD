@@ -4,9 +4,9 @@
         <p class="text-gray-600 mb-6 text-sm">
             Register for new cosutumer
         </p>
-        <form action="#" method="post" autocomplete="off">
+        <form action="#" method="post" autocomplete="off" class="form">
             <div class="space-y-2">
-                <div>
+                <div class="form__wrap">
                     <label for="name" class="text-gray-600 mb-2 block">Full Name</label>
                     <input
                         type="text"
@@ -15,8 +15,10 @@
                         class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                         placeholder="fulan fulana"
                     />
+                    <p class="error error_fullName">Err: </p>
                 </div>
-                <div>
+
+                <div class="form__wrap">
                     <label for="email" class="text-gray-600 mb-2 block">Email
                         address</label>
                     <input
@@ -26,8 +28,10 @@
                         class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                         placeholder="youremail.@domain.com"
                     />
+                    <p class="error error_email">Err: </p>
                 </div>
-                <div>
+
+                <div class="form__wrap">
                     <label
                         for="password"
                         class="text-gray-600 mb-2 block"
@@ -39,8 +43,10 @@
                         class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                         placeholder="*******"
                     />
+                    <p class="error error_password">Err: </p>
                 </div>
-                <div>
+
+                <div class="form__wrap">
                     <label
                         for="confirm"
                         class="text-gray-600 mb-2 block"
@@ -52,7 +58,9 @@
                         class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                         placeholder="*******"
                     />
+                    <p class="error error_confirm-password">Err: </p>
                 </div>
+
             </div>
             <div class="mt-6">
                 <div class="flex items-center">
@@ -76,6 +84,14 @@
                     class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
                 >create account</button>
             </div>
+            <div class="annouce_verify-wrap">
+                <img
+                    class="annouce_warning-img"
+                    src="/images/icons/annouce_warning.png"
+                    alt=""
+                />
+                <p class="annouce_verify">Check your email to verify password</p>
+            </div>
         </form>
 
         <!-- login with -->
@@ -89,8 +105,9 @@
         <div class="mt-4 flex gap-4">
             <a
                 href="#"
-                class="w-1/2 py-2 text-center text-white bg-blue-800 rounded uppercase font-roboto font-medium text-sm hover:bg-blue-700"
-            >facebook</a>
+                id="github"
+                class="github_btn w-1/2 py-2 text-center text-white bg-blue-800 rounded uppercase font-roboto font-medium text-sm hover:bg-blue-700"
+            >github</a>
             <a
                 href="#"
                 id="google"
@@ -100,7 +117,7 @@
         <!-- ./login with -->
 
         <p class="mt-4 text-center text-gray-600">Already have account?
-            <a href="login.html" class="text-primary">Login now</a></p>
+            <a href="/user/login" class="text-primary">Login now</a></p>
     </div>
 </div>
 <script src="/js/signup.js"></script>

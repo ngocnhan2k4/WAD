@@ -53,6 +53,11 @@ const Auth = {
             scope: ["profile", "email"], // Yêu cầu quyền truy cập thông tin profile và email
         })(req, res); // Trả về middleware để thực thi xác thực
     },
+    githubSignup: (req, res) => {
+        return passport.authenticate("github", {
+            scope: ["user:email"],
+        })(req, res);
+    },
     googleCallBack: (req, res) => {
         passport.authenticate(
             "google",
@@ -79,8 +84,33 @@ const Auth = {
             }
         )(req, res); // Chú ý gọi middleware với đối tượng req và res
     },
+    githubCallBack: (req, res) => {
+        passport.authenticate(
+            "github",
+            {
+                failureRedirect: "/auth/login",
+            },
+            (err, user, info) => {
+                if (err) {
+                    return res.redirect("/auth/login");
+                }
+                if (!user) {
+                    return res.redirect("/auth/login");
+                }
+
+                req.login(user, (err) => {
+                    if (err) {
+                        return res.redirect("/auth/login");
+                    }
+
+                    console.log(req.user);
+                    res.redirect("/product");
+                });
+            }
+        )(req, res);
+    },
+
     loginLocal: (req, res, next) => {
-        console.log("Login Local");
         passport.authenticate("local-login", (err, user, info) => {
             if (err) {
                 return res.status(500).json({ error: "An error occurred" });
@@ -108,7 +138,10 @@ const Auth = {
             if (!user) {
                 return res.send("Token not found");
             }
-            res.render("reset_password", { user });
+            res.render("reset_password", {
+                user,
+                page_style: "/css/reset_password.css",
+            });
         } catch (err) {
             console.log(err);
             return res.send("Token invalid");
@@ -132,7 +165,9 @@ const Auth = {
         }
     },
     forgotPassword: (req, res) => {
-        res.render("forgot_password");
+        res.render("forgot_password", {
+            page_style: "/css/forgot_password.css",
+        });
     },
     sendResetPassword: async (req, res) => {
         const email = req.body.email;
