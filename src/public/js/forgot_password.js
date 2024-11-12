@@ -33,6 +33,7 @@ btn_submit.addEventListener("click", async (e) => {
     if (data.error) {
         email_error.innerHTML = "Not Found Email";
         email_error.classList.remove("hidden");
+        email_error.style.color = "red";
     } else {
         email_error.innerHTML =
             "Email sent successfully, you can check your email to reset your password";
