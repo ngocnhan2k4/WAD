@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
+  id    Int      @id @default(autoincrement())
   username   String?   @unique
   password   String?
   type String?
@@ -16,4 +16,103 @@ model User {
   fullName String?
   verified Boolean? @default(false)
   verificationToken String?
+  registration_time DateTime?
+  state             String?
+  UserCart          UserCart[]
+  Orders            Orders[]
+}
+
+model Admin {
+  admin_id Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+  email    String  @unique
+}
+
+model Product {
+  product_id      Int     @id @default(autoincrement())
+  product_name    String
+  category_id     Int
+  manufacturer    Int
+  original_price  Float
+  current_price   Float
+  creation_time   DateTime
+  description     String
+  stock_quantity  Int
+  total_purchase  Int
+  Reviews         Reviews[]
+  OrderDetail     OrderDetail[]
+  UserCart        UserCart[]
+  Images          Images[]
+  Category        Categories @relation(fields: [category_id], references: [category_id])
+  Manufacturer    Suppliers @relation(fields: [manufacturer], references: [supplier_id])
+}
+
+model Reviews {
+  ordinal_numbers Int  
+  product_id Int
+  review_detail String?
+  @@id([ordinal_numbers, product_id])
+  Product    Product @relation(fields: [product_id], references: [product_id])
+}
+
+model Categories {
+  category_id   Int      @id @default(autoincrement())
+  category_name String
+  Products      Product[]
+}
+
+model UserCart {
+  user_id  Int
+  product_id   Int
+  quantity     Int
+  price        Float
+  @@id([user_id, product_id])
+  Product      Product @relation(fields: [product_id], references: [product_id])
+  User         User    @relation(fields: [user_id], references: [id])
+}
+
+model Orders {
+  order_id     Int       @id @default(autoincrement())
+  user_id  Int
+  order_date   DateTime
+  total_amount Float
+  status       String
+  creation_time DateTime
+  OrderDetail  OrderDetail[]
+  Payments     Payments[]
+  User         User      @relation(fields: [user_id], references: [id])
+}
+
+model OrderDetail {
+  order_detail_id Int    @id @default(autoincrement())
+  order_id        Int
+  product_id      Int
+  quantity        Int
+  price           Float
+  Orders          Orders @relation(fields: [order_id], references: [order_id])
+  Product         Product @relation(fields: [product_id], references: [product_id])
+}
+
+model Payments {
+  payment_id    Int       @id @default(autoincrement())
+  order_id      Int
+  payment_date  DateTime
+  amount        Float
+  payment_method String
+  Orders        Orders    @relation(fields: [order_id], references: [order_id])
+}
+
+model Suppliers {
+  supplier_id Int     @id @default(autoincrement())
+  brand       String
+  Products      Product[]
+}
+
+model Images {
+  ordinal_numbers   Int
+  product_id  Int
+  directory_path String?
+  @@id([ordinal_numbers, product_id])
+  Product     Product @relation(fields: [product_id], references: [product_id])
 }
