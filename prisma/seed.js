@@ -4,13 +4,8 @@ const prisma = new PrismaClient();
 
 async function main(){
 
-    //Thứ tự tạo DB: Admin - User - Categories - Suppliers - Products - UserCart - Reviews - Image - Orders - OrderDetail - Payment
+    //Thứ tự tạo DB: User - Categories - Suppliers - Products - UserCart - Reviews - Image - Orders - OrderDetail - Payment
     //Xem database: npx prisma studio
-    await prisma.admin.createMany({
-        data:[
-
-        ]
-    }),
 
     await prisma.user.createMany({
         data: [
