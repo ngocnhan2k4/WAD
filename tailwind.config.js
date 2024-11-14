@@ -2,6 +2,7 @@ module.exports = {
   content: ["./src/**/*.{html,js,hbs}"],
 
   theme: {
+   
     screen: {
       sm: "576px",
       md: "768px",
@@ -13,13 +14,14 @@ module.exports = {
       padding: "1rem",
     },
     extend: {
+      colors: {
+        primary: "#fd3d57",
+      },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
       },
-      colors: {
-        primary: "#fd3d57",
-      },
+     
     },
   },
   plugins: [

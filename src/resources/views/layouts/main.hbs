@@ -21,25 +21,34 @@
 </head>
 
 <body>
+     {{#if notAJAX}}
     <!-- header -->
     <header class="py-4 shadow-sm bg-white">
       <div class="container flex items-center justify-between">
         <!--logo-->
-        <a href="#">
+        <a href="/product">
           <img src="/images/logo.svg" alt="Logo" class="w-32">
         </a>
         <!--searchbar-->
         <div class="w-full max-w-xl relative flex">
-          {{!-- <span class="absolute left-4 top-3 text-lg text-gray-400">
-            <i class="fa-solid fa-search"></i>
-          </span> --}}
-          <input type="text" name="search" id="search"
-            class="w-full border border-primary border-r-0 pl-14 py-3 pr-3 rounded-l-md focus:outline-none hidden md:flex"
-            placeholder="search">
-          <button
-            class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
-            Search
-          </button>
+            <form metod="GET" action="/product" class="w-full flex" id="search-form">
+            {{!-- <span class="absolute left-4 top-3 text-lg text-gray-400">
+                <i class="fa-solid fa-search"></i>
+            </span> --}}
+            <input type="hidden" name="category" value="{{category}}">
+            <input type="hidden" name="brand" value="{{brand}}">
+            <input type="hidden" name="minPrice" value="{{minPrice}}">
+            <input type="hidden" name="maxPrice" value="{{maxPrice}}">
+            {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
+            <input type="hidden" name="sort" value="{{sort}}">
+            <input type="text" name="search" id="search"
+                class="w-full border border-primary border-r-0 pl-14 py-3 pr-3 rounded-l-md focus:outline-none hidden md:flex"
+                placeholder="search" value="{{search}}">
+            <button
+                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
+                Search
+            </button>
+          </form>
         </div>
     
         <div class="flex items-center space-x-4">
@@ -79,8 +88,6 @@
                 <span class="text-white">
                     <i class="fa-solid fa-bars"></i>
                 </span>
-
-
                 <span class="capitalize ml-2 text-white hidden">All Categories</span>
 
                 <!-- dropdown -->
@@ -125,9 +132,9 @@
         </div>
     </nav>
     <!-- ./navbar -->
-
+    {{/if}}
     {{{body}}}
-
+     {{#if notAJAX}}
     <!-- footer -->
     <footer class="bg-white pt-16 pb-12 border-t border-gray-100">
         <div class="container grid grid-cols-1 ">
@@ -209,9 +216,10 @@
         </div>
     </div>
     <!-- ./copyright -->
-
+    {{/if}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+        
 </body>
 
 </html>

@@ -13,3 +13,14 @@ model User {
   password   String?
   type String?
 }
+
+model product {
+  id      Int      @id @default(autoincrement())
+  image String?
+  name String @unique
+  original_price Decimal
+  discount_price Decimal
+  brand String?
+  category String
+  description String?
+}
