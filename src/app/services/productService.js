@@ -5,21 +5,28 @@ const Product = {
         skip:startIndex,
         take: PRODUCTS_PER_PAGE,
         orderBy: orderBy,
-        where: where
+        where: where,
+        include: {
+            Images: {
+                select: {
+                    directory_path: true // Chỉ lấy đường dẫn hình ảnh
+                }
+            }
+        }
     }),
     getNumOfProduct: (where) => prisma.product.count({
         where: where
     }),
-    getBrands: () => prisma.product.findMany({
+    getBrands: () => prisma.Suppliers.findMany({
         distinct: ['brand'],
         select: {
             brand: true
         }
     }),
-    getCategories: () => prisma.product.findMany({
-        distinct: ['category'],
+    getCategories: () => prisma.Categories.findMany({
+        distinct: ['category_name'],
         select: {
-            category: true
+            category_name: true
         }
     }),
 }

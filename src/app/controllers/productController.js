@@ -4,16 +4,8 @@ const PRODUCTS_PER_PAGE = 3;
 const productController = {
     getAllProducts: async (req, res) => {
         try{
-            // if(req.query.pagination){
-            //     req.query.category = '';
-            //     req.query.brand = '';
-            //     req.query.minPrice = '';
-            //     req.query.maxPrice = '';
-            //     req.query.search = '';
-            //     req.query.sort = '';
-            // }
-            
-            console.log('Query:\n', req.query);
+
+            //console.log('Query:\n', req.query);
             const allBrands = await Product.getBrands();
             const allCategories = await Product.getCategories();
 
@@ -22,6 +14,7 @@ const productController = {
             const orderBy = getSort(req.query);
 
             const totalProducts = await Product.getNumOfProduct(where); 
+            //console.log("Tong so san pham: "+totalProducts);
             const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
            
             const startIndex = (page - 1) * PRODUCTS_PER_PAGE;
@@ -73,16 +66,20 @@ const getFilters = (query) =>{
     const search = query.search || '';
     let where = {};
     if(categories.length > 0 ){
-        where.category = {in: categories};
+        where.category = {
+            category_name: {in: categories}
+        };
     }
-    if(brands.length > 0){
-        where.brand = {in: brands};
+    if (brands.length > 0) {
+        where.Manufacturer = {
+            brand: { in: brands }
+        };
     }
     if(minPrice || maxPrice){
-        where.discount_price = {gte: minPrice, lte: maxPrice};
+        where.current_price = {gte: minPrice, lte: maxPrice};
     }
     if(search){
-        where.name = {contains: search, mode: 'insensitive'};
+        where.product_name = {contains: search, mode: 'insensitive'};
     }
     return where;
 }
@@ -92,19 +89,19 @@ const getSort = (query) =>{
     let orderBy = {};
     switch(sort){
         case 'price-low-to-high':
-            orderBy = {discount_price: 'asc'};
+            orderBy = {current_price: 'asc'};
             break;
         case 'price-high-to-low':
-            orderBy = {discount_price: 'desc'};
+            orderBy = {current_price: 'desc'};
             break;
         case 'name-asc':
-            orderBy = {name: 'asc'};
+            orderBy = {product_name: 'asc'};
             break;
         case 'name-desc':
-            orderBy = {name: 'desc'};
+            orderBy = {product_name: 'desc'};
             break;
         default:
-            orderBy = {id: 'asc'};
+            orderBy = {product_id: 'asc'};
         
     }
     return orderBy;
