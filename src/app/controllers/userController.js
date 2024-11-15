@@ -6,10 +6,10 @@ const userController = {
         res.json(users);
     },
     login: (req, res) => {
-        res.render("login", { page_style: "/css/login.css" });
+        res.render("login", { page_style: "/css/login.css",notAJAX:true });
     },
     register: (req, res) => {
-        res.render("register", { page_style: "/css/signup.css" });
+        res.render("register", { page_style: "/css/signup.css",notAJAX:true });
     },
 };
 
