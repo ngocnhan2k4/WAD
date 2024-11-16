@@ -177,7 +177,7 @@ const Auth = {
                 return res.status(400).json({ error: "Email not found" });
             }
             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-                expiresIn: "10m",
+                expiresIn: "24h",
             });
             await sendResetPassword(email, token);
             res.status(200).json({ message: "Email sent" });

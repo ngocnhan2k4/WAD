@@ -46,7 +46,23 @@ async function sendEmail(email, token) {
         to: `${email}`,
         subject: "Verify your email",
         text: "Click the link below to verify your email",
-        html: `<a href='http://localhost:4000/auth/verify/${token}'>Verify</a>`,
+        html: `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="background-color: #f4f4f4; padding: 20px; text-align: center;">
+                <h2 style="color: #007BFF;">Chào mừng bạn đến với Dự án WEB Bán Hàng!</h2>
+                <p>Nhấn vào nút bên dưới để xác thực email của bạn và bắt đầu trải nghiệm các dịch vụ tuyệt vời.</p>
+                <a href='http://localhost:4000/auth/verify/${token}' 
+                   style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                    Xác Thực Email
+                </a>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #555;">
+                    Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.
+                </p>
+            </div>
+            <footer style="margin-top: 20px; text-align: center; font-size: 0.8em; color: #777;">
+                <p>&copy; 2024 Dự án WEB Bán Hàng. Tất cả các quyền được bảo lưu.</p>
+                <p>Email: nhatmonsterhack@gmail.com</p>
+            </footer>
+        </div>`,
     };
     transporter.sendMail(mailOptions, (err, info) => {});
 }
@@ -59,7 +75,23 @@ async function sendResetPassword(email, token) {
         to: `${email}`,
         subject: "Reset your password",
         text: "Click the link below to verify your email",
-        html: `<a href='http://localhost:4000/auth/reset/${token}'>Reset</a>`,
+        html: `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <div style="background-color: #f9f9f9; padding: 20px; text-align: center; border-radius: 8px; border: 1px solid #ddd;">
+                    <h2 style="color: #007BFF;">Yêu cầu đặt lại mật khẩu</h2>
+                    <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ bạn. Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này.</p>
+                    <a href='http://localhost:4000/auth/reset/${token}' 
+                       style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                        Đặt Lại Mật Khẩu
+                    </a>
+                    <p style="margin-top: 20px; font-size: 0.9em; color: #555;">
+                        Liên kết sẽ hết hạn sau 24 giờ.
+                    </p>
+                </div>
+                <footer style="margin-top: 20px; text-align: center; font-size: 0.8em; color: #777;">
+                    <p>&copy; 2024 Dự án WEB Bán Hàng. Tất cả các quyền được bảo lưu.</p>
+                    <p>Email: nhatmonsterhack@gmail.com</p>
+                </footer>
+            </div>`,
     };
     transporter.sendMail(mailOptions, (err, info) => {});
 }
