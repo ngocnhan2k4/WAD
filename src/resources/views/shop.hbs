@@ -24,7 +24,7 @@
                     <div class="space-y-2">
                         {{#each brands}}
                         <div class="flex items-center">
-                            <input type="checkbox" name="brand" value="{{this.brand}} id="brand-{{@index}}"
+                            <input type="checkbox" name="brand" value="{{this.brand}}" id="brand-{{@index}}"
                                 class="text-primary focus:ring-0 rounded-sm cursor-pointer" {{#if (contains ../brand this.brand)}}checked{{/if}}>
                             <label for="brand-{{@index}}" class="text-gray-600 ml-3 cursor-pointer">{{this.brand}}</label>
                         </div>

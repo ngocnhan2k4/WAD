@@ -13,11 +13,7 @@ const Product = {
                         directory_path: true, // Chỉ lấy đường dẫn hình ảnh
                     },
                 },
-                Categories: true, // Bao gồm thông tin danh mục
-                Suppliers: true, // Sửa lại từ 'Manufacturer' thành 'Suppliers'
-                OrderDetail: true, // Nếu bạn muốn bao gồm OrderDetail, thì bỏ dấu '?' đi
-                Reviews: true, // Nếu bạn muốn bao gồm Reviews, thì bỏ dấu '?' đi
-                UserCart: true, // Nếu bạn muốn bao gồm UserCart, thì bỏ dấu '?' đi
+                
             },
         }),
     getNumOfProduct: (where) =>
