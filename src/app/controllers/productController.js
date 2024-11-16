@@ -5,7 +5,7 @@ const productController = {
     getAllProducts: async (req, res) => {
         try{
 
-            //console.log('Query:\n', req.query);
+            console.log('Query:\n', req.query);
             const allBrands = await Product.getBrands();
             const allCategories = await Product.getCategories();
 
@@ -14,7 +14,7 @@ const productController = {
             const orderBy = getSort(req.query);
 
             const totalProducts = await Product.getNumOfProduct(where); 
-            //console.log("Tong so san pham: "+totalProducts);
+            console.log("Tong so san pham: "+totalProducts);
             const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
            
             const startIndex = (page - 1) * PRODUCTS_PER_PAGE;
@@ -66,7 +66,7 @@ const getFilters = (query) =>{
     const search = query.search || '';
     let where = {};
     if(categories.length > 0 ){
-        where.category = {
+        where.Category = {
             category_name: {in: categories}
         };
     }
@@ -79,7 +79,10 @@ const getFilters = (query) =>{
         where.current_price = {gte: minPrice, lte: maxPrice};
     }
     if(search){
-        where.product_name = {contains: search, mode: 'insensitive'};
+        where.OR = [
+            { product_name: { contains: search, mode: 'insensitive' } },
+            { description: { contains: search, mode: 'insensitive' } }
+        ];
     }
     return where;
 }

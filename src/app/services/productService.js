@@ -11,11 +11,14 @@ const Product = {
                 select: {
                     directory_path: true // Chỉ lấy đường dẫn hình ảnh
                 }
-            }
+            },
+            Category: true, // Bao gồm thông tin danh mục
+            Manufacturer: true,
         }
     }),
     getNumOfProduct: (where) => prisma.product.count({
-        where: where
+        where: where,
+       
     }),
     getBrands: () => prisma.Suppliers.findMany({
         distinct: ['brand'],
