@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin
+  user
+}
+
 model User {
   id                Int        @id @default(autoincrement())
   password          String?
@@ -114,7 +119,4 @@ model UserCart {
   @@id([user_id, product_id])
 }
 
-enum Role {
-  admin
-  user
-}
+
