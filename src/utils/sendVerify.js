@@ -46,7 +46,7 @@ async function sendEmail(email, token) {
         to: `${email}`,
         subject: "Verify your email",
         text: "Click the link below to verify your email",
-        html: `<a href='http://localhost:4000/auth/verify/${token}'>ẤN VÀO ĐÂY ĐỂ ĐƯỢC TOÀN BÚ CU</a>`,
+        html: `<a href='http://localhost:4000/auth/verify/${token}'>Verify</a>`,
     };
     transporter.sendMail(mailOptions, (err, info) => {});
 }

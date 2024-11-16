@@ -16,6 +16,15 @@ function validatePasswordMatch(password, confirmPassword) {
     return password === confirmPassword;
 }
 
+password.addEventListener("input", () => {
+    error_password.innerHTML = "";
+    error_password.classList.remove("error_true");
+});
+confirmPassword.addEventListener("input", () => {
+    error_confirm.innerHTML = "";
+    error_confirm.classList.remove("error_true");
+});
+
 btn_submit.addEventListener("click", async (e) => {
     e.preventDefault();
     btn_submit.disabled = true;

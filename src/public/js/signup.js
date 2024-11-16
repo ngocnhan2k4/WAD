@@ -142,6 +142,7 @@ btn_submit.addEventListener("click", async (e) => {
                 error_email.classList.add("error_true");
             }
         } else {
+            error_email.classList.remove("error_true");
             annouce_verify.classList.add("annouce_verify-wrap_true");
         }
 
