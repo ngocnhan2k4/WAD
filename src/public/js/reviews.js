@@ -47,7 +47,7 @@ function renderReviews(reviews) {
             (review) => `
             <div class="p-4 bg-white rounded-lg shadow review">
                 <div class="flex items-center mb-3">
-                    <span class="text-sm font-semibold text-gray-700">${review.User.fullname}</span>
+                    <span class="text-sm font-semibold text-gray-700">${review.User.fullName}</span>
                     <span class="ml-2 text-sm text-gray-500">${review.created_at}</span>
                 </div>
                 <div class="text-gray-800 review-detail">${review.review_detail}</div>

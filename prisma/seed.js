@@ -9,26 +9,26 @@ async function main(){
 
     await prisma.user.createMany({
         data: [
-            { username: 'alice01', password: 'securepass123', fullname: 'Alice Wonderland' },
-            { username: 'bob_the_builder', password: 'builder456', fullname: 'Bob Builder' },
-            { username: 'charlie_mk', password: 'charlie789', fullname: 'Charlie MK' },
-            { username: 'dave92', password: 'davesecret', fullname: 'Dave Secret' },
-            { username: 'ellen_w', password: 'password123', fullname: 'Ellen White' },
-            { username: 'frankie_l', password: 'frankiepass', fullname: 'Frankie L' },
-            { username: 'gina_g', password: 'ginapw123', fullname: 'Gina Green' },
-            { username: 'harry.h', password: 'harry456', fullname: 'Harry Hill' },
-            { username: 'irene90', password: 'irene789', fullname: 'Irene 90' },
-            { username: 'jackson_t', password: 'jackpw123', fullname: 'Jackson T' },
-            { username: 'katherine_x', password: 'kathy456', fullname: 'Katherine X' },
-            { username: 'luis_m', password: 'luispass123', fullname: 'Luis M' },
-            { username: 'michael_s', password: 'mike123456', fullname: 'Michael S' },
-            { username: 'nina_b', password: 'ninapass789', fullname: 'Nina B' },
-            { username: 'olivia_w', password: 'olivia2023', fullname: 'Olivia W' },
-            { username: 'peter_j', password: 'peterpassword', fullname: 'Peter J' },
-            { username: 'quinn_l', password: 'quinnpass12', fullname: 'Quinn L' },
-            { username: 'rebecca_r', password: 'rebecca123', fullname: 'Rebecca R' },
-            { username: 'steven_k', password: 'steven12345', fullname: 'Steven K' },
-            { username: 'tina_m', password: 'tinamk2024', fullname: 'Tina M' }
+            { username: 'alice01', password: 'securepass123', fullName: 'Alice Wonderland' },
+            { username: 'bob_the_builder', password: 'builder456', fullName: 'Bob Builder' },
+            { username: 'charlie_mk', password: 'charlie789', fullName: 'Charlie MK' },
+            { username: 'dave92', password: 'davesecret', fullName: 'Dave Secret' },
+            { username: 'ellen_w', password: 'password123', fullName: 'Ellen White' },
+            { username: 'frankie_l', password: 'frankiepass', fullName: 'Frankie L' },
+            { username: 'gina_g', password: 'ginapw123', fullName: 'Gina Green' },
+            { username: 'harry.h', password: 'harry456', fullName: 'Harry Hill' },
+            { username: 'irene90', password: 'irene789', fullName: 'Irene 90' },
+            { username: 'jackson_t', password: 'jackpw123', fullName: 'Jackson T' },
+            { username: 'katherine_x', password: 'kathy456', fullName: 'Katherine X' },
+            { username: 'luis_m', password: 'luispass123', fullName: 'Luis M' },
+            { username: 'michael_s', password: 'mike123456', fullName: 'Michael S' },
+            { username: 'nina_b', password: 'ninapass789', fullName: 'Nina B' },
+            { username: 'olivia_w', password: 'olivia2023', fullName: 'Olivia W' },
+            { username: 'peter_j', password: 'peterpassword', fullName: 'Peter J' },
+            { username: 'quinn_l', password: 'quinnpass12', fullName: 'Quinn L' },
+            { username: 'rebecca_r', password: 'rebecca123', fullName: 'Rebecca R' },
+            { username: 'steven_k', password: 'steven12345', fullName: 'Steven K' },
+            { username: 'tina_m', password: 'tinamk2024', fullName: 'Tina M' }
         ]
     });
     

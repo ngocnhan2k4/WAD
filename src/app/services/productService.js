@@ -102,7 +102,7 @@ const Product = {
             include: {
                 User: {
                     select: {
-                        fullname: true, 
+                        fullName: true, 
                     },
                 },
             },

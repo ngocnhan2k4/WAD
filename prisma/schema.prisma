@@ -18,7 +18,7 @@ model User {
   type              String?
   username          String?    @unique
   socialId          String?    @unique
-  fullname          String    
+  fullName          String    
   verified          Boolean?   @default(false)
   verificationToken String?
   registration_time DateTime?
