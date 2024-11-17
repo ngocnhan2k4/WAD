@@ -18,7 +18,17 @@ async function main(){
             { username: 'gina_g', password: 'ginapw123' },
             { username: 'harry.h', password: 'harry456' },
             { username: 'irene90', password: 'irene789' },
-            { username: 'jackson_t', password: 'jackpw123' }
+            { username: 'jackson_t', password: 'jackpw123' },
+            { username: 'katherine_x', password: 'kathy456' },
+            { username: 'luis_m', password: 'luispass123' },
+            { username: 'michael_s', password: 'mike123456' },
+            { username: 'nina_b', password: 'ninapass789' },
+            { username: 'olivia_w', password: 'olivia2023' },
+            { username: 'peter_j', password: 'peterpassword' },
+            { username: 'quinn_l', password: 'quinnpass12' },
+            { username: 'rebecca_r', password: 'rebecca123' },
+            { username: 'steven_k', password: 'steven12345' },
+            { username: 'tina_m', password: 'tinamk2024' }
         ]
     });
 
@@ -109,26 +119,136 @@ async function main(){
     
     await prisma.reviews.createMany({
         data: [
-            { ordinal_numbers: 1, product_id: 1, review_detail: 'Great desk, very sturdy and spacious.' },
-
-            { ordinal_numbers: 1, product_id: 2, review_detail: 'Comfortable for long hours of work, highly recommended.' },
-            { ordinal_numbers: 2, product_id: 2, review_detail: 'Good chair, but the lumbar support could be better.' },
-
-            { ordinal_numbers: 1, product_id: 3, review_detail: 'The height adjustment works well, but could be more stable.' },
-            
-            { ordinal_numbers: 1, product_id: 4, review_detail: 'Perfect size for my home office, very secure.' },
-            { ordinal_numbers: 2, product_id: 4, review_detail: 'Good quality, but I wish the drawers were larger.' },
-
-            { ordinal_numbers: 1, product_id: 5, review_detail: 'Beautiful bookshelf, fits well in my living room.' },
-            { ordinal_numbers: 2, product_id: 5, review_detail: 'Nice design, but some of the assembly parts didn’t fit well.' },
-
-            { ordinal_numbers: 1, product_id: 6, review_detail: 'Love the modern design, very sturdy.' },
-
-            { ordinal_numbers: 1, product_id: 7, review_detail: 'Comfortable and stylish, perfect for the living room.' },
-            { ordinal_numbers: 2, product_id: 7, review_detail: 'Great sofa, but a little firm for my liking.' },
-
-            { ordinal_numbers: 1, product_id: 8, review_detail: 'Elegant dining table, looks fantastic in my kitchen.' },
-        ]
+            // Product 1
+            { ordinal_numbers: 1, product_id: 1, user_id: 1, review_detail: 'Amazing product, very durable.' },
+            { ordinal_numbers: 2, product_id: 1, user_id: 2, review_detail: 'Highly recommend for office use.' },
+            { ordinal_numbers: 3, product_id: 1, user_id: 3, review_detail: 'Great value for the price.' },
+            { ordinal_numbers: 4, product_id: 1, user_id: 4, review_detail: 'Perfect size for my room.' },
+        
+            // Product 2
+            { ordinal_numbers: 1, product_id: 2, user_id: 5, review_detail: 'Comfortable and easy to assemble.' },
+            { ordinal_numbers: 2, product_id: 2, user_id: 6, review_detail: 'Good build quality, works as expected.' },
+            { ordinal_numbers: 3, product_id: 2, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.' },
+            { ordinal_numbers: 4, product_id: 2, user_id: 8, review_detail: 'High-quality materials, very sturdy.' },
+        
+            // Product 3
+            { ordinal_numbers: 1, product_id: 3, user_id: 9, review_detail: 'Nice color and durable material.' },
+            { ordinal_numbers: 2, product_id: 3, user_id: 10, review_detail: 'Compact and easy to move around.' },
+            { ordinal_numbers: 3, product_id: 3, user_id: 11, review_detail: 'Very practical and useful.' },
+            { ordinal_numbers: 4, product_id: 3, user_id: 12, review_detail: 'Excellent for everyday use.' },
+            { ordinal_numbers: 5, product_id: 3, user_id: 13, review_detail: 'Highly satisfied with the build quality.' },
+        
+            // Product 4
+            { ordinal_numbers: 1, product_id: 4, user_id: 14, review_detail: 'Strong and stable, great for daily use.' },
+            { ordinal_numbers: 2, product_id: 4, user_id: 15, review_detail: 'The finish is beautiful and smooth.' },
+            { ordinal_numbers: 3, product_id: 4, user_id: 16, review_detail: 'Solid construction, easy to clean.' },
+            { ordinal_numbers: 4, product_id: 4, user_id: 17, review_detail: 'Looks fantastic in my office.' },
+            { ordinal_numbers: 5, product_id: 4, user_id: 18, review_detail: 'Affordable and high-quality.' },
+            { ordinal_numbers: 6, product_id: 4, user_id: 19, review_detail: 'Fits perfectly in my workspace.' },
+        
+            // Product 5
+            { ordinal_numbers: 1, product_id: 5, user_id: 20, review_detail: 'Lovely design, adds charm to the room.' },
+            { ordinal_numbers: 2, product_id: 5, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.' },
+            { ordinal_numbers: 3, product_id: 5, user_id: 2, review_detail: 'Nice finish, very durable.' },
+            { ordinal_numbers: 4, product_id: 5, user_id: 3, review_detail: 'Modern and sleek look.' },
+            { ordinal_numbers: 5, product_id: 5, user_id: 4, review_detail: 'Blends well with my other furniture.' },
+        
+            // Product 6
+            { ordinal_numbers: 1, product_id: 6, user_id: 5, review_detail: 'Comfortable and easy to set up.' },
+            { ordinal_numbers: 2, product_id: 6, user_id: 6, review_detail: 'The design is simple and elegant.' },
+            { ordinal_numbers: 3, product_id: 6, user_id: 7, review_detail: 'Material quality exceeds expectations.' },
+            { ordinal_numbers: 4, product_id: 6, user_id: 8, review_detail: 'Affordable yet stylish option.' },
+        
+            // Product 7
+            { ordinal_numbers: 1, product_id: 7, user_id: 9, review_detail: 'Highly durable, great for outdoor use.' },
+            { ordinal_numbers: 2, product_id: 7, user_id: 10, review_detail: 'The surface is scratch-resistant.' },
+            { ordinal_numbers: 3, product_id: 7, user_id: 11, review_detail: 'Good design and functionality combined.' },
+            { ordinal_numbers: 4, product_id: 7, user_id: 12, review_detail: 'Matches perfectly with my décor.' },
+            { ordinal_numbers: 5, product_id: 7, user_id: 13, review_detail: 'Lightweight but feels sturdy.' },
+        
+            // Product 8
+            { ordinal_numbers: 1, product_id: 8, user_id: 14, review_detail: 'Compact, fits well in small spaces.' },
+            { ordinal_numbers: 2, product_id: 8, user_id: 15, review_detail: 'The quality of material is top-notch.' },
+            { ordinal_numbers: 3, product_id: 8, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.' },
+            { ordinal_numbers: 4, product_id: 8, user_id: 17, review_detail: 'Great product for the price.' },
+        
+            // Product 9
+            { ordinal_numbers: 1, product_id: 9, user_id: 18, review_detail: 'Stylish and functional.' },
+            { ordinal_numbers: 2, product_id: 9, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.' },
+            { ordinal_numbers: 3, product_id: 9, user_id: 20, review_detail: 'Good for both home and office use.' },
+            { ordinal_numbers: 4, product_id: 9, user_id: 1, review_detail: 'Quality product with a premium feel.' },
+        
+            // Product 10
+            { ordinal_numbers: 1, product_id: 10, user_id: 2, review_detail: 'Assembly instructions were clear.' },
+            { ordinal_numbers: 2, product_id: 10, user_id: 3, review_detail: 'Aesthetic design with a modern touch.' },
+            { ordinal_numbers: 3, product_id: 10, user_id: 4, review_detail: 'Perfect for the living room.' },
+            { ordinal_numbers: 4, product_id: 10, user_id: 5, review_detail: 'Value for money product.' },
+    
+            // Product 11
+            { ordinal_numbers: 1, product_id: 11, user_id: 1, review_detail: 'Amazing product, very durable.' },
+            { ordinal_numbers: 2, product_id: 11, user_id: 2, review_detail: 'Highly recommend for office use.' },
+            { ordinal_numbers: 3, product_id: 11, user_id: 3, review_detail: 'Great value for the price.' },
+            { ordinal_numbers: 4, product_id: 11, user_id: 4, review_detail: 'Perfect size for my room.' },
+        
+            // Product 12
+            { ordinal_numbers: 1, product_id: 12, user_id: 5, review_detail: 'Comfortable and easy to assemble.' },
+            { ordinal_numbers: 2, product_id: 12, user_id: 6, review_detail: 'Good build quality, works as expected.' },
+            { ordinal_numbers: 3, product_id: 12, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.' },
+            { ordinal_numbers: 4, product_id: 12, user_id: 8, review_detail: 'High-quality materials, very sturdy.' },
+        
+            // Product 13
+            { ordinal_numbers: 1, product_id: 13, user_id: 9, review_detail: 'Nice color and durable material.' },
+            { ordinal_numbers: 2, product_id: 13, user_id: 10, review_detail: 'Compact and easy to move around.' },
+            { ordinal_numbers: 3, product_id: 13, user_id: 11, review_detail: 'Very practical and useful.' },
+            { ordinal_numbers: 4, product_id: 13, user_id: 12, review_detail: 'Excellent for everyday use.' },
+            { ordinal_numbers: 5, product_id: 13, user_id: 13, review_detail: 'Highly satisfied with the build quality.' },
+        
+            // Product 14
+            { ordinal_numbers: 1, product_id: 14, user_id: 14, review_detail: 'Strong and stable, great for daily use.' },
+            { ordinal_numbers: 2, product_id: 14, user_id: 15, review_detail: 'The finish is beautiful and smooth.' },
+            { ordinal_numbers: 3, product_id: 14, user_id: 16, review_detail: 'Solid construction, easy to clean.' },
+            { ordinal_numbers: 4, product_id: 14, user_id: 17, review_detail: 'Looks fantastic in my office.' },
+            { ordinal_numbers: 5, product_id: 14, user_id: 18, review_detail: 'Affordable and high-quality.' },
+            { ordinal_numbers: 6, product_id: 14, user_id: 19, review_detail: 'Fits perfectly in my workspace.' },
+        
+            // Product 15
+            { ordinal_numbers: 1, product_id: 15, user_id: 20, review_detail: 'Lovely design, adds charm to the room.' },
+            { ordinal_numbers: 2, product_id: 15, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.' },
+            { ordinal_numbers: 3, product_id: 15, user_id: 2, review_detail: 'Nice finish, very durable.' },
+            { ordinal_numbers: 4, product_id: 15, user_id: 3, review_detail: 'Modern and sleek look.' },
+            { ordinal_numbers: 5, product_id: 15, user_id: 4, review_detail: 'Blends well with my other furniture.' },
+        
+            // Product 16
+            { ordinal_numbers: 1, product_id: 16, user_id: 5, review_detail: 'Comfortable and easy to set up.' },
+            { ordinal_numbers: 2, product_id: 16, user_id: 6, review_detail: 'The design is simple and elegant.' },
+            { ordinal_numbers: 3, product_id: 16, user_id: 7, review_detail: 'Material quality exceeds expectations.' },
+            { ordinal_numbers: 4, product_id: 16, user_id: 8, review_detail: 'Affordable yet stylish option.' },
+        
+            // Product 17
+            { ordinal_numbers: 1, product_id: 17, user_id: 9, review_detail: 'Highly durable, great for outdoor use.' },
+            { ordinal_numbers: 2, product_id: 17, user_id: 10, review_detail: 'The surface is scratch-resistant.' },
+            { ordinal_numbers: 3, product_id: 17, user_id: 11, review_detail: 'Good design and functionality combined.' },
+            { ordinal_numbers: 4, product_id: 17, user_id: 12, review_detail: 'Matches perfectly with my décor.' },
+            { ordinal_numbers: 5, product_id: 17, user_id: 13, review_detail: 'Lightweight but feels sturdy.' },
+        
+            // Product 18
+            { ordinal_numbers: 1, product_id: 18, user_id: 14, review_detail: 'Compact, fits well in small spaces.' },
+            { ordinal_numbers: 2, product_id: 18, user_id: 15, review_detail: 'The quality of material is top-notch.' },
+            { ordinal_numbers: 3, product_id: 18, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.' },
+            { ordinal_numbers: 4, product_id: 18, user_id: 17, review_detail: 'Great product for the price.' },
+        
+            // Product 19
+            { ordinal_numbers: 1, product_id: 19, user_id: 18, review_detail: 'Stylish and functional.' },
+            { ordinal_numbers: 2, product_id: 19, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.' },
+            { ordinal_numbers: 3, product_id: 19, user_id: 20, review_detail: 'Good for both home and office use.' },
+            { ordinal_numbers: 4, product_id: 19, user_id: 1, review_detail: 'Quality product with a premium feel.' },
+        
+            // Product 20
+            { ordinal_numbers: 1, product_id: 20, user_id: 2, review_detail: 'Assembly instructions were clear.' },
+            { ordinal_numbers: 2, product_id: 20, user_id: 3, review_detail: 'Aesthetic design with a modern touch.' },
+            { ordinal_numbers: 3, product_id: 20, user_id: 4, review_detail: 'Perfect for the living room.' },
+            { ordinal_numbers: 4, product_id: 20, user_id: 5, review_detail: 'Value for money product.' },
+        ],
     });
 
     await prisma.images.createMany({
@@ -201,7 +321,77 @@ async function main(){
             { ordinal_numbers: 3, product_id: 10, directory_path: '/images/products/product12.jpg' },
             { ordinal_numbers: 4, product_id: 10, directory_path: '/images/products/product1.jpg' },
             { ordinal_numbers: 5, product_id: 10, directory_path: '/images/products/product2.jpg' },
-            { ordinal_numbers: 6, product_id: 10, directory_path: '/images/products/product3.jpg' }
+            { ordinal_numbers: 6, product_id: 10, directory_path: '/images/products/product3.jpg' },
+
+            { ordinal_numbers: 1, product_id: 11, directory_path: '/images/products/product1.jpg' },
+            { ordinal_numbers: 2, product_id: 11, directory_path: '/images/products/product2.jpg' },
+            { ordinal_numbers: 3, product_id: 11, directory_path: '/images/products/product3.jpg' },
+            { ordinal_numbers: 4, product_id: 11, directory_path: '/images/products/product4.jpg' },
+            { ordinal_numbers: 5, product_id: 11, directory_path: '/images/products/product5.jpg' },
+            { ordinal_numbers: 6, product_id: 11, directory_path: '/images/products/product6.jpg' },
+
+            { ordinal_numbers: 1, product_id: 12, directory_path: '/images/products/product2.jpg' },
+            { ordinal_numbers: 2, product_id: 12, directory_path: '/images/products/product3.jpg' },
+            { ordinal_numbers: 3, product_id: 12, directory_path: '/images/products/product4.jpg' },
+            { ordinal_numbers: 4, product_id: 12, directory_path: '/images/products/product5.jpg' },
+            { ordinal_numbers: 5, product_id: 12, directory_path: '/images/products/product6.jpg' },
+            { ordinal_numbers: 6, product_id: 12, directory_path: '/images/products/product7.jpg' },
+
+            { ordinal_numbers: 1, product_id: 13, directory_path: '/images/products/product3.jpg' },
+            { ordinal_numbers: 2, product_id: 13, directory_path: '/images/products/product4.jpg' },
+            { ordinal_numbers: 3, product_id: 13, directory_path: '/images/products/product5.jpg' },
+            { ordinal_numbers: 4, product_id: 13, directory_path: '/images/products/product6.jpg' },
+            { ordinal_numbers: 5, product_id: 13, directory_path: '/images/products/product7.jpg' },
+            { ordinal_numbers: 6, product_id: 13, directory_path: '/images/products/product8.jpg' },
+
+            { ordinal_numbers: 1, product_id: 14, directory_path: '/images/products/product4.jpg' },
+            { ordinal_numbers: 2, product_id: 14, directory_path: '/images/products/product5.jpg' },
+            { ordinal_numbers: 3, product_id: 14, directory_path: '/images/products/product6.jpg' },
+            { ordinal_numbers: 4, product_id: 14, directory_path: '/images/products/product7.jpg' },
+            { ordinal_numbers: 5, product_id: 14, directory_path: '/images/products/product8.jpg' },
+            { ordinal_numbers: 6, product_id: 14, directory_path: '/images/products/product9.jpg' },
+
+            { ordinal_numbers: 1, product_id: 15, directory_path: '/images/products/product5.jpg' },
+            { ordinal_numbers: 2, product_id: 15, directory_path: '/images/products/product6.jpg' },
+            { ordinal_numbers: 3, product_id: 15, directory_path: '/images/products/product7.jpg' },
+            { ordinal_numbers: 4, product_id: 15, directory_path: '/images/products/product8.jpg' },
+            { ordinal_numbers: 5, product_id: 15, directory_path: '/images/products/product9.jpg' },
+            { ordinal_numbers: 6, product_id: 15, directory_path: '/images/products/product10.jpg' },
+
+            { ordinal_numbers: 1, product_id: 16, directory_path: '/images/products/product6.jpg' },
+            { ordinal_numbers: 2, product_id: 16, directory_path: '/images/products/product7.jpg' },
+            { ordinal_numbers: 3, product_id: 16, directory_path: '/images/products/product8.jpg' },
+            { ordinal_numbers: 4, product_id: 16, directory_path: '/images/products/product9.jpg' },
+            { ordinal_numbers: 5, product_id: 16, directory_path: '/images/products/product10.jpg' },
+            { ordinal_numbers: 6, product_id: 16, directory_path: '/images/products/product11.jpg' },
+
+            { ordinal_numbers: 1, product_id: 17, directory_path: '/images/products/product7.jpg' },
+            { ordinal_numbers: 2, product_id: 17, directory_path: '/images/products/product8.jpg' },
+            { ordinal_numbers: 3, product_id: 17, directory_path: '/images/products/product9.jpg' },
+            { ordinal_numbers: 4, product_id: 17, directory_path: '/images/products/product10.jpg' },
+            { ordinal_numbers: 5, product_id: 17, directory_path: '/images/products/product11.jpg' },
+            { ordinal_numbers: 6, product_id: 17, directory_path: '/images/products/product12.jpg' },
+
+            { ordinal_numbers: 1, product_id: 18, directory_path: '/images/products/product8.jpg' },
+            { ordinal_numbers: 2, product_id: 18, directory_path: '/images/products/product9.jpg' },
+            { ordinal_numbers: 3, product_id: 18, directory_path: '/images/products/product10.jpg' },
+            { ordinal_numbers: 4, product_id: 18, directory_path: '/images/products/product11.jpg' },
+            { ordinal_numbers: 5, product_id: 18, directory_path: '/images/products/product12.jpg' },
+            { ordinal_numbers: 6, product_id: 18, directory_path: '/images/products/product1.jpg' },
+
+            { ordinal_numbers: 1, product_id: 19, directory_path: '/images/products/product9.jpg' },
+            { ordinal_numbers: 2, product_id: 19, directory_path: '/images/products/product10.jpg' },
+            { ordinal_numbers: 3, product_id: 19, directory_path: '/images/products/product11.jpg' },
+            { ordinal_numbers: 4, product_id: 19, directory_path: '/images/products/product12.jpg' },
+            { ordinal_numbers: 5, product_id: 19, directory_path: '/images/products/product1.jpg' },
+            { ordinal_numbers: 6, product_id: 19, directory_path: '/images/products/product2.jpg' },
+
+            { ordinal_numbers: 1, product_id: 20, directory_path: '/images/products/product10.jpg' },
+            { ordinal_numbers: 2, product_id: 20, directory_path: '/images/products/product11.jpg' },
+            { ordinal_numbers: 3, product_id: 20, directory_path: '/images/products/product12.jpg' },
+            { ordinal_numbers: 4, product_id: 20, directory_path: '/images/products/product1.jpg' },
+            { ordinal_numbers: 5, product_id: 20, directory_path: '/images/products/product2.jpg' },
+            { ordinal_numbers: 6, product_id: 20, directory_path: '/images/products/product3.jpg' }
         ]
     });
 

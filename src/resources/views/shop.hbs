@@ -1,18 +1,18 @@
-<div class="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
+<div class="container grid items-start grid-cols-2 gap-6 pt-4 pb-16 md:grid-cols-4">
 
     <!-- ./sidebar lọc sản phẩm -->
     <form method="GET" action="/product" id="filter-form">
-        <div class="col-span-1 bg-white px-4 pb-6 shadow rounded overflow-hiddenb hidden md:block">
-            <div class="divide-y divide-gray-200 space-y-5">
+        <div class="hidden col-span-1 px-4 pb-6 bg-white rounded shadow overflow-hiddenb md:block">
+            <div class="space-y-5 divide-y divide-gray-200">
                 <!-- Lọc theo category -->
                 <div>
-                    <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Categories</h3>
+                    <h3 class="mb-3 text-xl font-medium text-gray-800 uppercase">Categories</h3>
                     <div class="space-y-2">
                         {{#each categories}}
                         <div class="flex items-center">
                             <input type="checkbox" name="category" value="{{this.category_name}}" id="cat-{{@index}}"
-                                class="text-primary focus:ring-0 rounded-sm cursor-pointer"  {{#if (contains ../category_name this.category_name)}}checked{{/if}}>
-                            <label for="cat-{{@index}}" class="text-gray-600 ml-3 cursor-pointer">{{this.category_name}}</label>
+                                class="rounded-sm cursor-pointer text-primary focus:ring-0"  {{#if (contains ../category_name this.category_name)}}checked{{/if}}>
+                            <label for="cat-{{@index}}" class="ml-3 text-gray-600 cursor-pointer">{{this.category_name}}</label>
                         </div>
                        {{/each}}
                     </div>
@@ -20,13 +20,13 @@
 
                 <!-- Lọc theo brand -->
                 <div class="pt-4">
-                    <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Brands</h3>
+                    <h3 class="mb-3 text-xl font-medium text-gray-800 uppercase">Brands</h3>
                     <div class="space-y-2">
                         {{#each brands}}
                         <div class="flex items-center">
                             <input type="checkbox" name="brand" value="{{this.brand}}" id="brand-{{@index}}"
-                                class="text-primary focus:ring-0 rounded-sm cursor-pointer" {{#if (contains ../brand this.brand)}}checked{{/if}}>
-                            <label for="brand-{{@index}}" class="text-gray-600 ml-3 cursor-pointer">{{this.brand}}</label>
+                                class="rounded-sm cursor-pointer text-primary focus:ring-0" {{#if (contains ../brand this.brand)}}checked{{/if}}>
+                            <label for="brand-{{@index}}" class="ml-3 text-gray-600 cursor-pointer">{{this.brand}}</label>
                         </div>
                         {{/each}}
                     </div>
@@ -34,14 +34,14 @@
 
                 <!-- Lọc theo giá -->
                 <div class="pt-4">
-                    <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Price</h3>
-                    <div class="mt-4 flex items-center">
+                    <h3 class="mb-3 text-xl font-medium text-gray-800 uppercase">Price</h3>
+                    <div class="flex items-center mt-4">
                         <input type="text" name="minPrice" id="minPrice"
-                            class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                            class="w-full px-3 py-1 text-gray-600 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-0"
                             placeholder="min" value="{{minPrice}}">
                         <span class="mx-3 text-gray-500">-</span>
                         <input type="text" name="maxPrice" id="maxPrice"
-                            class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                            class="w-full px-3 py-1 text-gray-600 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-0"
                             placeholder="max" value="{{maxPrice}}">
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <input type="hidden" name="sort" value="{{sort}}">
                     {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
                     <input type="hidden" name="search" value="{{search}}">
-                    <button type="submit" class="px-4 py-2 rounded  text-white bg-red-500 hover:bg-primary hover:text-gray-700">Apply Filters</button>
+                    <button type="submit" class="px-4 py-2 text-white bg-red-500 rounded hover:bg-primary hover:text-gray-700">Apply Filters</button>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <input type="hidden" name="maxPrice" value="{{maxPrice}}">
                 {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
                 <input type="hidden" name="search" value="{{search}}">
-                <select id="sort" name="sort" class="w-44 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
+                <select id="sort" name="sort" class="px-4 py-3 text-sm text-gray-600 border-gray-300 rounded shadow-sm w-44 focus:ring-primary focus:border-primary">
                     <option value="">Default sorting</option>
                     <option value="price-low-to-high" {{#if (eq sort 'price-low-to-high' )}}selected{{/if}}>Price low to
                         high
@@ -87,24 +87,24 @@
 
         <!--danh sách sản phẩm-->
         <div id="product-list">
-            <div class="grid md:grid-cols-3 grid-cols-2 gap-6">
+            <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
                 {{#each products}}
-                <div class="bg-white shadow rounded overflow-hidden group">
+                <div class="overflow-hidden bg-white rounded shadow group">
                     <div class="relative">
-                        <a href="#"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
+                        <a href="/product/productDetail?id={{product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
                     </div>
-                    <div class="pt-4 pb-3 px-4">
-                        <a href="#">
-                            <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
+                    <div class="px-4 pt-4 pb-3">
+                        <a href="/product/productDetail?id={{product_id}}">
+                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
                                 {{product_name}}</h4>
                         </a>
                         <div class="flex items-baseline mb-1 space-x-2">
-                            <p class="text-xl text-primary font-semibold">{{current_price}}</p>
+                            <p class="text-xl font-semibold text-primary">{{current_price}}</p>
                             <p class="text-sm text-gray-400 line-through">{{original_price}}</p>
                         </div>
                     </div>
                     <a href="#"
-                        class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
+                        class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
                         to cart</a>
                 </div>
                 {{/each}}
@@ -116,7 +116,7 @@
             {{#if hasPreviousPage}}
             <li>
                 <a href="?page={{previousPage}}&sort={{sort}}&category={{category}}&brand={{brand}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&search={{search}}"
-                    class="pagination-link py-2 px-3 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-primary hover:text-gray-700">Previous</a>
+                    class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
             </li>
             {{/if}}
             {{#each pages}}
@@ -127,14 +127,14 @@
                     </li>
                 {{else if (shouldShowEllipsis @index ../currentPage ../totalPages)}}
                     <li>
-                        <span class="pagination-link py-2 px-3 leading-tight text-black bg-white border border-gray-300">...</span>
+                        <span class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 pagination-link">...</span>
                     </li>
                 {{/if}}
             {{/each}}
             {{#if hasNextPage}}
             <li>
                 <a href="?page={{nextPage}}&sort={{sort}}&category={{category}}&brand={{brand}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&search={{search}}"
-                    class="pagination-link py-2 px-3 leading-tight text-black bg-white border border-gray-300 rounded-r-lg hover:bg-primary hover:text-gray-700">Next</a>
+                    class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
             </li>
             {{/if}}
         </ul>
