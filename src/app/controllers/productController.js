@@ -66,12 +66,12 @@ const getFilters = (query) =>{
     const search = query.search || '';
     let where = {};
     if(categories.length > 0 ){
-        where.Category = {
+        where.Categories = {
             category_name: {in: categories}
         };
     }
     if (brands.length > 0) {
-        where.Manufacturer = {
+        where.Suppliers = {
             brand: { in: brands }
         };
     }
