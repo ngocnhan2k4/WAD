@@ -102,7 +102,7 @@ const Product = {
             include: {
                 User: {
                     select: {
-                        username: true, // Hoặc bạn có thể sử dụng trường username nếu cần
+                        fullname: true, 
                     },
                 },
             },

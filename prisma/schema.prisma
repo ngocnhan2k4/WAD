@@ -16,9 +16,9 @@ model User {
   id                Int        @id @default(autoincrement())
   password          String?
   type              String?
-  username          String    @unique
+  username          String?    @unique
   socialId          String?    @unique
-  fullName          String?    // Tên đầy đủ của User
+  fullname          String    
   verified          Boolean?   @default(false)
   verificationToken String?
   registration_time DateTime?

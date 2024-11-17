@@ -102,6 +102,8 @@ const productController = {
                 availability,
                 pagination,
             };
+
+            renderData.notAJAX = true;
     
             res.render('product', renderData);
         } catch (err) {

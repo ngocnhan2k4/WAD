@@ -9,35 +9,28 @@ async function main(){
 
     await prisma.user.createMany({
         data: [
-            { username: 'alice01', password: 'securepass123' },
-            { username: 'bob_the_builder', password: 'builder456' },
-            { username: 'charlie_mk', password: 'charlie789' },
-            { username: 'dave92', password: 'davesecret' },
-            { username: 'ellen_w', password: 'password123' },
-            { username: 'frankie_l', password: 'frankiepass' },
-            { username: 'gina_g', password: 'ginapw123' },
-            { username: 'harry.h', password: 'harry456' },
-            { username: 'irene90', password: 'irene789' },
-            { username: 'jackson_t', password: 'jackpw123' },
-            { username: 'katherine_x', password: 'kathy456' },
-            { username: 'luis_m', password: 'luispass123' },
-            { username: 'michael_s', password: 'mike123456' },
-            { username: 'nina_b', password: 'ninapass789' },
-            { username: 'olivia_w', password: 'olivia2023' },
-            { username: 'peter_j', password: 'peterpassword' },
-            { username: 'quinn_l', password: 'quinnpass12' },
-            { username: 'rebecca_r', password: 'rebecca123' },
-            { username: 'steven_k', password: 'steven12345' },
-            { username: 'tina_m', password: 'tinamk2024' }
+            { username: 'alice01', password: 'securepass123', fullname: 'Alice Wonderland' },
+            { username: 'bob_the_builder', password: 'builder456', fullname: 'Bob Builder' },
+            { username: 'charlie_mk', password: 'charlie789', fullname: 'Charlie MK' },
+            { username: 'dave92', password: 'davesecret', fullname: 'Dave Secret' },
+            { username: 'ellen_w', password: 'password123', fullname: 'Ellen White' },
+            { username: 'frankie_l', password: 'frankiepass', fullname: 'Frankie L' },
+            { username: 'gina_g', password: 'ginapw123', fullname: 'Gina Green' },
+            { username: 'harry.h', password: 'harry456', fullname: 'Harry Hill' },
+            { username: 'irene90', password: 'irene789', fullname: 'Irene 90' },
+            { username: 'jackson_t', password: 'jackpw123', fullname: 'Jackson T' },
+            { username: 'katherine_x', password: 'kathy456', fullname: 'Katherine X' },
+            { username: 'luis_m', password: 'luispass123', fullname: 'Luis M' },
+            { username: 'michael_s', password: 'mike123456', fullname: 'Michael S' },
+            { username: 'nina_b', password: 'ninapass789', fullname: 'Nina B' },
+            { username: 'olivia_w', password: 'olivia2023', fullname: 'Olivia W' },
+            { username: 'peter_j', password: 'peterpassword', fullname: 'Peter J' },
+            { username: 'quinn_l', password: 'quinnpass12', fullname: 'Quinn L' },
+            { username: 'rebecca_r', password: 'rebecca123', fullname: 'Rebecca R' },
+            { username: 'steven_k', password: 'steven12345', fullname: 'Steven K' },
+            { username: 'tina_m', password: 'tinamk2024', fullname: 'Tina M' }
         ]
     });
-
-    await prisma.user.createMany({
-        data:[
-            {username:'nhansensei',password:'secret'},
-            {username:'nhansensei1',password:'secret'},
-        ]
-    })
     
     await prisma.categories.createMany({
         data: [
