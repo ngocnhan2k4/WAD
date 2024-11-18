@@ -2,10 +2,10 @@
     {{#each products}}
        <div class="bg-white shadow rounded overflow-hidden group">
                     <div class="relative">
-                        <a href="#"><img src={{Images.[0].directory_path}} alt="product 1" class="w-full"></a>
+                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product 1" class="w-full"></a>
                     </div>
                     <div class="pt-4 pb-3 px-4">
-                        <a href="#">
+                        <a href="/product/productDetail?id={{this.product_id}}">
                             <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                                 {{product_name}}</h4>
                         </a>
