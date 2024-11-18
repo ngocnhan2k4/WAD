@@ -27,7 +27,7 @@
             {{#if hasPreviousPage}}
             <li>
                 <a href="?page={{previousPage}}&sort={{sort}}&category={{category}}&brand={{brand}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&search={{search}}"
-                    class="pagination-link py-2 px-3 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-primary hover:text-gray-700">Previous</a>
+                    class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
             </li>
             {{/if}}
             {{#each pages}}
@@ -38,14 +38,14 @@
                     </li>
                 {{else if (shouldShowEllipsis @index ../currentPage ../totalPages)}}
                     <li>
-                        <span class="pagination-link py-2 px-3 leading-tight text-black bg-white border border-gray-300">...</span>
+                        <span class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 pagination-link">...</span>
                     </li>
                 {{/if}}
             {{/each}}
             {{#if hasNextPage}}
             <li>
                 <a href="?page={{nextPage}}&sort={{sort}}&category={{category}}&brand={{brand}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&search={{search}}"
-                    class="pagination-link py-2 px-3 leading-tight text-black bg-white border border-gray-300 rounded-r-lg hover:bg-primary hover:text-gray-700">Next</a>
+                    class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
             </li>
             {{/if}}
         </ul>
