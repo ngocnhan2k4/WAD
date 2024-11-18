@@ -36,8 +36,12 @@
             {{!-- <span class="absolute text-lg text-gray-400 left-4 top-3">
                 <i class="fa-solid fa-search"></i>
             </span> --}}
-            <input type="hidden" name="category" value="{{category}}">
-            <input type="hidden" name="brand" value="{{brand}}">
+           {{#each category}}
+                <input type="hidden" name="category" value="{{this}}">
+            {{/each}}
+            {{#each brand}}
+                <input type="hidden" name="brand" value="{{this}}">
+            {{/each}}
             <input type="hidden" name="minPrice" value="{{minPrice}}">
             <input type="hidden" name="maxPrice" value="{{maxPrice}}">
             {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}

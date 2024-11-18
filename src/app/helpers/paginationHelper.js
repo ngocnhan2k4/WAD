@@ -7,7 +7,7 @@ Handlebars.registerHelper('shouldShowPage', function(index, currentPage, totalPa
 
 Handlebars.registerHelper('shouldShowEllipsis', function(index, currentPage, totalPages) {
     const page = index + 1;
-    return (page === currentPage - 3 || page === currentPage + 3) && totalPages > 5;
+    return (page === currentPage - 3 || page === currentPage + 3) && totalPages > 4;
 });
 
 Handlebars.registerHelper('contains', function(array, value) {
