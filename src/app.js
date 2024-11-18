@@ -9,6 +9,8 @@ dotenv.config();
 const app = express();
 // Đăng ký các helper Handlebars
 require('./app/helpers/paginationHelper');
+require('./app/helpers/reviewsHelper');
+
 app.use(express.static("./src/public"));
 app.use("/node_modules", express.static("node_modules"));
 app.use(express.json());

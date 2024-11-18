@@ -18,7 +18,7 @@ model User {
   type              String?
   username          String?    @unique
   socialId          String?    @unique
-  fullName          String?
+  fullName          String    
   verified          Boolean?   @default(false)
   verificationToken String?
   registration_time DateTime?
@@ -26,6 +26,7 @@ model User {
   role              Role?
   Orders            Orders[]
   UserCart          UserCart[]
+  Reviews           Reviews[] 
 }
 
 model Categories {
@@ -96,8 +97,10 @@ model Product {
 model Reviews {
   ordinal_numbers Int
   product_id      Int
+  user_id         Int
   review_detail   String?
   Product         Product @relation(fields: [product_id], references: [product_id])
+  User            User    @relation(fields: [user_id], references: [id])
 
   @@id([ordinal_numbers, product_id])
 }

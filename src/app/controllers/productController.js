@@ -54,9 +54,63 @@ const productController = {
        
     },
     
-    getProductDetail :(req,res)=>{
-        res.render('product');
-    }
+    getProductDetail: async (req, res) => {
+        try {
+            const productId = parseInt(req.query.id);
+            if (!productId) {
+                return res.status(400).json({ error: 'Product ID is required' });
+            }
+    
+            const product = await Product.getProductById(productId);
+            if (!product) {
+                return res.status(404).json({ error: 'Product not found' });
+            }
+    
+            const REVIEWS_PER_PAGE = 2;
+            const page = parseInt(req.query.page) || 1;
+            const startIndex = (page - 1) * REVIEWS_PER_PAGE;
+    
+            const reviews = await Product.getReviews(productId, startIndex, REVIEWS_PER_PAGE);
+            const totalReviews = await Product.getNumOfReviews(productId);
+            const totalPages = Math.ceil(totalReviews / REVIEWS_PER_PAGE);
+    
+            const pagination = {
+                currentPage: page,
+                totalPages: totalPages,
+                hasPreviousPage: page > 1,
+                hasNextPage: page < totalPages,
+                previousPage: page - 1,
+                nextPage: page + 1,
+                pages: Array.from({ length: totalPages }, (_, i) => i + 1)
+            };
+    
+            if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+                return res.json({
+                    product,
+                    reviews,
+                    pagination,
+                });
+            }
+    
+            const relatedProducts = await Product.getRelatedProducts(product.category_id, product.product_id);
+            const availability = product.stock_quantity > 0 ? 'In stock' : 'Out of stock';
+    
+            const renderData = {
+                product,
+                relatedProducts,
+                reviews,
+                availability,
+                pagination,
+            };
+
+            renderData.notAJAX = true;
+    
+            res.render('product', renderData);
+        } catch (err) {
+            console.error('Error fetching product details:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },      
 };
 const getFilters = (query) =>{
     const categories = Array.isArray(query.category) ? query.category : (query.category ? query.category.split(',') : []);
