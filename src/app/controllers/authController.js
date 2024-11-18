@@ -36,7 +36,7 @@ const Auth = {
         if (!user) {
             return res.send("Token not found");
         }
-        res.redirect("/product");
+        res.redirect("/");
     },
     logout: (req, res) => {
         req.logout((err) => {
@@ -45,7 +45,7 @@ const Auth = {
             }
 
             // Xử lý sau khi logout thành công
-            res.redirect("/product"); // Chuyển hướng người dùng đến trang chủ hoặc trang khác sau khi logout
+            res.redirect("/"); // Chuyển hướng người dùng đến trang chủ hoặc trang khác sau khi logout
         });
     },
     googleSignup: (req, res) => {
@@ -79,7 +79,7 @@ const Auth = {
                     }
 
                     console.log(req.user); // In thông tin người dùng vào console
-                    res.redirect("/product"); // Chuyển hướng đến trang sản phẩm sau khi đăng nhập thành công
+                    res.redirect("/"); // Chuyển hướng đến trang sản phẩm sau khi đăng nhập thành công
                 });
             }
         )(req, res); // Chú ý gọi middleware với đối tượng req và res
@@ -104,7 +104,7 @@ const Auth = {
                     }
 
                     console.log(req.user);
-                    res.redirect("/product");
+                    res.redirect("/");
                 });
             }
         )(req, res);
