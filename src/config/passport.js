@@ -5,7 +5,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
 //chưa cần mã hóa
-const User = require("../app/services/userService");
+const User = require("../app/user/service");
 //User sử dụng Prismas
 const crypto = require("../utils/crypto");
 

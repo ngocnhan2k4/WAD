@@ -1,4 +1,4 @@
-const Home = require("../services/homeService");
+const Home = require("./service");
 
 const homeController = {
     home: async (req, res) => {

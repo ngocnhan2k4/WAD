@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../app/controllers/authController");
+const authController = require("./controller");
 
 router.use("/signuplocal", authController.signUpLocal);
 router.use("/verify/:token", authController.verify);

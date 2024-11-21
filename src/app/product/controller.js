@@ -1,4 +1,4 @@
-const Product = require('../services/productService')
+const Product = require('./service')
 const PRODUCTS_PER_PAGE = 3;
 
 const productController = {

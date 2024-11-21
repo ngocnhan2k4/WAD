@@ -1,6 +1,6 @@
 const passport = require("../../config/passport");
-const User = require("../services/userService");
-const { login } = require("./userController");
+const User = require("./service");
+const { login } = require("../user/controller");
 const jwt = require("jsonwebtoken");
 const { sendResetPassword } = require("../../utils/sendVerify");
 const Auth = {
