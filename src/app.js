@@ -8,20 +8,24 @@ dotenv.config();
 
 const app = express();
 // Đăng ký các helper Handlebars
-require('./app/helpers/paginationHelper');
-require('./app/helpers/reviewsHelper');
+require("./app/helpers/paginationHelper");
+require("./app/helpers/reviewsHelper");
 
 app.use(express.static("./src/public"));
 app.use("/node_modules", express.static("node_modules"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.engine("hbs", handlebars.engine({
-    extname: ".hbs",
-    helpers: {
-        eq: (a, b) => a === b
-    }
-}));
+app.engine(
+    "hbs",
+    handlebars.engine({
+        extname: ".hbs",
+        helpers: {
+            eq: (a, b) => a === b,
+            neq: (a, b) => a !== b,
+        },
+    })
+);
 
 app.use(
     session({
@@ -34,7 +38,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");

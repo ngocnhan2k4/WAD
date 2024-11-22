@@ -1,3 +1,4 @@
+const { use } = require("passport");
 const prisma = require("../../config/database/db.config");
 
 const User = {
@@ -14,7 +15,12 @@ const User = {
                 id: id,
             },
         }),
+
     createUserLocal: (email, password, fullName, Token) => {
+        const now = new Date();
+        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+        const gmt7 = new Date(utc + 7 * 3600000);
+
         return prisma.User.create({
             data: {
                 username: email,
@@ -22,26 +28,50 @@ const User = {
                 fullName: fullName,
                 type: "local",
                 verificationToken: Token,
+                role: "user",
+                registration_time: gmt7,
+                user_image: "/images/avatar/avatar_placeholder.png",
+                state: "noban",
             },
         });
     },
-    createUserGoogle: (fullName, socialId) => {
+    createUserGoogle: (fullName, socialId, email, image) => {
+        const now = new Date();
+        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+        const gmt7 = new Date(utc + 7 * 3600000);
+
         return prisma.User.create({
             data: {
                 fullName: fullName,
                 type: "google",
                 socialId: socialId,
                 verified: true,
+                username: email,
+                role: "user",
+                registration_time: gmt7,
+                user_image: image,
+                state: "noban",
             },
         });
     },
-    createUserGithub: (fullName, socialId) => {
+    createUserGithub: (fullName, socialId, email, image) => {
+        const now = new Date();
+        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+        const gmt7 = new Date(utc + 7 * 3600000);
+        if (email == null) {
+            email = "No email";
+        }
         return prisma.User.create({
             data: {
                 fullName: fullName,
                 type: "github",
                 socialId: socialId,
                 verified: true,
+                username: email,
+                role: "user",
+                registration_time: gmt7,
+                user_image: image,
+                state: "noban",
             },
         });
     },

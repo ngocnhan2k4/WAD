@@ -1,0 +1,147 @@
+<div class="view_account__inner">
+    {{! <nav class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <h2>Base</h2>
+        </div>
+        <a href="#" class="nav-item">Dashboard</a>
+        <a href="#" class="nav-item">Analytics</a>
+        <a href="#" class="nav-item">Invoice</a>
+        <a href="#" class="nav-item">Schedule</a>
+        <a href="#" class="nav-item">Calendar</a>
+        <a href="#" class="nav-item">Messages</a>
+        <a href="#" class="nav-item">Notification</a>
+        <a href="#" class="nav-item">Settings</a>
+    </nav> }}
+
+    <main class="main-content">
+        <div class="header">
+            <h1 class="heading">Customer List</h1>
+            <p id="sort__info" sort="{{sort}}" order="{{order}}"></p>
+            <div class="search-container">
+                <input
+                    type="text"
+                    class="search-input"
+                    value="{{user_search}}"
+                    placeholder="Search by name or email"
+                />
+                <button class="search-button">Search</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th id="user_name">Name</th>
+                    <th id="user_email">Email</th>
+                    <th id="user_reg">Register</th>
+                    <th id="user_role">Role</th>
+                    <th id="user_state">State</th>
+                    <th style="width: 5%; padding-left: 15px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                    {{#if (neq id 0)}}
+                        <tr id="{{id}}">
+                            <td class="customer-name"><img
+                                    class="acc_avatar"
+                                    src="{{user_image}}"
+                                    alt=""
+                                />{{fullName}}</td>
+                            <td class="acc__name">{{username}}</td>
+                            <td class="acc_reg">{{registration_time}}</td>
+                            {{#if (eq role "admin")}}
+                                <td><span
+                                        class="acc__role acc_admin"
+                                    >Admin</span></td>
+                            {{else}}
+                                <td><span
+                                        class="acc__role acc_customer"
+                                    >Customer</span></td>
+                            {{/if}}
+                            {{#if (eq state "ban")}}
+                                <td><span
+                                        class="acc__state acc_ban"
+                                    >Ban</span></td>
+                            {{else}}
+                                <td><span class="acc__state acc_noban">No Ban</span></td>
+                            {{/if}}
+
+                            <td>
+                                <div class="icon__inner">
+                                    <img
+                                        class="acc_accept"
+                                        src="/images/icons/check_mark.png"
+                                        alt=""
+                                    />
+                                    <img
+                                        class="acc_notaccepct"
+                                        src="/images/icons/wrong_mark.png"
+                                        alt=""
+                                    />
+                                </div>
+                                <img
+                                    class="icon__input"
+                                    src="/images/icons/input.png"
+                                    alt=""
+                                />
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr id="{{id}}" class="null__tr">
+                            <td class="customer-name"><img
+                                    class="acc_avatar"
+                                    src=""
+                                    alt=""
+                                /></td>
+                            <td class="acc__name"></td>
+                            <td class="acc_reg"></td>
+                            <td><span class="acc__role acc_admin"></span></td>
+                            <td><span class="acc__state acc_ban"></span></td>
+                            <td>
+                                <div class="icon__inner">
+                                    <img
+                                        class="acc_accept"
+                                        src="/images/icons/check_mark.png"
+                                        alt=""
+                                    />
+                                    <img
+                                        class="acc_notaccepct"
+                                        src="/images/icons/wrong_mark.png"
+                                        alt=""
+                                    />
+                                </div>
+                                <img
+                                    class="icon__input"
+                                    src="/images/icons/input.png"
+                                    alt=""
+                                />
+                            </td>
+                        </tr>
+                    {{/if}}
+
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="pagination__inner">
+            <div class="pagination-container">
+                <button class="page-btn prev-btn" disabled>Previous</button>
+                <div class="pagination">
+                    <input
+                        type="number"
+                        class="current-page"
+                        value="{{currentPage}}"
+                        min="1"
+                        max="{{pages}}"
+                    />
+                    <span class="separator">/</span>
+                    <span class="total-pages">{{pages}}</span>
+                </div>
+                <button class="page-btn next-btn">Next</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/js/view_account.js"></script>

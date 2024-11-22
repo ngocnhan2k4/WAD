@@ -104,9 +104,13 @@ passport.use(
             try {
                 let user = await User.findUserBySocialId(profile.id);
                 if (!user) {
+                    const email = profile.emails && profile.emails[0].value;
+                    const avatar = profile.photos[0].value;
                     user = await User.createUserGoogle(
                         profile.displayName,
-                        profile.id
+                        profile.id,
+                        email,
+                        avatar
                     );
                 }
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
@@ -128,9 +132,13 @@ passport.use(
             try {
                 let user = await User.findUserBySocialId(profile.id);
                 if (!user) {
+                    const email = profile.emails && profile.emails[0].value;
+                    const avatar = profile.photos[0].value;
                     user = await User.createUserGithub(
                         profile.displayName,
-                        profile.id
+                        profile.id,
+                        email,
+                        avatar
                     );
                 }
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
