@@ -23,6 +23,7 @@ model User {
   verificationToken String?
   registration_time DateTime?
   state             String?
+  user_image       String?
   role              Role?
   Orders            Orders[]
   UserCart          UserCart[]
