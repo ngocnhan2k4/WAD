@@ -14,5 +14,6 @@ router.use("/forgot", authController.forgotPassword);
 router.use("/sendreset", authController.sendResetPassword);
 router.use("/reset/:token", authController.resetPassword);
 router.use("/updatepassword", authController.updatePassword);
+router.use("/ban", authController.ban);
 
 module.exports = router;

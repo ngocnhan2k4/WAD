@@ -51,14 +51,14 @@ acc_accept.addEventListener("click", async () => {
         state = "noban";
     }
 
-    const userUpdate = await fetch("/admin/updateuser", {
+    const message = await fetch("/admin/updateuser", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ id, role, state }),
     }).then((res) => res.json());
-    if (userUpdate) {
+    if (message === "success") {
         acc__state.parentElement.children[3].classList.remove(
             "icon__inner--active"
         );
@@ -67,6 +67,9 @@ acc_accept.addEventListener("click", async () => {
         );
         accrole = role;
         accstate = state;
+    } else {
+        alert("Can't update your account");
+        acc_notaccepct.click();
     }
 });
 
@@ -95,7 +98,7 @@ function displayProductItems(ids) {
         if (!ids.includes(id)) {
             product__item.style.display = "none";
         } else {
-            product__item.style.display = "block";
+            product__item.style.display = "flex";
         }
     });
 }

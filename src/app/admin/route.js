@@ -1,7 +1,9 @@
 const express = require("express");
+const isAdmin = require("./middleware.js");
 const router = express.Router();
 const adminController = require("./adminController");
 
+router.use(isAdmin);
 router.use("/viewaccount/:id", adminController.viewDetail);
 router.use("/viewaccount", adminController.viewAccount);
 router.use("/sortview", adminController.sortView);

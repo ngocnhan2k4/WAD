@@ -32,11 +32,14 @@ btn_submit.addEventListener("click", async (e) => {
     });
     const data = await response.json();
     if (data.error) {
-        if (data.error === "Email not found") {
+        if (
+            data.error === "Email not found" ||
+            data.error === "Account is banned"
+        ) {
             annouce_wrap.classList.add("annouce-wrap_true");
             annouce_wrap.style.backgroundColor = "#491b1bdb";
             annouce_img.src = "/images/icons/error.png";
-            annouce.innerHTML = "Email and Password not found";
+            annouce.innerHTML = data.error;
             annouce.style.color = "white";
         } else {
             annouce_wrap.classList.add("annouce-wrap_true");

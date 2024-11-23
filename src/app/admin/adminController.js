@@ -1,4 +1,3 @@
-const { use } = require("passport");
 const User = require("../admin/service");
 
 function formatDateSimple(date) {
@@ -149,8 +148,12 @@ const Admin = {
             res.json();
             return;
         }
+        if (id == req.user.id) {
+            res.json("Can't update your account");
+            return;
+        }
         const result = await User.updateUser(id, role, state);
-        res.json(result);
+        res.json("success");
     },
     viewDetail: async (req, res) => {
         let id = req.params.id;

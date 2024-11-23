@@ -488,20 +488,23 @@ acc_accepts.forEach((acc_accept) => {
         } else {
             state = "noban";
         }
-        const userUpdate = await fetch("/admin/updateuser", {
+        const message = await fetch("/admin/updateuser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ id, role, state }),
         }).then((res) => res.json());
-        if (userUpdate) {
+        if (message === "success") {
             acc_accept.parentElement.classList.remove("icon__inner--active");
             acc_accept.parentElement.nextElementSibling.classList.remove(
                 "icon__input--inputed"
             );
             accRoles[tr.id] = undefined;
             accStates[tr.id] = undefined;
+        } else {
+            alert("Can't update your account");
+            acc_accept.nextElementSibling?.click();
         }
     });
 });

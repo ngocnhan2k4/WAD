@@ -1,5 +1,5 @@
 <main class="view_detail container">
-    <div class="grid grid-cols-5 gap-8">
+    <div class="view__inner grid grid-cols-5 md:gap-8">
         <div class="col-span-2">
             <div class="view__info">
                 <img src="{{user.user_image}}" alt="" class="view__img" />
@@ -94,7 +94,7 @@
                     >Search</button>
                 </div>
             </div>
-            <div class="view__product grid grid-cols-3 gap-4">
+            <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {{#each products}}
                     <div
                         id={{product_id}}
@@ -109,7 +109,7 @@
                                     class="w-full"
                                 /></a>
                         </div>
-                        <div class="px-4 pt-4 pb-3">
+                        <div class="product__content px-4 pt-4 pb-3">
                             <a
                                 href="/product/productDetail?id={{this.product_id}}"
                             >
@@ -118,7 +118,9 @@
                                 >
                                     {{product_name}}</h4>
                             </a>
-                            <div class="flex items-baseline mb-1 space-x-2">
+                            <div
+                                class="flex mt-auto items-baseline mb-1 space-x-2"
+                            >
                                 <p
                                     class="text-xl font-semibold text-primary"
                                 >{{current_price}}</p>

@@ -56,7 +56,12 @@ passport.use(
                     password
                 );
                 if (!user) {
-                    return done(null, false, { message: "Email not found" });
+                    return done(null, false, {
+                        message: "Email and password not found",
+                    });
+                }
+                if (user.state === "ban") {
+                    return done(null, false, { message: "Account is banned" });
                 }
                 if (!user.verified) {
                     return done(null, false, { message: "Email not verified" });
@@ -113,6 +118,7 @@ passport.use(
                         avatar
                     );
                 }
+
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
             } catch (error) {
                 return done(error, false, { message: error.message }); // Trả về lỗi nếu có
