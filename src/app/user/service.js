@@ -1,6 +1,6 @@
-const { use } = require("passport");
+const bcrypt = require("bcrypt");
 const prisma = require("../../config/database/db.config");
-
+const { DateTime } = require("luxon");
 const User = {
     getAll: () => prisma.User.findMany(),
     findUserByUsername: (username) =>
@@ -16,29 +16,32 @@ const User = {
             },
         }),
 
-    createUserLocal: (email, password, fullName, Token) => {
-        const now = new Date();
-        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-        const gmt7 = new Date(utc + 7 * 3600000);
+    createUserLocal: async (email, password, fullName, Token) => {
+        const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
 
-        return prisma.User.create({
-            data: {
-                username: email,
-                password: password,
-                fullName: fullName,
-                type: "local",
-                verificationToken: Token,
-                role: "user",
-                registration_time: gmt7,
-                user_image: "/images/avatar/avatar_placeholder.png",
-                state: "noban",
-            },
-        });
+        const hashedPassword = bcrypt.hashSync(password, 10);
+
+        try {
+            return await prisma.User.create({
+                data: {
+                    username: email,
+                    password: hashedPassword,
+                    fullName: fullName,
+                    type: "local",
+                    verificationToken: Token,
+                    role: "user",
+                    registration_time: gmt7,
+                    user_image: "/images/avatar/avatar_placeholder.png",
+                    state: "noban",
+                },
+            });
+        } catch (error) {
+            console.error("Error creating user:", error);
+            throw new Error("Failed to create user");
+        }
     },
     createUserGoogle: (fullName, socialId, email, image) => {
-        const now = new Date();
-        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-        const gmt7 = new Date(utc + 7 * 3600000);
+        const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
 
         return prisma.User.create({
             data: {
@@ -55,9 +58,7 @@ const User = {
         });
     },
     createUserGithub: (fullName, socialId, email, image) => {
-        const now = new Date();
-        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-        const gmt7 = new Date(utc + 7 * 3600000);
+        const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
         if (email == null) {
             email = "No email";
         }
@@ -107,13 +108,21 @@ const User = {
             },
         });
     },
-    findUserByUsernameAndPassWord: (username, password) =>
-        prisma.User.findUnique({
-            where: {
-                username: username,
-                password: password,
-            },
-        }),
+    findUserByUsernameAndPassWord: async (username, password) => {
+        const user = await prisma.User.findFirst({
+            where: { username: username },
+        });
+
+        if (!user) {
+            return null;
+        }
+        const isMatch = bcrypt.compareSync(password, user.password);
+        if (isMatch) {
+            return user;
+        }
+
+        return null;
+    },
 };
 
 module.exports = User;

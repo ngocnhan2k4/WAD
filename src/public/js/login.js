@@ -32,21 +32,18 @@ btn_submit.addEventListener("click", async (e) => {
     });
     const data = await response.json();
     if (data.error) {
-        if (
-            data.error === "Email not found" ||
-            data.error === "Account is banned"
-        ) {
-            annouce_wrap.classList.add("annouce-wrap_true");
-            annouce_wrap.style.backgroundColor = "#491b1bdb";
-            annouce_img.src = "/images/icons/error.png";
-            annouce.innerHTML = data.error;
-            annouce.style.color = "white";
-        } else {
+        if (data.error === "Email not verified") {
             annouce_wrap.classList.add("annouce-wrap_true");
             annouce_wrap.style.backgroundColor = "#ecdecb";
             annouce_img.src = "/images/icons/annouce_warning.png";
             annouce.innerHTML = "Email not verified";
             annouce.style.color = "#5a3e07";
+        } else {
+            annouce_wrap.classList.add("annouce-wrap_true");
+            annouce_wrap.style.backgroundColor = "#491b1bdb";
+            annouce_img.src = "/images/icons/error.png";
+            annouce.innerHTML = data.error;
+            annouce.style.color = "white";
         }
     } else {
         window.location.href = "/product";

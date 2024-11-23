@@ -18,7 +18,8 @@ function validateEmail(email) {
     return re.test(email);
 }
 function validatePassword(password) {
-    return password.length > 6; //bổ sung sau
+    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{7,}$/;
+    return re.test(password);
 }
 
 function validateFormBlank() {
@@ -102,7 +103,8 @@ btn_submit.addEventListener("click", async (e) => {
         }
 
         if (!validatePassword(password.value)) {
-            error_password.innerHTML = "Password must be at least 6 characters";
+            error_password.innerHTML =
+                "Password must >6, at least 1 number, 1 A-Z, 1 a-z and 1 special character";
             error_password.classList.add("error_true");
             btn_submit.disabled = false; // Kích hoạt lại nút nếu có lỗi
             return;
