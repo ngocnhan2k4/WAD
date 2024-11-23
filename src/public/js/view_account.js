@@ -7,7 +7,7 @@ const search_button = document.querySelector(".search-button");
 const search_input = document.querySelector(".search-input");
 const acc__roles = document.querySelectorAll(".acc__role");
 const acc__states = document.querySelectorAll(".acc__state");
-const trs = document.querySelectorAll("tr");
+const trs = document.querySelectorAll("tr:not(thead tr)");
 const sort__info = document.querySelector("#sort__info");
 
 let sort = sort__info.getAttribute("sort") || "";
@@ -286,7 +286,7 @@ user_email.addEventListener("click", async () => {
     );
 });
 
-user_reg.addEventListener("click", async () => {
+user_reg.addEventListener("click", async (event) => {
     user_reg.disable = true;
     user_reg_isIncrement = !user_reg_isIncrement;
     user_which_sort.key = "user_reg";
