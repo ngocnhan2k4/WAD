@@ -1,3 +1,4 @@
+const { use } = require("passport");
 const User = require("../admin/service");
 
 function formatDateSimple(date) {
@@ -29,7 +30,12 @@ const Admin = {
         } else {
             sort = "";
         }
-        const order = req.query.order ? "asc" : "desc";
+        let order = req.query.order;
+        if (order === "false") {
+            order = "desc";
+        } else {
+            order = "asc";
+        }
         const field = {
             key: sort,
             order: order,
@@ -145,6 +151,47 @@ const Admin = {
         }
         const result = await User.updateUser(id, role, state);
         res.json(result);
+    },
+    viewDetail: async (req, res) => {
+        let id = req.params.id;
+        id = Number(id);
+        if (isNaN(id) || id < 1) {
+            res.redirect("/admin/viewaccount");
+            return;
+        }
+        const user = await User.getUserById(id);
+        if (user === null) {
+            res.redirect("/admin/viewaccount");
+            return;
+        }
+        const total_pay = await User.getTotalPayment(id);
+        const categories_favorite = await User.getCateFavorite(id);
+        const products_favorite = await User.getProductFavorite(id);
+        const manufac_favorite = await User.getManufacFavorite(id);
+        const bought_products = await User.getBoughtProducts(id);
+        user.categories_favorite = categories_favorite;
+        user.manufac_favorite = manufac_favorite;
+        user.products_favorite = products_favorite;
+        user.total_pay = total_pay;
+
+        user.registration_time = formatDateSimple(user.registration_time);
+        res.render("view_detail", {
+            page_style: "/css/view_detail.css",
+            notAJAX: true,
+            user: user,
+            products: bought_products,
+        });
+    },
+    searchProducts: async (req, res) => {
+        const search = req.body.search;
+        const id = Number(req.body.id);
+        if (search === undefined || id === undefined) {
+            res.json([]);
+            return;
+        }
+        const products = await User.searchProducts(search);
+        const products_Id = products.map((product) => product.product_id);
+        res.json(products_Id);
     },
 };
 

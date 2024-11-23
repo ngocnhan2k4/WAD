@@ -7,13 +7,13 @@ const search_button = document.querySelector(".search-button");
 const search_input = document.querySelector(".search-input");
 const acc__roles = document.querySelectorAll(".acc__role");
 const acc__states = document.querySelectorAll(".acc__state");
-
+const trs = document.querySelectorAll("tr");
 const sort__info = document.querySelector("#sort__info");
 
 let sort = sort__info.getAttribute("sort") || "";
-console.log("sort", sort);
 let order = sort__info.getAttribute("order") || "";
 order = order === "true";
+console.log("order", order);
 let user_search = search_input.value || "";
 let user_name_isIncrement = false;
 let user_email_isIncrement = false;
@@ -33,6 +33,8 @@ let currentPage = currentPageInput.value;
 
 function whereSort() {
     if (sort === "user_name") {
+        console.log("sort", sort);
+        console.log("order", order);
         if (order == true) {
             user_name.classList.add("sorted-asc");
             user_name.classList.remove("sorted-desc");
@@ -99,6 +101,11 @@ function changeSort(newsort, neworder) {
     whereSort();
 }
 
+function resetSort() {
+    sort = "";
+    order = "";
+    removeSort();
+}
 whereSort();
 function makePagination(currentPage) {
     if (currentPage == 1) {
@@ -380,7 +387,6 @@ search_button.addEventListener("click", async () => {
         },
         body: JSON.stringify({ user_search }),
     }).then((res) => res.json());
-    changeSort("user_name", user_name_isIncrement);
     document.querySelector(".total-pages").textContent = pages;
     currentPageInput.max = pages;
     render(users);
@@ -393,6 +399,7 @@ search_button.addEventListener("click", async () => {
     user_which_sort.order = "";
     currentPage = 1;
     makePagination(currentPage);
+    resetSort();
     search_input.disable = false;
     console.log(
         "search",
@@ -407,7 +414,8 @@ search_button.addEventListener("click", async () => {
 const accRoles = {};
 const accStates = {};
 acc__roles.forEach((acc__role) => {
-    acc__role.addEventListener("click", async () => {
+    acc__role.addEventListener("click", async (event) => {
+        event.stopPropagation();
         //ra cha của nó là tr lấy id
         const td = acc__role.parentElement;
         const tr = td.parentElement;
@@ -436,7 +444,8 @@ acc__roles.forEach((acc__role) => {
 });
 
 acc__states.forEach((acc__state) => {
-    acc__state.addEventListener("click", async () => {
+    acc__state.addEventListener("click", async (event) => {
+        event.stopPropagation();
         const td = acc__state.parentElement;
         const tr = td.parentElement;
         if (accStates[tr.id] === undefined) {
@@ -463,7 +472,8 @@ const acc_accepts = document.querySelectorAll(".acc_accept");
 const acc_cancels = document.querySelectorAll(".acc_notaccepct");
 
 acc_accepts.forEach((acc_accept) => {
-    acc_accept.addEventListener("click", async () => {
+    acc_accept.addEventListener("click", async (event) => {
+        event.stopPropagation();
         const tr = acc_accept.parentElement.parentElement.parentElement;
         const id = tr.id;
         let role = tr.querySelector(".acc__role").innerHTML;
@@ -497,7 +507,8 @@ acc_accepts.forEach((acc_accept) => {
 });
 
 acc_cancels.forEach((acc_cancel) => {
-    acc_cancel.addEventListener("click", async () => {
+    acc_cancel.addEventListener("click", async (event) => {
+        event.stopPropagation();
         const tr = acc_cancel.parentElement.parentElement.parentElement;
         let role = accRoles[tr.id];
         tr.querySelector(".acc__role").innerHTML = role;
@@ -534,5 +545,11 @@ acc_cancels.forEach((acc_cancel) => {
         );
         accRoles[tr.id] = undefined;
         accStates[tr.id] = undefined;
+    });
+});
+
+trs.forEach((tr) => {
+    tr.addEventListener("click", () => {
+        window.location.href = `/admin/viewaccount/${tr.id}`;
     });
 });

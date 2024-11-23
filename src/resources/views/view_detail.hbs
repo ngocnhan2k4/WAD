@@ -1,0 +1,143 @@
+<main class="view_detail container">
+    <div class="grid grid-cols-5 gap-8">
+        <div class="col-span-2">
+            <div class="view__info">
+                <img src="{{user.user_image}}" alt="" class="view__img" />
+                <div class="view__acc">
+                    <p class="user__id" id="{{user.id}}"></p>
+                    <h2 class="view__name">{{user.fullName}}</h2>
+                    <p class="view__email email">{{user.username}}</p>
+                    <p class="view__reg date">{{user.registration_time}}</p>
+                    <div class="admin__control">
+                        {{#if (eq user.role "admin")}}
+                            <span class="acc__role acc_admin">Admin</span>
+                        {{else}}
+                            <span class="acc__role acc_customer">Customer</span>
+                        {{/if}}
+
+                        {{#if (eq user.state "ban")}}
+                            <span class="acc__state acc_ban">Ban</span>
+                        {{else}}
+                            <span class="acc__state acc_noban">No Ban</span>
+                        {{/if}}
+
+                        <img
+                            class="icon__input"
+                            src="/images/icons/input.png"
+                            alt=""
+                        />
+                        <div class="icon__inner">
+                            <img
+                                class="acc_accept"
+                                src="/images/icons/check_mark.png"
+                                alt=""
+                            />
+                            <img
+                                class="acc_notaccepct"
+                                src="/images/icons/wrong_mark.png"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view__total">
+                <h2 class="view__heading">
+                    Total
+                </h2>
+                <div class="view__total__content">
+                    <div class="view__total__item">
+                        <p class="view__total__name">Number of orders purchased</p>
+                        <p
+                            class="view__total__value"
+                        >{{user.total_pay.total}}</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Total amount</p>
+                        <p
+                            class="view__total__value"
+                        >{{user.total_pay.payments}}</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Categories favorite</p>
+                        <p
+                            class="view__total__value"
+                        >{{user.categories_favorite.category}}({{user.categories_favorite.count}})</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Products favorite</p>
+                        <p
+                            class="view__total__value"
+                        >{{user.products_favorite.product}}({{user.products_favorite.count}})</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Supplier favorite</p>
+                        <p
+                            class="view__total__value"
+                        >{{user.manufac_favorite.manufacturer}}({{user.manufac_favorite.count}})</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-span-3">
+            <div class="view__product__header">
+                <h2 class="view__heading">Products bought</h2>
+                <div class="view__product__search">
+                    <input
+                        type="text"
+                        class="view__product__search__input"
+                        placeholder="Search product"
+                    />
+                    <button
+                        class="view__product__search__button"
+                    >Search</button>
+                </div>
+            </div>
+            <div class="view__product grid grid-cols-3 gap-4">
+                {{#each products}}
+                    <div
+                        id={{product_id}}
+                        class="product__item overflow-hidden bg-white rounded shadow group"
+                    >
+                        <div class="relative">
+                            <a
+                                href="/product/productDetail?id={{this.product_id}}"
+                            ><img
+                                    src={{Images.0.directory_path}}
+                                    alt="product{{@index}}"
+                                    class="w-full"
+                                /></a>
+                        </div>
+                        <div class="px-4 pt-4 pb-3">
+                            <a
+                                href="/product/productDetail?id={{this.product_id}}"
+                            >
+                                <h4
+                                    class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                                >
+                                    {{product_name}}</h4>
+                            </a>
+                            <div class="flex items-baseline mb-1 space-x-2">
+                                <p
+                                    class="text-xl font-semibold text-primary"
+                                >{{current_price}}</p>
+                                <p
+                                    class="text-sm text-gray-400 line-through"
+                                >{{original_price}}</p>
+                            </div>
+                        </div>
+                        <a
+                            href="#"
+                            class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
+                        >Add to cart</a>
+                    </div>
+
+                {{/each}}
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script src="/js/view_detail.js"></script>
