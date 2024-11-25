@@ -109,10 +109,12 @@
         </div>
 
         <div class="flex gap-3 pt-5 pb-5 mt-6 border-b border-gray-200">
-            <a href="#"
-                class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded bg-primary border-primary hover:bg-transparent hover:text-primary">
+            
+            <button id="add-to-cart-{{product.product_id}}" 
+                    data-product-id="{{product.product_id}}" 
+                    class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
                 <i class="fa-solid fa-bag-shopping"></i> Add to cart
-            </a>
+            </button>
             <a href="#"
                 class="flex items-center gap-2 px-8 py-2 font-medium text-gray-600 uppercase transition border border-gray-300 rounded hover:text-primary">
                 <i class="fa-solid fa-heart"></i> Wishlist
@@ -226,16 +228,19 @@
                         {{this.product_name}}</h4>
                 </a>
                 <div class="flex items-baseline mb-1 space-x-2">
-                    <p class="text-xl font-semibold text-primary">{{this.current_price}}</p>
-                    <p class="text-sm text-gray-400 line-through">{{this.original_price}}</p>
+                    <p class="text-xl font-semibold text-primary">${{this.current_price}}</p>
+                    <p class="text-sm text-gray-400 line-through">${{this.original_price}}</p>
                 </div>
             </div>
-            <a href="#"
-                class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
-                to cart</a>
+            <button id="add-to-cart-{{this.product_id}}" 
+                    data-product-id="{{this.product_id}}" 
+                    class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                Add to cart
+            </button>
         </div>
         {{/each}}
     </div>
 </div>
 <!-- ./related product -->
 <script src="/js/reviews.js"></script>
+<script src="/js/addCart.js"></script>
