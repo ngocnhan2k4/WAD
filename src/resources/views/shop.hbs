@@ -73,14 +73,16 @@
                 <input type="hidden" name="search" value="{{search}}">
                 <select id="sort" name="sort" class="px-4 py-3 text-sm text-gray-600 border-gray-300 rounded shadow-sm w-44 focus:ring-primary focus:border-primary">
                     <option value="">Default sorting</option>
-                    <option value="price-low-to-high" {{#if (eq sort 'price-low-to-high' )}}selected{{/if}}>Price low to
-                        high
+                    <option value="price-low-to-high" {{#if (eq sort 'price-low-to-high' )}}selected{{/if}}>Price Ascending
                     </option>
-                    <option value="price-high-to-low" {{#if (eq sort 'price-high-to-low' )}}selected{{/if}}>Price high
-                        to low
+                    <option value="price-high-to-low" {{#if (eq sort 'price-high-to-low' )}}selected{{/if}}>Price Descending
                     </option>
                     <option value="name-asc" {{#if (eq sort 'name-asc' )}}selected{{/if}}>Name A-Z</option>
                     <option value="name-desc" {{#if (eq sort 'name-desc' )}}selected{{/if}}>Name Z-A</option>
+                    {{#if admin}}
+                    <option value="total-asc" {{#if (eq sort 'total-asc' )}}selected{{/if}}>Total Purchase Ascending</option>
+                    <option value="total-desc" {{#if (eq sort 'total-desc' )}}selected{{/if}}>Total Purchase Descending</option>
+                    {{/if}}
                 </select>
             </form>
         </div>
@@ -98,10 +100,16 @@
                             <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
                                 {{product_name}}</h4>
                         </a>
-                        <div class="flex items-baseline mb-1 space-x-2">
+                        <div class="flex items-baseline mb-1 space-x-2 g">
                             <p class="text-xl font-semibold text-primary">{{current_price}}</p>
                             <p class="text-sm text-gray-400 line-through">{{original_price}}</p>
                         </div>
+                        {{#if ../admin}}
+                        <div class="flex items-center">
+                            <h4 class="text-xl font-medium">Total Purchase: </h4>
+                            <span class="ml-2 text-xl font-semibold text-blue-600">{{total_purchase}}</span>
+                        </div>
+                        {{/if}}
                     </div>
                     <button id="add-to-cart-{{this.product_id}}" 
                             data-product-id="{{this.product_id}}" 
