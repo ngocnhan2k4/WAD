@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:serif="http://www.serif.com/" viewBox="0 0 24 30" version="1.1" xml:space="preserve" style="" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+    <g>
+        <g>
+            <path d="M2.293,3.707l18,18c0.39,0.39 1.024,0.39 1.414,0c0.39,-0.39 0.39,-1.024 0,-1.414l-18,-18c-0.39,-0.39 -1.024,-0.39 -1.414,-0c-0.39,0.39 -0.39,1.024 -0,1.414Z" fill="white"/>
+            <path d="M3.615,8c0.013,0.013 0.026,0.025 0.04,0.038l4.845,4.404c0,1.284 0,5.074 0,7.477c-0,0.769 0.441,1.47 1.134,1.803c0.693,0.333 1.515,0.239 2.115,-0.241l3,-2.4c0.366,-0.292 0.613,-0.7 0.708,-1.149l-9.932,-9.932l-1.91,-0Zm16.77,-0l-9.91,-0l5.025,5.025l-0,-0.583c-0,0 4.845,-4.404 4.845,-4.404c0.014,-0.013 0.027,-0.025 0.04,-0.038Zm-16.619,-6.574c0.17,0.083 0.33,0.195 0.471,0.337l4.238,4.237l12.525,-0c0,0 0,-3 0,-3c0,-1.105 -0.895,-2 -2,-2l-14,0c-0.466,0 -0.894,0.159 -1.234,0.426Z" fill="white"/>
+        </g>
+    </g>
+    <text x="0" y="39" fill="#ffffff" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Rolas Design</text>
+    <text x="0" y="44" fill="#ffffff" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+</svg>

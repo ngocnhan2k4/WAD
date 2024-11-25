@@ -71,7 +71,9 @@ const Auth = {
                 if (!user) {
                     return res.redirect("/auth/login"); // Nếu không có người dùng, chuyển hướng về trang đăng nhập
                 }
-
+                if (user.state === "ban") {
+                    return res.redirect("/auth/ban");
+                }
                 // Nếu xác thực thành công, sử dụng req.login để lưu thông tin người dùng vào session
                 req.login(user, (err) => {
                     if (err) {
@@ -97,7 +99,9 @@ const Auth = {
                 if (!user) {
                     return res.redirect("/auth/login");
                 }
-
+                if (user.state === "ban") {
+                    return res.redirect("/auth/ban");
+                }
                 req.login(user, (err) => {
                     if (err) {
                         return res.redirect("/auth/login");
@@ -185,6 +189,9 @@ const Auth = {
             console.log(err);
             res.status(500).send("An error occurred");
         }
+    },
+    ban: async (req, res) => {
+        res.render("ban", { page_style: "/css/ban.css", notAJAX: true });
     },
 
     checkLogin: (req, res) => {

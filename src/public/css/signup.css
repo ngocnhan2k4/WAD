@@ -61,3 +61,8 @@
         padding: 0;
     }
 }
+@media (max-width: 500px) {
+    .error_long {
+        bottom: -45px !important;
+    }
+}
