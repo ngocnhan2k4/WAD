@@ -14,41 +14,65 @@ document.addEventListener('DOMContentLoaded', function () {
         const cartItems = document.querySelectorAll('[id^="row-"]');
     
         cartItems.forEach(item => {
-        const productId = item.id.replace('row-', '');
-        const quantityInput = document.getElementById(`quantity-${productId}`);
-        const deleteButton = document.getElementById(`delete-${productId}`);
-
-        // Sự kiện thay đổi số lượng
-        quantityInput.addEventListener('input', function () {
-            const newQuantity = parseInt(this.value, 10);
-            if (newQuantity < 1 || isNaN(newQuantity)) {
-                alert('Quantity must be a positive integer');
-                this.value = 1;
-                return;
-            }
-        
-            // Cập nhật rowSubtotal
-            const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
-            const rowSubtotal = unitPrice * newQuantity;
-            updateRowSubtotal(productId, newQuantity);
-            updateCartItem(productId, newQuantity, rowSubtotal); // Gửi thêm rowSubtotal
-        });
-
-        // Sự kiện nút xóa
-        deleteButton.addEventListener('click', function () {
-            item.remove();
-            updateTotalSubtotal();
-            deleteProductOnServer(productId);
-            if (document.querySelectorAll('[id^="row-"]').length === 0) {
-                document.querySelector('#shoppingCart tbody').innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center">Your cart is empty.</td>
-                </tr>`;
-                document.querySelector('.float-right h1').textContent = `$0.00`;
-            }
+            const productId = item.id.replace('row-', '');
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            const deleteButton = document.getElementById(`delete-${productId}`);
+    
+            // Sự kiện thay đổi số lượng
+            quantityInput.addEventListener('input', function () {
+                const newQuantity = this.value.trim(); // Lấy giá trị nhập vào, bỏ khoảng trắng
+    
+                // Nếu người dùng xóa hết thì không làm gì, để người dùng nhập lại
+                if (newQuantity === '') {
+                    return;
+                }
+    
+                // Nếu giá trị không hợp lệ (không phải số hoặc nhỏ hơn 1), tự động đặt về 1
+                if (isNaN(parseInt(newQuantity, 10)) || parseInt(newQuantity, 10) < 1) {
+                    alert('Quantity must be a positive integer. Defaulting to 1.');
+                    this.value = 1;
+                } else {
+                    // Nếu giá trị hợp lệ, tính lại rowSubtotal và cập nhật
+                    const parsedQuantity = parseInt(newQuantity, 10);
+                    const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
+                    const rowSubtotal = unitPrice * parsedQuantity;
+                    updateRowSubtotal(productId, parsedQuantity);
+                    updateCartItem(productId, parsedQuantity, rowSubtotal); // Gửi thêm rowSubtotal
+                }
+            });
+    
+            // Xử lý khi người dùng rời khỏi ô nhập liệu (blur)
+            quantityInput.addEventListener('blur', function () {
+                const newQuantity = this.value.trim(); // Lấy giá trị nhập vào, bỏ khoảng trắng
+    
+                // Nếu giá trị trống hoặc không hợp lệ, đặt lại thành 1
+                if (newQuantity === '' || isNaN(parseInt(newQuantity, 10)) || parseInt(newQuantity, 10) < 1) {
+                    alert('Quantity must be a positive integer. Defaulting to 1.');
+                    this.value = 1;
+    
+                    // Cập nhật rowSubtotal và gửi thông tin cập nhật với số lượng 1
+                    const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
+                    const rowSubtotal = unitPrice;
+                    updateRowSubtotal(productId, 1);
+                    updateCartItem(productId, 1, rowSubtotal); // Cập nhật với số lượng 1
+                }
+            });
+    
+            // Sự kiện nút xóa
+            deleteButton.addEventListener('click', function () {
+                item.remove();
+                updateTotalSubtotal();
+                deleteProductOnServer(productId);
+                if (document.querySelectorAll('[id^="row-"]').length === 0) {
+                    document.querySelector('#shoppingCart tbody').innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center">Your cart is empty.</td>
+                    </tr>`;
+                    document.querySelector('.float-right h1').textContent = `$0`;
+                }
             });
         });
-    }
+    }      
 
     function updateRowSubtotal(productId, quantity) {
         const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
