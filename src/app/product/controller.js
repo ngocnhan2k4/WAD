@@ -1,11 +1,17 @@
+const { admin } = require('googleapis/build/src/apis/admin');
 const Product = require('./service')
-const PRODUCTS_PER_PAGE = 3;
+const PRODUCTS_PER_PAGE = 6;
 
 const productController = {
     getAllProducts: async (req, res) => {
         try{
 
             console.log('Query:\n', req.query);
+            console.log('User:\n', req.user);
+            let isAdmin = true;
+            if(!req.user || req.user.role != 'admin')
+                isAdmin = false;
+            
             const allBrands = await Product.getBrands();
             const allCategories = await Product.getCategories();
 
@@ -19,6 +25,28 @@ const productController = {
            
             const startIndex = (page - 1) * PRODUCTS_PER_PAGE;
             const paginatedProducts = await Product.getAll(startIndex, PRODUCTS_PER_PAGE, orderBy, where);
+
+            //add
+            if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+                return res.json({ 
+                    products: paginatedProducts,
+                    currentPage: page,
+                    totalPages,
+                    hasPreviousPage: page > 1,
+                    hasNextPage: page < totalPages,
+                    previousPage: page - 1,
+                    nextPage: page + 1,
+                    pages: Array.from({ length: totalPages }, (_, index) => index + 1),
+                    sort: req.query.sort,
+                    category: req.query.category,
+                    brand: req.query.brand,
+                    minPrice: req.query.minPrice,
+                    maxPrice: req.query.maxPrice,
+                    search: req.query.search,
+                    admin: isAdmin,
+                });
+            }
+
             const renderData = {
                 brands: allBrands,
                 categories: allCategories,
@@ -35,16 +63,19 @@ const productController = {
                 brand: req.query.brand,
                 minPrice: req.query.minPrice,
                 maxPrice: req.query.maxPrice,
-                search: req.query.search
+                search: req.query.search,
+                admin: isAdmin,
+                
             }
+            res.render('shop', renderData);
 
-            if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
-                renderData.notAJAX = false;
-                res.render('partials/product-list', renderData);
-            } else {
-                renderData.notAJAX = true;
-                res.render('shop', renderData);
-            }
+            // if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+            //     renderData.notAJAX = false;
+            //     res.render('partials/product-list', renderData);
+            // } else {
+            //     renderData.notAJAX = true;
+            //     res.render('shop', renderData);
+            // }
 
             
         }catch(err){
@@ -156,6 +187,12 @@ const getSort = (query) =>{
             break;
         case 'name-desc':
             orderBy = {product_name: 'desc'};
+            break;
+        case 'total-asc':
+            orderBy = { total_purchase: 'asc' };
+            break;
+        case 'total-desc':
+            orderBy = { total_purchase: 'desc' };
             break;
         default:
             orderBy = {product_id: 'asc'};
