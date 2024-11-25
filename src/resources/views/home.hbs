@@ -41,7 +41,6 @@
     </div>
 </div>
 <!-- ./features -->
-
 <!-- categories -->
 <div class="container py-16">
     <h2 class="mb-6 text-2xl font-medium text-gray-800 uppercase">shop by category</h2>
@@ -99,9 +98,11 @@
                     <p class="text-sm text-gray-400 line-through">${{this.original_price}}</p>
                 </div>
             </div>
-            <a href="#"
-                class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
-                to cart</a>
+            <button id="add-to-cart-{{this.product_id}}" 
+                    data-product-id="{{this.product_id}}" 
+                    class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                Add to cart
+            </button>
         </div>
         {{/each}}
     </div>
@@ -125,12 +126,15 @@
                     <p class="text-sm text-gray-400 line-through">${{this.original_price}}</p>
                 </div>
             </div>
-            <a href="#"
-                class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
-                to cart</a>
+            <button id="add-to-cart-{{this.product_id}}" 
+                    data-product-id="{{this.product_id}}" 
+                    class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                Add to cart
+            </button>
         </div>
         {{/each}}
     </div>
 </div>
+<script src="/js/addCart.js"></script>
 <!-- ./product -->
 

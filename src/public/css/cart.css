@@ -1,0 +1,85 @@
+/* Tạo khoảng cách giữa thead và tbody */
+#shoppingCart {
+    border-spacing: 0 15px; /* Tạo khoảng cách 15px giữa các hàng */
+    border-collapse: separate; /* Giữ các ô tách rời để khoảng cách hiệu quả */
+}
+
+/* Header của bảng */
+#shoppingCart thead th {
+    padding: 15px 0;
+    border-bottom: 2px solid #ddd;
+    border-top: 2px solid #ddd;
+    background-color: #f8f9fa; /* Màu nền nhạt */
+    color: #343a40; /* Màu chữ đậm */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Nội dung bảng */
+#shoppingCart tbody td {
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+/* Hình ảnh sản phẩm */
+#shoppingCart tbody img {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Tiêu đề sản phẩm */
+#shoppingCart h4 {
+    font-size: 18px;
+    color: #212529;
+    font-weight: 700;
+}
+
+/* Mô tả sản phẩm */
+#shoppingCart p {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+/* Nút hành động */
+.actions button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #6c757d;
+    transition: all 0.3s ease-in-out;
+}
+
+.actions button:hover {
+    background-color: #007bff; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+    border-color: #007bff;
+}
+
+a.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    padding: 10px 40px; /* Tăng padding để nút lớn hơn */
+    font-size: 20px; /* Tăng font size */
+    border-radius: 10px; /* Làm nút bo tròn hơn */
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+a.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #003f88);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+/* Subtotal */
+.float-right h4 {
+    color: #6c757d;
+}
+
+.float-right h1 {
+    color: #212529;
+    font-size: 28px;
+}

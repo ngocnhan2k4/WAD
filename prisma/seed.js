@@ -113,134 +113,134 @@ async function main(){
     await prisma.reviews.createMany({
         data: [
             // Product 1
-            { ordinal_numbers: 1, product_id: 1, user_id: 1, review_detail: 'Amazing product, very durable.' },
-            { ordinal_numbers: 2, product_id: 1, user_id: 2, review_detail: 'Highly recommend for office use.' },
-            { ordinal_numbers: 3, product_id: 1, user_id: 3, review_detail: 'Great value for the price.' },
-            { ordinal_numbers: 4, product_id: 1, user_id: 4, review_detail: 'Perfect size for my room.' },
+            { ordinal_numbers: 1, product_id: 1, user_id: 1, review_detail: 'Amazing product, very durable.', creation_time: new Date('2024-11-01T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 1, user_id: 2, review_detail: 'Highly recommend for office use.', creation_time: new Date('2024-11-02T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 1, user_id: 3, review_detail: 'Great value for the price.', creation_time: new Date('2024-11-03T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 1, user_id: 4, review_detail: 'Perfect size for my room.', creation_time: new Date('2024-11-04T11:00:00Z') },
         
             // Product 2
-            { ordinal_numbers: 1, product_id: 2, user_id: 5, review_detail: 'Comfortable and easy to assemble.' },
-            { ordinal_numbers: 2, product_id: 2, user_id: 6, review_detail: 'Good build quality, works as expected.' },
-            { ordinal_numbers: 3, product_id: 2, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.' },
-            { ordinal_numbers: 4, product_id: 2, user_id: 8, review_detail: 'High-quality materials, very sturdy.' },
+            { ordinal_numbers: 1, product_id: 2, user_id: 5, review_detail: 'Comfortable and easy to assemble.', creation_time: new Date('2024-11-05T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 2, user_id: 6, review_detail: 'Good build quality, works as expected.', creation_time: new Date('2024-11-06T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 2, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.', creation_time: new Date('2024-11-07T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 2, user_id: 8, review_detail: 'High-quality materials, very sturdy.', creation_time: new Date('2024-11-08T11:00:00Z') },
         
             // Product 3
-            { ordinal_numbers: 1, product_id: 3, user_id: 9, review_detail: 'Nice color and durable material.' },
-            { ordinal_numbers: 2, product_id: 3, user_id: 10, review_detail: 'Compact and easy to move around.' },
-            { ordinal_numbers: 3, product_id: 3, user_id: 11, review_detail: 'Very practical and useful.' },
-            { ordinal_numbers: 4, product_id: 3, user_id: 12, review_detail: 'Excellent for everyday use.' },
-            { ordinal_numbers: 5, product_id: 3, user_id: 13, review_detail: 'Highly satisfied with the build quality.' },
+            { ordinal_numbers: 1, product_id: 3, user_id: 9, review_detail: 'Nice color and durable material.', creation_time: new Date('2024-11-09T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 3, user_id: 10, review_detail: 'Compact and easy to move around.', creation_time: new Date('2024-11-10T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 3, user_id: 11, review_detail: 'Very practical and useful.', creation_time: new Date('2024-11-11T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 3, user_id: 12, review_detail: 'Excellent for everyday use.', creation_time: new Date('2024-11-12T11:00:00Z') },
+            { ordinal_numbers: 5, product_id: 3, user_id: 13, review_detail: 'Highly satisfied with the build quality.', creation_time: new Date('2024-11-13T08:00:00Z') },
         
             // Product 4
-            { ordinal_numbers: 1, product_id: 4, user_id: 14, review_detail: 'Strong and stable, great for daily use.' },
-            { ordinal_numbers: 2, product_id: 4, user_id: 15, review_detail: 'The finish is beautiful and smooth.' },
-            { ordinal_numbers: 3, product_id: 4, user_id: 16, review_detail: 'Solid construction, easy to clean.' },
-            { ordinal_numbers: 4, product_id: 4, user_id: 17, review_detail: 'Looks fantastic in my office.' },
-            { ordinal_numbers: 5, product_id: 4, user_id: 18, review_detail: 'Affordable and high-quality.' },
-            { ordinal_numbers: 6, product_id: 4, user_id: 19, review_detail: 'Fits perfectly in my workspace.' },
-        
+            { ordinal_numbers: 1, product_id: 4, user_id: 14, review_detail: 'Strong and stable, great for daily use.', creation_time: new Date('2024-11-01T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 4, user_id: 15, review_detail: 'The finish is beautiful and smooth.', creation_time: new Date('2024-11-02T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 4, user_id: 16, review_detail: 'Solid construction, easy to clean.', creation_time: new Date('2024-11-03T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 4, user_id: 17, review_detail: 'Looks fantastic in my office.', creation_time: new Date('2024-11-04T11:00:00Z') },
+            { ordinal_numbers: 5, product_id: 4, user_id: 18, review_detail: 'Affordable and high-quality.', creation_time: new Date('2024-11-05T12:00:00Z') },
+            { ordinal_numbers: 6, product_id: 4, user_id: 19, review_detail: 'Fits perfectly in my workspace.', creation_time: new Date('2024-11-06T13:00:00Z') },
+            
             // Product 5
-            { ordinal_numbers: 1, product_id: 5, user_id: 20, review_detail: 'Lovely design, adds charm to the room.' },
-            { ordinal_numbers: 2, product_id: 5, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.' },
-            { ordinal_numbers: 3, product_id: 5, user_id: 2, review_detail: 'Nice finish, very durable.' },
-            { ordinal_numbers: 4, product_id: 5, user_id: 3, review_detail: 'Modern and sleek look.' },
-            { ordinal_numbers: 5, product_id: 5, user_id: 4, review_detail: 'Blends well with my other furniture.' },
-        
+            { ordinal_numbers: 1, product_id: 5, user_id: 20, review_detail: 'Lovely design, adds charm to the room.', creation_time: new Date('2024-11-07T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 5, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.', creation_time: new Date('2024-11-08T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 5, user_id: 2, review_detail: 'Nice finish, very durable.', creation_time: new Date('2024-11-09T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 5, user_id: 3, review_detail: 'Modern and sleek look.', creation_time: new Date('2024-11-10T11:00:00Z') },
+            { ordinal_numbers: 5, product_id: 5, user_id: 4, review_detail: 'Blends well with my other furniture.', creation_time: new Date('2024-11-11T12:00:00Z') },
+            
             // Product 6
-            { ordinal_numbers: 1, product_id: 6, user_id: 5, review_detail: 'Comfortable and easy to set up.' },
-            { ordinal_numbers: 2, product_id: 6, user_id: 6, review_detail: 'The design is simple and elegant.' },
-            { ordinal_numbers: 3, product_id: 6, user_id: 7, review_detail: 'Material quality exceeds expectations.' },
-            { ordinal_numbers: 4, product_id: 6, user_id: 8, review_detail: 'Affordable yet stylish option.' },
-        
+            { ordinal_numbers: 1, product_id: 6, user_id: 5, review_detail: 'Comfortable and easy to set up.', creation_time: new Date('2024-11-12T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 6, user_id: 6, review_detail: 'The design is simple and elegant.', creation_time: new Date('2024-11-13T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 6, user_id: 7, review_detail: 'Material quality exceeds expectations.', creation_time: new Date('2024-11-14T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 6, user_id: 8, review_detail: 'Affordable yet stylish option.', creation_time: new Date('2024-11-15T11:00:00Z') },
+            
             // Product 7
-            { ordinal_numbers: 1, product_id: 7, user_id: 9, review_detail: 'Highly durable, great for outdoor use.' },
-            { ordinal_numbers: 2, product_id: 7, user_id: 10, review_detail: 'The surface is scratch-resistant.' },
-            { ordinal_numbers: 3, product_id: 7, user_id: 11, review_detail: 'Good design and functionality combined.' },
-            { ordinal_numbers: 4, product_id: 7, user_id: 12, review_detail: 'Matches perfectly with my décor.' },
-            { ordinal_numbers: 5, product_id: 7, user_id: 13, review_detail: 'Lightweight but feels sturdy.' },
-        
+            { ordinal_numbers: 1, product_id: 7, user_id: 9, review_detail: 'Highly durable, great for outdoor use.', creation_time: new Date('2024-11-16T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 7, user_id: 10, review_detail: 'The surface is scratch-resistant.', creation_time: new Date('2024-11-17T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 7, user_id: 11, review_detail: 'Good design and functionality combined.', creation_time: new Date('2024-11-18T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 7, user_id: 12, review_detail: 'Matches perfectly with my décor.', creation_time: new Date('2024-11-19T11:00:00Z') },
+            { ordinal_numbers: 5, product_id: 7, user_id: 13, review_detail: 'Lightweight but feels sturdy.', creation_time: new Date('2024-11-20T12:00:00Z') },
+            
             // Product 8
-            { ordinal_numbers: 1, product_id: 8, user_id: 14, review_detail: 'Compact, fits well in small spaces.' },
-            { ordinal_numbers: 2, product_id: 8, user_id: 15, review_detail: 'The quality of material is top-notch.' },
-            { ordinal_numbers: 3, product_id: 8, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.' },
-            { ordinal_numbers: 4, product_id: 8, user_id: 17, review_detail: 'Great product for the price.' },
-        
+            { ordinal_numbers: 1, product_id: 8, user_id: 14, review_detail: 'Compact, fits well in small spaces.', creation_time: new Date('2024-11-21T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 8, user_id: 15, review_detail: 'The quality of material is top-notch.', creation_time: new Date('2024-11-22T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 8, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.', creation_time: new Date('2024-11-23T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 8, user_id: 17, review_detail: 'Great product for the price.', creation_time: new Date('2024-11-24T11:00:00Z') },
+            
             // Product 9
-            { ordinal_numbers: 1, product_id: 9, user_id: 18, review_detail: 'Stylish and functional.' },
-            { ordinal_numbers: 2, product_id: 9, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.' },
-            { ordinal_numbers: 3, product_id: 9, user_id: 20, review_detail: 'Good for both home and office use.' },
-            { ordinal_numbers: 4, product_id: 9, user_id: 1, review_detail: 'Quality product with a premium feel.' },
-        
+            { ordinal_numbers: 1, product_id: 9, user_id: 18, review_detail: 'Stylish and functional.', creation_time: new Date('2024-11-25T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 9, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.', creation_time: new Date('2024-11-26T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 9, user_id: 20, review_detail: 'Good for both home and office use.', creation_time: new Date('2024-11-27T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 9, user_id: 1, review_detail: 'Quality product with a premium feel.', creation_time: new Date('2024-11-28T11:00:00Z') },
+            
             // Product 10
-            { ordinal_numbers: 1, product_id: 10, user_id: 2, review_detail: 'Assembly instructions were clear.' },
-            { ordinal_numbers: 2, product_id: 10, user_id: 3, review_detail: 'Aesthetic design with a modern touch.' },
-            { ordinal_numbers: 3, product_id: 10, user_id: 4, review_detail: 'Perfect for the living room.' },
-            { ordinal_numbers: 4, product_id: 10, user_id: 5, review_detail: 'Value for money product.' },
+            { ordinal_numbers: 1, product_id: 10, user_id: 2, review_detail: 'Assembly instructions were clear.', creation_time: new Date('2024-11-29T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 10, user_id: 3, review_detail: 'Aesthetic design with a modern touch.', creation_time: new Date('2024-11-30T09:00:00Z') },
+            { ordinal_numbers: 3, product_id: 10, user_id: 4, review_detail: 'Perfect for the living room.', creation_time: new Date('2024-12-01T10:00:00Z') },
+            { ordinal_numbers: 4, product_id: 10, user_id: 5, review_detail: 'Value for money product.', creation_time: new Date('2024-12-02T11:00:00Z') },
     
             // Product 11
-            { ordinal_numbers: 1, product_id: 11, user_id: 1, review_detail: 'Amazing product, very durable.' },
-            { ordinal_numbers: 2, product_id: 11, user_id: 2, review_detail: 'Highly recommend for office use.' },
-            { ordinal_numbers: 3, product_id: 11, user_id: 3, review_detail: 'Great value for the price.' },
-            { ordinal_numbers: 4, product_id: 11, user_id: 4, review_detail: 'Perfect size for my room.' },
-        
+            { ordinal_numbers: 1, product_id: 11, user_id: 1, review_detail: 'Amazing product, very durable.', creation_time: new Date('2024-11-20T10:00:00Z') },
+            { ordinal_numbers: 2, product_id: 11, user_id: 2, review_detail: 'Highly recommend for office use.', creation_time: new Date('2024-11-20T10:05:00Z') },
+            { ordinal_numbers: 3, product_id: 11, user_id: 3, review_detail: 'Great value for the price.', creation_time: new Date('2024-11-20T10:10:00Z') },
+            { ordinal_numbers: 4, product_id: 11, user_id: 4, review_detail: 'Perfect size for my room.', creation_time: new Date('2024-11-20T10:15:00Z') },
+
             // Product 12
-            { ordinal_numbers: 1, product_id: 12, user_id: 5, review_detail: 'Comfortable and easy to assemble.' },
-            { ordinal_numbers: 2, product_id: 12, user_id: 6, review_detail: 'Good build quality, works as expected.' },
-            { ordinal_numbers: 3, product_id: 12, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.' },
-            { ordinal_numbers: 4, product_id: 12, user_id: 8, review_detail: 'High-quality materials, very sturdy.' },
-        
+            { ordinal_numbers: 1, product_id: 12, user_id: 5, review_detail: 'Comfortable and easy to assemble.', creation_time: new Date('2024-11-20T11:00:00Z') },
+            { ordinal_numbers: 2, product_id: 12, user_id: 6, review_detail: 'Good build quality, works as expected.', creation_time: new Date('2024-11-20T11:05:00Z') },
+            { ordinal_numbers: 3, product_id: 12, user_id: 7, review_detail: 'Stylish design, fits perfectly in my room.', creation_time: new Date('2024-11-20T11:10:00Z') },
+            { ordinal_numbers: 4, product_id: 12, user_id: 8, review_detail: 'High-quality materials, very sturdy.', creation_time: new Date('2024-11-20T11:15:00Z') },
+
             // Product 13
-            { ordinal_numbers: 1, product_id: 13, user_id: 9, review_detail: 'Nice color and durable material.' },
-            { ordinal_numbers: 2, product_id: 13, user_id: 10, review_detail: 'Compact and easy to move around.' },
-            { ordinal_numbers: 3, product_id: 13, user_id: 11, review_detail: 'Very practical and useful.' },
-            { ordinal_numbers: 4, product_id: 13, user_id: 12, review_detail: 'Excellent for everyday use.' },
-            { ordinal_numbers: 5, product_id: 13, user_id: 13, review_detail: 'Highly satisfied with the build quality.' },
-        
+            { ordinal_numbers: 1, product_id: 13, user_id: 9, review_detail: 'Nice color and durable material.', creation_time: new Date('2024-11-20T12:00:00Z') },
+            { ordinal_numbers: 2, product_id: 13, user_id: 10, review_detail: 'Compact and easy to move around.', creation_time: new Date('2024-11-20T12:05:00Z') },
+            { ordinal_numbers: 3, product_id: 13, user_id: 11, review_detail: 'Very practical and useful.', creation_time: new Date('2024-11-20T12:10:00Z') },
+            { ordinal_numbers: 4, product_id: 13, user_id: 12, review_detail: 'Excellent for everyday use.', creation_time: new Date('2024-11-20T12:15:00Z') },
+            { ordinal_numbers: 5, product_id: 13, user_id: 13, review_detail: 'Highly satisfied with the build quality.', creation_time: new Date('2024-11-20T12:20:00Z') },
+
             // Product 14
-            { ordinal_numbers: 1, product_id: 14, user_id: 14, review_detail: 'Strong and stable, great for daily use.' },
-            { ordinal_numbers: 2, product_id: 14, user_id: 15, review_detail: 'The finish is beautiful and smooth.' },
-            { ordinal_numbers: 3, product_id: 14, user_id: 16, review_detail: 'Solid construction, easy to clean.' },
-            { ordinal_numbers: 4, product_id: 14, user_id: 17, review_detail: 'Looks fantastic in my office.' },
-            { ordinal_numbers: 5, product_id: 14, user_id: 18, review_detail: 'Affordable and high-quality.' },
-            { ordinal_numbers: 6, product_id: 14, user_id: 19, review_detail: 'Fits perfectly in my workspace.' },
-        
+            { ordinal_numbers: 1, product_id: 14, user_id: 14, review_detail: 'Strong and stable, great for daily use.', creation_time: new Date('2024-11-21T09:00:00Z') },
+            { ordinal_numbers: 2, product_id: 14, user_id: 15, review_detail: 'The finish is beautiful and smooth.', creation_time: new Date('2024-11-21T09:05:00Z') },
+            { ordinal_numbers: 3, product_id: 14, user_id: 16, review_detail: 'Solid construction, easy to clean.', creation_time: new Date('2024-11-21T09:10:00Z') },
+            { ordinal_numbers: 4, product_id: 14, user_id: 17, review_detail: 'Looks fantastic in my office.', creation_time: new Date('2024-11-21T09:15:00Z') },
+            { ordinal_numbers: 5, product_id: 14, user_id: 18, review_detail: 'Affordable and high-quality.', creation_time: new Date('2024-11-21T09:20:00Z') },
+            { ordinal_numbers: 6, product_id: 14, user_id: 19, review_detail: 'Fits perfectly in my workspace.', creation_time: new Date('2024-11-21T09:25:00Z') },
+
             // Product 15
-            { ordinal_numbers: 1, product_id: 15, user_id: 20, review_detail: 'Lovely design, adds charm to the room.' },
-            { ordinal_numbers: 2, product_id: 15, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.' },
-            { ordinal_numbers: 3, product_id: 15, user_id: 2, review_detail: 'Nice finish, very durable.' },
-            { ordinal_numbers: 4, product_id: 15, user_id: 3, review_detail: 'Modern and sleek look.' },
-            { ordinal_numbers: 5, product_id: 15, user_id: 4, review_detail: 'Blends well with my other furniture.' },
+            { ordinal_numbers: 1, product_id: 15, user_id: 20, review_detail: 'Lovely design, adds charm to the room.', creation_time: new Date('2024-11-21T10:00:00Z') },
+            { ordinal_numbers: 2, product_id: 15, user_id: 1, review_detail: 'Assembly was straightforward, no complaints.', creation_time: new Date('2024-11-21T10:05:00Z') },
+            { ordinal_numbers: 3, product_id: 15, user_id: 2, review_detail: 'Nice finish, very durable.', creation_time: new Date('2024-11-21T10:10:00Z') },
+            { ordinal_numbers: 4, product_id: 15, user_id: 3, review_detail: 'Modern and sleek look.', creation_time: new Date('2024-11-21T10:15:00Z') },
+            { ordinal_numbers: 5, product_id: 15, user_id: 4, review_detail: 'Blends well with my other furniture.', creation_time: new Date('2024-11-21T10:20:00Z') },
         
             // Product 16
-            { ordinal_numbers: 1, product_id: 16, user_id: 5, review_detail: 'Comfortable and easy to set up.' },
-            { ordinal_numbers: 2, product_id: 16, user_id: 6, review_detail: 'The design is simple and elegant.' },
-            { ordinal_numbers: 3, product_id: 16, user_id: 7, review_detail: 'Material quality exceeds expectations.' },
-            { ordinal_numbers: 4, product_id: 16, user_id: 8, review_detail: 'Affordable yet stylish option.' },
-        
+            { ordinal_numbers: 1, product_id: 16, user_id: 5, review_detail: 'Comfortable and easy to set up.', creation_time: new Date('2024-11-22T08:00:00Z') },
+            { ordinal_numbers: 2, product_id: 16, user_id: 6, review_detail: 'The design is simple and elegant.', creation_time: new Date('2024-11-22T08:05:00Z') },
+            { ordinal_numbers: 3, product_id: 16, user_id: 7, review_detail: 'Material quality exceeds expectations.', creation_time: new Date('2024-11-22T08:10:00Z') },
+            { ordinal_numbers: 4, product_id: 16, user_id: 8, review_detail: 'Affordable yet stylish option.', creation_time: new Date('2024-11-22T08:15:00Z') },
+
             // Product 17
-            { ordinal_numbers: 1, product_id: 17, user_id: 9, review_detail: 'Highly durable, great for outdoor use.' },
-            { ordinal_numbers: 2, product_id: 17, user_id: 10, review_detail: 'The surface is scratch-resistant.' },
-            { ordinal_numbers: 3, product_id: 17, user_id: 11, review_detail: 'Good design and functionality combined.' },
-            { ordinal_numbers: 4, product_id: 17, user_id: 12, review_detail: 'Matches perfectly with my décor.' },
-            { ordinal_numbers: 5, product_id: 17, user_id: 13, review_detail: 'Lightweight but feels sturdy.' },
-        
+            { ordinal_numbers: 1, product_id: 17, user_id: 9, review_detail: 'Highly durable, great for outdoor use.', creation_time: new Date('2024-11-22T09:00:00Z') },
+            { ordinal_numbers: 2, product_id: 17, user_id: 10, review_detail: 'The surface is scratch-resistant.', creation_time: new Date('2024-11-22T09:05:00Z') },
+            { ordinal_numbers: 3, product_id: 17, user_id: 11, review_detail: 'Good design and functionality combined.', creation_time: new Date('2024-11-22T09:10:00Z') },
+            { ordinal_numbers: 4, product_id: 17, user_id: 12, review_detail: 'Matches perfectly with my décor.', creation_time: new Date('2024-11-22T09:15:00Z') },
+            { ordinal_numbers: 5, product_id: 17, user_id: 13, review_detail: 'Lightweight but feels sturdy.', creation_time: new Date('2024-11-22T09:20:00Z') },
+
             // Product 18
-            { ordinal_numbers: 1, product_id: 18, user_id: 14, review_detail: 'Compact, fits well in small spaces.' },
-            { ordinal_numbers: 2, product_id: 18, user_id: 15, review_detail: 'The quality of material is top-notch.' },
-            { ordinal_numbers: 3, product_id: 18, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.' },
-            { ordinal_numbers: 4, product_id: 18, user_id: 17, review_detail: 'Great product for the price.' },
-        
+            { ordinal_numbers: 1, product_id: 18, user_id: 14, review_detail: 'Compact, fits well in small spaces.', creation_time: new Date('2024-11-22T10:00:00Z') },
+            { ordinal_numbers: 2, product_id: 18, user_id: 15, review_detail: 'The quality of material is top-notch.', creation_time: new Date('2024-11-22T10:05:00Z') },
+            { ordinal_numbers: 3, product_id: 18, user_id: 16, review_detail: 'Setup was easy, and it feels very stable.', creation_time: new Date('2024-11-22T10:10:00Z') },
+            { ordinal_numbers: 4, product_id: 18, user_id: 17, review_detail: 'Great product for the price.', creation_time: new Date('2024-11-22T10:15:00Z') },
+
             // Product 19
-            { ordinal_numbers: 1, product_id: 19, user_id: 18, review_detail: 'Stylish and functional.' },
-            { ordinal_numbers: 2, product_id: 19, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.' },
-            { ordinal_numbers: 3, product_id: 19, user_id: 20, review_detail: 'Good for both home and office use.' },
-            { ordinal_numbers: 4, product_id: 19, user_id: 1, review_detail: 'Quality product with a premium feel.' },
-        
+            { ordinal_numbers: 1, product_id: 19, user_id: 18, review_detail: 'Stylish and functional.', creation_time: new Date('2024-11-22T11:00:00Z') },
+            { ordinal_numbers: 2, product_id: 19, user_id: 19, review_detail: 'Love the design, fits my needs perfectly.', creation_time: new Date('2024-11-22T11:05:00Z') },
+            { ordinal_numbers: 3, product_id: 19, user_id: 20, review_detail: 'Good for both home and office use.', creation_time: new Date('2024-11-22T11:10:00Z') },
+            { ordinal_numbers: 4, product_id: 19, user_id: 1, review_detail: 'Quality product with a premium feel.', creation_time: new Date('2024-11-22T11:15:00Z') },
+
             // Product 20
-            { ordinal_numbers: 1, product_id: 20, user_id: 2, review_detail: 'Assembly instructions were clear.' },
-            { ordinal_numbers: 2, product_id: 20, user_id: 3, review_detail: 'Aesthetic design with a modern touch.' },
-            { ordinal_numbers: 3, product_id: 20, user_id: 4, review_detail: 'Perfect for the living room.' },
-            { ordinal_numbers: 4, product_id: 20, user_id: 5, review_detail: 'Value for money product.' },
+            { ordinal_numbers: 1, product_id: 20, user_id: 2, review_detail: 'Assembly instructions were clear.', creation_time: new Date('2024-11-22T12:00:00Z') },
+            { ordinal_numbers: 2, product_id: 20, user_id: 3, review_detail: 'Aesthetic design with a modern touch.', creation_time: new Date('2024-11-22T12:05:00Z') },
+            { ordinal_numbers: 3, product_id: 20, user_id: 4, review_detail: 'Perfect for the living room.', creation_time: new Date('2024-11-22T12:10:00Z') },
+            { ordinal_numbers: 4, product_id: 20, user_id: 5, review_detail: 'Value for money product.', creation_time: new Date('2024-11-22T12:15:00Z') },
         ],
     });
 
@@ -390,16 +390,16 @@ async function main(){
 
     await prisma.orders.createMany({
         data: [
-            { user_id: 1, order_date: new Date('2024-01-05'), total_amount: 150.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 2, order_date: new Date('2024-02-10'), total_amount: 200.00, status: 'Processing', creation_time: new Date() },
-            { user_id: 3, order_date: new Date('2024-03-15'), total_amount: 250.00, status: 'Pending', creation_time: new Date() },
-            { user_id: 4, order_date: new Date('2024-04-20'), total_amount: 300.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 5, order_date: new Date('2024-05-25'), total_amount: 350.00, status: 'Cancelled', creation_time: new Date() },
-            { user_id: 6, order_date: new Date('2024-06-30'), total_amount: 400.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 7, order_date: new Date('2024-07-05'), total_amount: 450.00, status: 'Shipped', creation_time: new Date() },
-            { user_id: 8, order_date: new Date('2024-08-10'), total_amount: 500.00, status: 'Pending', creation_time: new Date() },
-            { user_id: 9, order_date: new Date('2024-09-15'), total_amount: 550.00, status: 'Processing', creation_time: new Date() },
-            { user_id: 10, order_date: new Date('2024-10-20'), total_amount: 600.00, status: 'Completed', creation_time: new Date() }
+            { user_id: 1, total_amount: 150.00, status: 'Completed', creation_time: new Date() },
+            { user_id: 2, total_amount: 200.00, status: 'Processing', creation_time: new Date() },
+            { user_id: 3, total_amount: 250.00, status: 'Pending', creation_time: new Date() },
+            { user_id: 4, total_amount: 300.00, status: 'Completed', creation_time: new Date() },
+            { user_id: 5, total_amount: 350.00, status: 'Cancelled', creation_time: new Date() },
+            { user_id: 6, total_amount: 400.00, status: 'Completed', creation_time: new Date() },
+            { user_id: 7, total_amount: 450.00, status: 'Shipped', creation_time: new Date() },
+            { user_id: 8, total_amount: 500.00, status: 'Pending', creation_time: new Date() },
+            { user_id: 9, total_amount: 550.00, status: 'Processing', creation_time: new Date() },
+            { user_id: 10, total_amount: 600.00, status: 'Completed', creation_time: new Date() }
         ]
     });
 

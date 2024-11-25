@@ -186,6 +186,15 @@ const Auth = {
             res.status(500).send("An error occurred");
         }
     },
+
+    checkLogin: (req, res) => {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (req.user) {
+            return res.json({ loggedIn: true, user: req.user });
+        } else {
+            return res.json({ loggedIn: false });
+        }
+    },
 };
 
 module.exports = Auth;
