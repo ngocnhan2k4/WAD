@@ -99,12 +99,32 @@ const Product = {
             where: { product_id: parseInt(productId) },
             skip: startIndex,
             take: limit,
+            orderBy: {
+                creation_time: 'desc', // Sắp xếp theo thời gian sớm nhất
+            },
             include: {
                 User: {
                     select: {
                         fullName: true, 
                     },
                 },
+            },
+        });
+    },
+
+    addReview: async (reviewData) => {
+        const { product_id } = reviewData;
+    
+        // Tính ordinal_numbers bằng cách đếm số bình luận hiện tại
+        const currentCount = await prisma.reviews.count({
+            where: { product_id },
+        });
+    
+        // Thêm bình luận mới
+        return prisma.reviews.create({
+            data: {
+                ordinal_numbers: currentCount + 1, // Tăng thứ tự
+                ...reviewData, // Bao gồm product_id, user_id, review_detail, creation_time
             },
         });
     },

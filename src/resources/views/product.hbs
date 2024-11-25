@@ -109,10 +109,12 @@
         </div>
 
         <div class="flex gap-3 pt-5 pb-5 mt-6 border-b border-gray-200">
-            <a href="#"
-                class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded bg-primary border-primary hover:bg-transparent hover:text-primary">
+            
+            <button id="add-to-cart-{{product.product_id}}" 
+                    data-product-id="{{product.product_id}}" 
+                    class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
                 <i class="fa-solid fa-bag-shopping"></i> Add to cart
-            </a>
+            </button>
             <a href="#"
                 class="flex items-center gap-2 px-8 py-2 font-medium text-gray-600 uppercase transition border border-gray-300 rounded hover:text-primary">
                 <i class="fa-solid fa-heart"></i> Wishlist
@@ -139,8 +141,35 @@
 <!-- ./product-detail -->
 <!-- reviews -->
 <div class="container pb-16">
-    <h3 class="pb-3 mb-6 text-2xl font-medium text-gray-800 border-b border-gray-200 font-roboto">Reviews</h3>
     
+    <!-- Add a review -->
+    <div class="p-6 mt-6 mb-6 bg-white rounded-lg shadow">
+        <h4 class="mb-4 text-lg font-semibold text-gray-800">Add a Review</h4>
+        <form id="review-form" class="space-y-4">
+            <input type="hidden" id="user-id" value="{{user.id}}"> 
+            <input type="hidden" id="product-id" value="{{product.product_id}}">
+
+            <!-- Textarea for review -->
+            <div>
+                <label for="review-detail" class="block mb-2 text-sm font-medium text-gray-700">
+                    Your Comment
+                </label>
+                <textarea id="review-detail" name="review_detail" rows="3"
+                    class="w-full p-3 text-gray-800 border rounded-lg focus:ring-primary focus:border-primary"
+                    placeholder="Write your comment here..."required></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button id="submit-btn" type="submit"
+                    class="px-4 py-2 text-white transition bg-blue-500 rounded hover:bg-blue-600">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <h3 class="pb-3 mb-6 text-2xl font-medium text-gray-800 border-b border-gray-200 font-roboto">Reviews</h3>
     <input type="hidden" id="product-id" value="{{product.product_id}}">
 
     <div id="reviews-container" class="space-y-6">
@@ -148,7 +177,7 @@
             <div class="p-4 bg-white rounded-lg shadow review">
                 <div class="flex items-center mb-3">
                     <span class="text-sm font-semibold text-gray-700">{{this.User.fullName}}</span> <!-- Hiển thị tên đầy đủ người bình luận -->
-                    <span class="ml-2 text-sm text-gray-500">{{this.created_at}}</span>
+                    <span class="ml-2 text-sm text-gray-500">{{this.creation_time}}</span>
                 </div>
                 <div class="text-gray-800 review-detail">
                     {{this.review_detail}}
@@ -199,16 +228,19 @@
                         {{this.product_name}}</h4>
                 </a>
                 <div class="flex items-baseline mb-1 space-x-2">
-                    <p class="text-xl font-semibold text-primary">{{this.current_price}}</p>
-                    <p class="text-sm text-gray-400 line-through">{{this.original_price}}</p>
+                    <p class="text-xl font-semibold text-primary">${{this.current_price}}</p>
+                    <p class="text-sm text-gray-400 line-through">${{this.original_price}}</p>
                 </div>
             </div>
-            <a href="#"
-                class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
-                to cart</a>
+            <button id="add-to-cart-{{this.product_id}}" 
+                    data-product-id="{{this.product_id}}" 
+                    class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                Add to cart
+            </button>
         </div>
         {{/each}}
     </div>
 </div>
 <!-- ./related product -->
 <script src="/js/reviews.js"></script>
+<script src="/js/addCart.js"></script>

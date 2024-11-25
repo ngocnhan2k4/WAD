@@ -5,7 +5,8 @@
 const userRouter = require("../app/user/route");
 const productRouter = require("../app/product/route");
 const authRouter = require("../app/auth/route");
-const homeRouter = require("../app/home/route")
+const homeRouter = require("../app/home/route");
+const cartRouter = require("../app/cart/route");
 function route(app) {
     app.use("/reset-password", (req, res) => {
         res.render("reset_password");
@@ -13,6 +14,7 @@ function route(app) {
     app.use("/user", userRouter);
     app.use("/product", productRouter);
     app.use("/auth", authRouter);
+    app.use("/cart", cartRouter);
     app.use("/", homeRouter);
 }
 

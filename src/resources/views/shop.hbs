@@ -107,18 +107,20 @@
                         {{#if ../admin}}
                         <div class="flex items-center">
                             <h4 class="text-xl font-medium">Total Purchase: </h4>
-                            <span class="text-xl font-semibold text-blue-600 ml-2">{{total_purchase}}</span>
+                            <span class="ml-2 text-xl font-semibold text-blue-600">{{total_purchase}}</span>
                         </div>
                         {{/if}}
                     </div>
-                    <a href="#"
-                        class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">Add
-                        to cart</a>
+                    <button id="add-to-cart-{{this.product_id}}" 
+                            data-product-id="{{this.product_id}}" 
+                            class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                        Add to cart
+                    </button>
                 </div>
                 {{/each}}
             </div>
             <!-- Pagination controls -->  
- <div class="flex justify-center mt-10" >
+<div class="flex justify-center mt-10">
     <nav>
         <ul class="inline-flex items-center -space-x-px">
             {{#if hasPreviousPage}}
@@ -154,3 +156,4 @@
 </div>
 <!-- Bao gồm file JavaScript -->
 <script src="/js/filter.js"></script>
+<script src="/js/addCart.js"></script>
