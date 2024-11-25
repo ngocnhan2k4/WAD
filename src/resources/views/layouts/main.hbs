@@ -9,7 +9,9 @@
 
     <link rel="shortcut icon" href="/images/favicon/favicon.ico" type="image/x-icon">
 
+    <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,12 +19,12 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    
     <link rel="stylesheet" href="{{page_style}}" />
 </head>
 
 <body>
-     {{#if notAJAX}}
+     {{!-- {{#if notAJAX}} --}}
     <!-- header -->
     <header class="py-4 bg-white shadow-sm">
       <div class="container flex items-center justify-between">
@@ -66,15 +68,16 @@
               class="absolute right-0 flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -top-1 bg-primary">
               8</div>
           </a>
-          <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
-            <div class="text-2xl">
-              <i class="fa-solid fa-bag-shopping"></i>
-            </div>
-            <div class="text-xs leading-3">Cart</div>
-            <div
-              class="absolute flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary">
-              2</div>
-          </a>
+            <a href="/cart" id="cart-link" class="relative text-center text-gray-700 transition hover:text-primary">
+                <div class="text-2xl">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <div class="text-xs leading-3">Cart</div>
+                <div id="cart-count" 
+                    class="absolute flex items-center justify-center hidden w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary">
+                    0
+                </div>
+            </a>
           <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
             <div class="text-2xl">
               <i class="fa-regular fa-user"></i>
@@ -137,9 +140,9 @@
         </div>
     </nav>
     <!-- ./navbar -->
-    {{/if}}
+    {{!-- {{/if}} --}}
     {{{body}}}
-    {{#if notAJAX}}
+    {{!-- {{#if notAJAX}} --}}
     <!-- footer -->
     <footer class="pt-16 pb-12 bg-white border-t border-gray-100">
         <div class="container grid grid-cols-1 ">
@@ -221,10 +224,9 @@
         </div>
     </div>
     <!-- ./copyright -->
-    {{/if}}
+    {{!-- {{/if}} --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
         
 </body>
-
 </html>

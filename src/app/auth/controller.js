@@ -193,6 +193,15 @@ const Auth = {
     ban: async (req, res) => {
         res.render("ban", { page_style: "/css/ban.css", notAJAX: true });
     },
+
+    checkLogin: (req, res) => {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (req.user) {
+            return res.json({ loggedIn: true, user: req.user });
+        } else {
+            return res.json({ loggedIn: false });
+        }
+    },
 };
 
 module.exports = Auth;

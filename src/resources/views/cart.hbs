@@ -1,0 +1,77 @@
+<section class="pt-5 pb-5">
+  <div class="container">
+    <div class="row w-100">
+      <div class="col-lg-12 col-md-12 col-12">
+        <h3 class="mb-4 text-center display-5 font-weight-bold">Shopping Cart</h3>
+        <p class="mb-5 text-center text-muted">
+          <i class="text-info font-weight-bold">{{itemCount}}</i> items in your cart
+        </p>
+        <table id="shoppingCart" class="table table-condensed table-responsive" style="width: 100%;">
+          <thead>
+            <tr>
+              <th style="width:48%">Product</th>
+              <th style="width:13%">Unit Price</th>
+              <th style="width:10%">Quantity</th>
+              <th style="width:13%">Total Price</th>
+              <th style="width:16%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each cartItems}}
+            <tr id="row-{{this.Product.product_id}}">
+              <input type="hidden" id="product-id-{{this.Product.product_id}}" value="{{this.Product.product_id}}">
+              <td data-th="Product">
+                <div class="flex d-flex align-items-center">
+                  <div class="text-left col-md-4 d-flex">
+                    <img src="{{this.Product.Images.[0].directory_path}}" 
+                         alt="{{this.Product.product_name}}" 
+                         class="mb-2 rounded-lg shadow img-fluid d-none d-md-block"
+                         style="max-width: 100%; max-height: 150px; object-fit: cover;">
+                  </div>
+                  <div class="ml-3 text-left col-md-8 mt-sm-2">
+                    <h4 class="font-weight-bold">{{this.Product.product_name}}</h4>
+                    <p class="text-muted">Brand: {{this.Product.Suppliers.brand}}</p>
+                  </div>
+                </div>
+              </td>
+              <td data-th="Price" style="text-align: center">
+                <span id="price-{{this.Product.product_id}}" class="font-weight-bold">${{this.Product.current_price}}</span>
+              </td>
+              <td data-th="Quantity">
+                <input type="number" id="quantity-{{this.Product.product_id}}" 
+                       class="text-center form-control form-control-lg"
+                       value="{{this.quantity}}" min="1" step="1"
+                       style="max-width: 120px; display: inline-block; padding: 10px; font-size: 16px;">
+              </td>
+              <td style="text-align: center">
+                <span id="total-price-{{this.Product.product_id}}" class="font-weight-bold">${{this.price}}</span>
+              </td>
+              <td class="actions" data-th="">
+                <div class="text-center">
+                  <button id="delete-{{this.Product.product_id}}" 
+                          class="mb-2 bg-white btn btn-white border-secondary btn-md rounded-circle">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+        <hr style="border-top: 1px solid #ccc; margin-top: 30px; margin-bottom: 20px;">
+
+        <div class="float-right mt-4 text-right">
+          <h4 class="font-weight-bold">Subtotal:</h4>
+          <h1 class="font-weight-bold">${{subtotal}}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 row d-flex align-items-center">
+      <div class="text-right col-sm-6 order-md-2">
+        <a href="checkout.html" class="pl-5 pr-5 mb-4 btn btn-primary btn-lg rounded-pill">Checkout</a>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/js/cart.js"></script>

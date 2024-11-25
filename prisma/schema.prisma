@@ -23,7 +23,7 @@ model User {
   verificationToken String?
   registration_time DateTime?
   state             String?
-  user_image       String?
+  user_image        String?
   role              Role?
   Orders            Orders[]
   UserCart          UserCart[]
@@ -58,7 +58,6 @@ model OrderDetail {
 model Orders {
   order_id      Int           @id @default(autoincrement())
   user_id       Int
-  order_date    DateTime
   total_amount  Float
   status        String
   creation_time DateTime
@@ -100,6 +99,7 @@ model Reviews {
   product_id      Int
   user_id         Int
   review_detail   String?
+  creation_time   DateTime  @default(now())
   Product         Product @relation(fields: [product_id], references: [product_id])
   User            User    @relation(fields: [user_id], references: [id])
 

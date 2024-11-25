@@ -12,7 +12,6 @@ require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
 
 app.use(express.static("./src/public"));
-app.use("/node_modules", express.static("node_modules"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
