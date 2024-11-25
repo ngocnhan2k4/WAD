@@ -6,5 +6,6 @@ router.get("/", cartController.getCart);
 router.post("/update", cartController.updateCartItemQuantity);
 router.post("/add", cartController.addToCart);
 router.post("/delete", cartController.deleteCartItem);
+router.get("/count", cartController.getCartCount);
 
 module.exports = router;

@@ -105,6 +105,25 @@ const cartController = {
             res.status(500).send("Internal Server Error");
         }
     },
+
+    getCartCount: async (req, res) => {
+        try {
+            if (!req.user) {
+                // Nếu người dùng chưa đăng nhập, trả về loggedIn: false
+                return res.json({ loggedIn: false, cartCount: 0 });
+            }
+    
+            const userId = req.user.id;
+    
+            // Lấy tổng số lượng sản phẩm trong giỏ hàng từ service
+            const itemCount = await Cart.getNumOfCartItems(userId);
+    
+            res.json({ loggedIn: true, cartCount: itemCount });
+        } catch (err) {
+            console.error("Error fetching cart count:", err);
+            res.status(500).send("Internal Server Error");
+        }
+    },
 };
 
 module.exports = cartController;
