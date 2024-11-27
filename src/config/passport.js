@@ -4,9 +4,12 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
-const bcrypt = require("bcrypt");
 
 const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
+const callbackURL = `${routehttp}auth/google/callback`;
+const callbackURLGithub = `${routehttp}auth/github/callback`;
+console.log("callbackURL", callbackURL);
+console.log("callbackURLGithub", callbackURLGithub);
 
 const User = require("../app/user/service");
 //User sử dụng Prismas
@@ -106,7 +109,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: `${routehttp}auth/google/callback`,
+            callbackURL,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
@@ -135,7 +138,7 @@ passport.use(
         {
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: `${routehttp}auth/github/callback`,
+            callbackURLGithub,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
