@@ -1,4 +1,5 @@
 const prisma = require("../../config/database/db.config");
+const bcrypt = require("bcrypt");
 
 const User = {
     findUserByUsername: (username) =>
