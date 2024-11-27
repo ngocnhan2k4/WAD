@@ -61,6 +61,7 @@ model Orders {
   total_amount  Float
   status        String
   creation_time DateTime
+  shipping_address String?
   OrderDetail   OrderDetail[]
   User          User          @relation(fields: [user_id], references: [id])
   Payments      Payments[]

@@ -390,16 +390,16 @@ async function main(){
 
     await prisma.orders.createMany({
         data: [
-            { user_id: 1, total_amount: 150.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 2, total_amount: 200.00, status: 'Processing', creation_time: new Date() },
-            { user_id: 3, total_amount: 250.00, status: 'Pending', creation_time: new Date() },
-            { user_id: 4, total_amount: 300.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 5, total_amount: 350.00, status: 'Cancelled', creation_time: new Date() },
-            { user_id: 6, total_amount: 400.00, status: 'Completed', creation_time: new Date() },
-            { user_id: 7, total_amount: 450.00, status: 'Shipped', creation_time: new Date() },
-            { user_id: 8, total_amount: 500.00, status: 'Pending', creation_time: new Date() },
-            { user_id: 9, total_amount: 550.00, status: 'Processing', creation_time: new Date() },
-            { user_id: 10, total_amount: 600.00, status: 'Completed', creation_time: new Date() }
+            { user_id: 1, total_amount: 150.00, status: 'Completed', creation_time: new Date(), shipping_address: '123 Main St, City A' },
+            { user_id: 2, total_amount: 200.00, status: 'Processing', creation_time: new Date(), shipping_address: '456 Oak St, City B' },
+            { user_id: 3, total_amount: 250.00, status: 'Pending', creation_time: new Date(), shipping_address: '789 Pine St, City C' },
+            { user_id: 4, total_amount: 300.00, status: 'Completed', creation_time: new Date(), shipping_address: '321 Elm St, City D' },
+            { user_id: 5, total_amount: 350.00, status: 'Cancelled', creation_time: new Date(), shipping_address: '654 Maple St, City E' },
+            { user_id: 6, total_amount: 400.00, status: 'Completed', creation_time: new Date(), shipping_address: '987 Birch St, City F' },
+            { user_id: 7, total_amount: 450.00, status: 'Shipped', creation_time: new Date(), shipping_address: '246 Cedar St, City G' },
+            { user_id: 8, total_amount: 500.00, status: 'Pending', creation_time: new Date(), shipping_address: '135 Spruce St, City H' },
+            { user_id: 9, total_amount: 550.00, status: 'Processing', creation_time: new Date(), shipping_address: '864 Willow St, City I' },
+            { user_id: 10, total_amount: 600.00, status: 'Completed', creation_time: new Date(), shipping_address: '753 Aspen St, City J' }
         ]
     });
 
