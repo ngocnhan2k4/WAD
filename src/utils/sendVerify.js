@@ -5,6 +5,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN_SECRET;
+const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
@@ -50,7 +51,7 @@ async function sendEmail(email, token) {
             <div style="background-color: #f4f4f4; padding: 20px; text-align: center;">
                 <h2 style="color: #007BFF;">Chào mừng bạn đến với Dự án WEB Bán Hàng!</h2>
                 <p>Nhấn vào nút bên dưới để xác thực email của bạn và bắt đầu trải nghiệm các dịch vụ tuyệt vời.</p>
-                <a href='http://localhost:4000/auth/verify/${token}' 
+                <a href='${routehttp}auth/verify/${token}' 
                    style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
                     Xác Thực Email
                 </a>
@@ -79,7 +80,7 @@ async function sendResetPassword(email, token) {
                 <div style="background-color: #f9f9f9; padding: 20px; text-align: center; border-radius: 8px; border: 1px solid #ddd;">
                     <h2 style="color: #007BFF;">Yêu cầu đặt lại mật khẩu</h2>
                     <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ bạn. Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này.</p>
-                    <a href='http://localhost:4000/auth/reset/${token}' 
+                    <a href='${routehttp}auth/reset/${token}' 
                        style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
                         Đặt Lại Mật Khẩu
                     </a>

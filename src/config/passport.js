@@ -6,6 +6,8 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
 const bcrypt = require("bcrypt");
 
+const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
+
 const User = require("../app/user/service");
 //User sử dụng Prismas
 const crypto = require("../utils/crypto");
@@ -104,7 +106,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: "http://localhost:4000/auth/google/callback",
+            callbackURL: `${routehttp}auth/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
@@ -133,7 +135,7 @@ passport.use(
         {
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: "http://localhost:4000/auth/github/callback",
+            callbackURL: `${routehttp}auth/github/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
