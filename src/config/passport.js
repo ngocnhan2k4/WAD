@@ -5,7 +5,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
 
-const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:3000/";
+const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
 const callbackURL = `${routehttp}auth/google/callback`;
 const callbackURLGithub = `${routehttp}auth/github/callback`;
 
