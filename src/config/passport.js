@@ -111,6 +111,7 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
+                console.log("profile", profile);
                 let user = await User.findUserBySocialId(profile.id);
                 if (!user) {
                     const email = null;
@@ -125,6 +126,7 @@ passport.use(
 
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
             } catch (error) {
+                console.log("error google ở đây", error);
                 return done(error, false, { message: error.message }); // Trả về lỗi nếu có
             }
         }
@@ -155,7 +157,7 @@ passport.use(
                 }
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
             } catch (error) {
-                console.log("error ở đây", error);
+                console.log("error github ở đây", error);
                 return done(error, false, { message: error.message }); // Trả về lỗi nếu có
             }
         }

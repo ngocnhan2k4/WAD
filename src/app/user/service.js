@@ -52,7 +52,7 @@ const User = {
                 username: email,
                 role: "user",
                 registration_time: gmt7,
-                user_image: image,
+                user_image: image || "/images/avatar/avatar_placeholder.png",
                 state: "noban",
             },
         });
@@ -68,7 +68,7 @@ const User = {
                 username: email,
                 role: "user",
                 registration_time: gmt7,
-                user_image: image,
+                user_image: image || "/images/avatar/avatar_placeholder.png",
                 state: "noban",
             },
         });
