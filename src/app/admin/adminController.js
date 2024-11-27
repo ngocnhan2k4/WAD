@@ -46,6 +46,12 @@ const Admin = {
         const count = await User.countSearch(user_search);
         users.forEach((user) => {
             user.registration_time = formatDateSimple(user.registration_time);
+            if (user.username === null && user.type === "github") {
+                user.username = "Github account";
+            }
+            if (user.username === null && user.type === "google") {
+                user.username = "Google account";
+            }
         });
 
         const pages = Math.ceil(count / 10);
@@ -127,6 +133,12 @@ const Admin = {
         const users = await User.sortUser(field);
         users.forEach((user) => {
             user.registration_time = formatDateSimple(user.registration_time);
+            if (user.username === null && user.type === "github") {
+                user.username = "Github account";
+            }
+            if (user.username === null && user.type === "google") {
+                user.username = "Google account";
+            }
         });
         res.json(users);
     },
@@ -166,6 +178,12 @@ const Admin = {
         if (user === null) {
             res.redirect("/admin/viewaccount");
             return;
+        }
+        if (user.username === null && user.type === "github") {
+            user.username = "Github account";
+        }
+        if (user.username === null && user.type === "google") {
+            user.username = "Google account";
         }
         const total_pay = await User.getTotalPayment(id);
         const categories_favorite = await User.getCateFavorite(id);

@@ -59,9 +59,6 @@ const User = {
     },
     createUserGithub: (fullName, socialId, email, image) => {
         const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
-        if (email == null) {
-            email = "No email";
-        }
         return prisma.User.create({
             data: {
                 fullName: fullName,
