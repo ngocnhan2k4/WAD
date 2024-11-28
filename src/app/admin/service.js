@@ -23,6 +23,21 @@ function funcountSearch(user_search) {
     });
 }
 
+async function countProductsBelongToCategory(category_id) {
+    return prisma.Product.count({
+        where: {
+            category_id: category_id,
+        },
+    });
+}
+
+async function countProductsBelongManufacturer(manufacturer) {
+    return prisma.Product.count({
+        where: {
+            manufacturer: manufacturer,
+        },
+    });
+}
 const User = {
     getAll: () => prisma.User.findMany(),
     getAllUser: () => prisma.User.findMany(),
@@ -345,6 +360,57 @@ const User = {
                 product_id: true,
             },
         });
+    },
+    getCategories: async () => {
+        const categories = await prisma.Categories.findMany();
+        for (let i = 0; i < categories.length; i++) {
+            categories[i].count = await countProductsBelongToCategory(
+                categories[i].category_id
+            );
+        }
+        return categories;
+    },
+    getManufacturers: async () => {
+        const manufacturers = await prisma.Suppliers.findMany();
+        for (let i = 0; i < manufacturers.length; i++) {
+            manufacturers[i].count = await countProductsBelongManufacturer(
+                manufacturers[i].supplier_id
+            );
+        }
+        return manufacturers;
+    },
+    updateManuOrCate: async (type, name) => {
+        if (type === "category") {
+            const cate = await prisma.Categories.findFirst({
+                where: {
+                    category_name: name,
+                },
+            });
+            if (cate) {
+                return null;
+            }
+            return prisma.Categories.create({
+                data: {
+                    category_name: name,
+                },
+            });
+        } else if (type === "manufacturer") {
+            const manu = await prisma.Suppliers.findFirst({
+                where: {
+                    brand: name,
+                },
+            });
+            if (manu) {
+                return null;
+            }
+            return prisma.Suppliers.create({
+                data: {
+                    brand: name,
+                },
+            });
+        } else {
+            throw new Error(`Invalid type: ${type}`);
+        }
     },
 };
 

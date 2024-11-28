@@ -1,0 +1,111 @@
+<main class="view_detail container">
+    <div class="view__inner row">
+        <div class="col-4">
+            <div class="view__info">
+                <img src="/images/img/cate01.png" alt="" class="view__img" />
+                <div class="view__acc">
+                    <p class="view__id" id=""></p>
+                    <h2 id="editableHeading" class="view__name">Samsung</h2>
+                    <input
+                        type="text"
+                        id="edit-name"
+                        class="edit__input"
+                        value="Samsung"
+                        style="display:none"
+                        onblur="saveName()"
+                    />
+                    <div class="admin__control">
+                        <button class="delete__btn">Delete</button>
+                        <button class="update__btn">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="view__total">
+                <h2 class="view__heading">
+                    Index
+                </h2>
+                <div class="view__total__content">
+                    <div class="view__total__item">
+                        <p class="view__total__name">Number of orders purchased</p>
+                        <p class="view__total__value">5</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Total amount</p>
+                        <p class="view__total__value">200</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Users favorite</p>
+                        <p class="view__total__value">4</p>
+                    </div>
+                    <div class="view__total__item">
+                        <p class="view__total__name">Number of Products</p>
+                        <p class="view__total__value">23</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-8">
+            <div class="view__product__header">
+                <h2 class="view__heading">Products: </h2>
+                <div class="view__product__search">
+                    <input
+                        type="text"
+                        class="view__product__search__input"
+                        placeholder="Search product"
+                    />
+                    <button
+                        class="view__product__search__button"
+                    >Search</button>
+                </div>
+            </div>
+            <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {{#each products}}
+                    <div
+                        id={{product_id}}
+                        class="product__item overflow-hidden bg-white rounded shadow group"
+                    >
+                        <div class="relative">
+                            <a
+                                href="/product/productDetail?id={{this.product_id}}"
+                            ><img
+                                    src={{Images.0.directory_path}}
+                                    alt="product{{@index}}"
+                                    class="w-full"
+                                /></a>
+                        </div>
+                        <div class="product__content px-4 pt-4 pb-3">
+                            <a
+                                href="/product/productDetail?id={{this.product_id}}"
+                            >
+                                <h4
+                                    class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                                >
+                                    {{product_name}}</h4>
+                            </a>
+                            <div
+                                class="flex mt-auto items-baseline mb-1 space-x-2"
+                            >
+                                <p
+                                    class="text-xl font-semibold text-primary"
+                                >{{current_price}}</p>
+                                <p
+                                    class="text-sm text-gray-400 line-through"
+                                >{{original_price}}</p>
+                            </div>
+                        </div>
+                        <a
+                            href="#"
+                            class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
+                        >Add to cart</a>
+                    </div>
+
+                {{/each}}
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script src="/js/view_cate_manu_detail.js"></script>

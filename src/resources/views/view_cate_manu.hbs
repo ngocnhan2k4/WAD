@@ -1,11 +1,11 @@
 <main class="cate__manu container">
     <div class="header">
-        <h1 class="heading">Customer List</h1>
+        <h1 class="heading">Manufactories And Categories List</h1>
     </div>
     <nav>
         <ul class="menu">
-            <li class="cate__nav menu__active">Caterogies</li>
-            <li class="manu__nav">Manufactories</li>
+            <li id="cate__nav" class="menu__nav menu__active">Caterogies</li>
+            <li id="manu__nav" class="menu__nav">Manufactories</li>
             <div class="decor__nav"></div>
         </ul>
     </nav>
@@ -27,43 +27,24 @@
                     style="white-space: pre;"
                 >+ Add new</button>
             </div>
-            <div class="row row-cols-3 gy-3">
-                <div class="col">
-                    <div class="cate__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Category 1"
-                            class="cate__item-image"
-                        />
-                        <h2 class="cate__item-title">Electronics</h2>
-                        <p class="cate__item-description">Discover the latest in
-                            electronic gadgets and devices.</p>
+            <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 gy-3">
+                {{#each categories}}
+                    <div class="col">
+                        <div id="{{category_id}}" class="cate__item">
+                            <img
+                                src="{{img}}"
+                                alt="Category img"
+                                class="cate__item-image"
+                            />
+                            <h2 class="cate__item-title">{{category_name}}</h2>
+                            <div class="cate__item-info">
+                                <p>The nums products: </p>
+                                <p class="cate__item-description">{{count}}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="cate__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Category 2"
-                            class="cate__item-image"
-                        />
-                        <h2 class="cate__item-title">Furniture</h2>
-                        <p class="cate__item-description">Stylish and modern
-                            furniture for every room in your home.</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="cate__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Category 3"
-                            class="cate__item-image"
-                        />
-                        <h2 class="cate__item-title">Clothing</h2>
-                        <p class="cate__item-description">Trendy outfits for
-                            men, women, and kids at unbeatable prices.</p>
-                    </div>
-                </div>
+                {{/each}}
+
             </div>
 
         </div>
@@ -84,82 +65,49 @@
                     style="white-space: pre;"
                 >+ Add new</button>
             </div>
-            <div class="row row-cols-3 gy-3">
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 1"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">Samsung</h2>
-                        <p class="manu__item-description">Leading innovations in
-                            electronics and appliances.</p>
+            <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 gy-3">
+                {{#each manufacturers}}
+                    <div class="col">
+                        <div id="{{supplier_id}}" class="manu__item">
+                            <img
+                                src="{{img}}"
+                                alt="Manufacturer 1"
+                                class="manu__item-image"
+                            />
+                            <h2 class="manu__item-title">{{brand}}</h2>
+                            <div class="manu__item-info">
+                                <p>The nums products: </p>
+                                <p class="manu__item-description">{{count}}</p>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 2"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">IKEA</h2>
-                        <p class="manu__item-description">Affordable,
-                            well-designed furniture and home accessories.</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 3"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">Nike</h2>
-                        <p class="manu__item-description">High-performance
-                            sportswear and casual clothing.</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 3"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">Nike</h2>
-                        <p class="manu__item-description">High-performance
-                            sportswear and casual clothing.</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 3"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">Nike</h2>
-                        <p class="manu__item-description">High-performance
-                            sportswear and casual clothing.</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="manu__item">
-                        <img
-                            src="https://via.placeholder.com/150"
-                            alt="Manufacturer 3"
-                            class="manu__item-image"
-                        />
-                        <h2 class="manu__item-title">Nike</h2>
-                        <p class="manu__item-description">High-performance
-                            sportswear and casual clothing.</p>
-                    </div>
-                </div>
+                {{/each}}
             </div>
 
         </div>
 
     </div>
 </main>
+<div class="shadow">
+</div>
+<div class="dialog">
+    <button class="dialog-close" id="closeDialogBtn">&times;</button>
+    <div class="dialog-header">Add New Category</div>
+    <form class="form">
+        <input
+            id="input"
+            type="text"
+            name="name"
+            placeholder="Enter category name"
+            required
+        />
+        <p class="dialog_status"></p>
+        <div class="dialog-buttons">
+            <button class="cancel-btn" id="cancelBtn">Cancel</button>
+            <button class="save-btn">Save</button>
+        </div>
+    </form>
+</div>
+
+<script src="/js/view_cate_manu.js"></script>

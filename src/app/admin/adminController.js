@@ -215,8 +215,74 @@ const Admin = {
         res.json(products_Id);
     },
     viewCateManu: async (req, res) => {
+        const categories = await User.getCategories();
+        const manufacturers = await User.getManufacturers();
+        categories.forEach((cate, index) => {
+            const i = index % 3;
+            cate.img = `/images/img/cate0${i + 1}.png`;
+        });
+        manufacturers.forEach((manu, index) => {
+            const i = index % 3;
+            manu.img = `/images/img/manu0${i + 1}.png`;
+        });
         res.render("view_cate_manu", {
             page_style: "/css/cate_manu.css",
+            manufacturers: manufacturers,
+            categories: categories,
+        });
+    },
+    updateManuOrCate: async (req, res) => {
+        const { type, name } = req.body;
+        if (
+            type === undefined ||
+            name === undefined ||
+            name === "" ||
+            type === ""
+        ) {
+            const message = {
+                status: "fail",
+            };
+            res.status(200).json(message);
+            return;
+        }
+        try {
+            const result = await User.updateManuOrCate(type, name);
+            if (result) {
+                if (type === "category") {
+                    const message = {
+                        id: result.category_id,
+                        status: "success",
+                    };
+                    res.status(200).json(message);
+                } else {
+                    const message = {
+                        id: result.supplier_id,
+                        status: "success",
+                    };
+                    res.status(200).json(message);
+                }
+            } else {
+                const message = {
+                    status: "fail",
+                };
+                res.status(200).json(message);
+            }
+        } catch (err) {
+            console.log(err);
+            const message = {
+                status: "fail",
+            };
+            res.status(200).json(message);
+        }
+    },
+    viewCateDetail: async (req, res) => {
+        res.render("view_cate_manu_detail", {
+            page_style: "/css/cate_manu_detail.css",
+        });
+    },
+    viewManuDetail: async (req, res) => {
+        res.render("view_cate_manu_detail", {
+            page_style: "/css/cate_manu_detail.css",
         });
     },
 };
