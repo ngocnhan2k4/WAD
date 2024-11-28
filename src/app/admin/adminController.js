@@ -214,6 +214,11 @@ const Admin = {
         const products_Id = products.map((product) => product.product_id);
         res.json(products_Id);
     },
+    viewCateManu: async (req, res) => {
+        res.render("view_cate_manu", {
+            page_style: "/css/cate_manu.css",
+        });
+    },
 };
 
 module.exports = Admin;

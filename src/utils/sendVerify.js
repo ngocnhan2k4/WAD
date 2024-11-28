@@ -1,19 +1,17 @@
 const nodemailer = require("nodemailer");
 
-const ZOHO_EMAIL = "webbanhang@zohomail.com"; // Email Zoho của bạn
-const ZOHO_APP_PASSWORD = "VcRHNkmTfhvt"; // Mật khẩu ứng dụng
+const GMAIL_EMAIL = process.env.GOOGLE_MAIL; // Email Gmail của bạn
+const GMAIL_APP_PASSWORD = process.env.GOOGLE_PASS; // App Password của Gmail
 
 const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
 
-// Hàm tạo transporter cho Zoho Mail
+// Hàm tạo transporter cho Gmail
 function createTransporter() {
     const transporter = nodemailer.createTransport({
-        host: "smtp.zoho.com", // Máy chủ SMTP của Zoho
-        port: 465, // Cổng SMTP SSL của Zoho
-        secure: true, // Sử dụng kết nối SSL
+        service: "gmail", // Sử dụng dịch vụ Gmail
         auth: {
-            user: ZOHO_EMAIL,
-            pass: ZOHO_APP_PASSWORD,
+            user: GMAIL_EMAIL,
+            pass: GMAIL_APP_PASSWORD, // Sử dụng App Password
         },
     });
     return transporter;
@@ -23,7 +21,7 @@ function createTransporter() {
 async function sendEmail(email, token) {
     const transporter = createTransporter();
     const mailOptions = {
-        from: `Dự án WEB Bán Hàng <${ZOHO_EMAIL}>`,
+        from: `Dự án WEB Bán Hàng <${GMAIL_EMAIL}>`,
         to: email,
         subject: "Verify your email",
         text: "Click the link below to verify your email",
@@ -41,7 +39,7 @@ async function sendEmail(email, token) {
             </div>
             <footer style="margin-top: 20px; text-align: center; font-size: 0.8em; color: #777;">
                 <p>&copy; 2024 Dự án WEB Bán Hàng. Tất cả các quyền được bảo lưu.</p>
-                <p>Email: ${ZOHO_EMAIL}</p>
+                <p>Email: ${GMAIL_EMAIL}</p>
             </footer>
         </div>`,
     };
@@ -58,7 +56,7 @@ async function sendEmail(email, token) {
 async function sendResetPassword(email, token) {
     const transporter = createTransporter();
     const mailOptions = {
-        from: `Dự án WEB Bán Hàng <${ZOHO_EMAIL}>`,
+        from: `Dự án WEB Bán Hàng <${GMAIL_EMAIL}>`,
         to: email,
         subject: "Reset your password",
         text: "Click the link below to reset your password",
@@ -76,7 +74,7 @@ async function sendResetPassword(email, token) {
             </div>
             <footer style="margin-top: 20px; text-align: center; font-size: 0.8em; color: #777;">
                 <p>&copy; 2024 Dự án WEB Bán Hàng. Tất cả các quyền được bảo lưu.</p>
-                <p>Email: ${ZOHO_EMAIL}</p>
+                <p>Email: ${GMAIL_EMAIL}</p>
             </footer>
         </div>`,
     };

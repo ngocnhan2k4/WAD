@@ -1,105 +1,157 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Page</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shop Page</title>
 
-    <link rel="shortcut icon" href="/images/favicon/favicon.ico" type="image/x-icon">
+        <link
+            rel="shortcut icon"
+            href="/images/favicon/favicon.ico"
+            type="image/x-icon"
+        />
 
-    <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/style.css">
+        <script
+            src="https://kit.fontawesome.com/1cbed95cdb.js"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="/css/style.css" />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/css/grid_system.css" />
+        <link rel="stylesheet" href="{{page_style}}" />
+    </head>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-        rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
-    
-    <link rel="stylesheet" href="{{page_style}}" />
-</head>
-
-<body>
-     {{!-- {{#if notAJAX}} --}}
-    <!-- header -->
-    <header class="py-4 bg-white shadow-sm">
-      <div class="container flex items-center justify-between">
-        <!--logo-->
-        <a href="/">
-          <img src="/images/logo.svg" alt="Logo" class="w-32">
-        </a>
-        <!--searchbar-->
-        <div class="relative flex w-full max-w-xl">
-            <form metod="GET" action="/product" class="flex w-full" id="search-form">
-            {{!-- <span class="absolute text-lg text-gray-400 left-4 top-3">
+    <body>
+        {{!-- {{#if notAJAX}} --}}
+        <!-- header -->
+        <header class="py-4 bg-white shadow-sm">
+            <div class="container flex items-center justify-between">
+                <!--logo-->
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Logo" class="w-32" />
+                </a>
+                <!--searchbar-->
+                <div class="relative flex w-full max-w-xl">
+                    <form
+                        metod="GET"
+                        action="/product"
+                        class="flex w-full"
+                        id="search-form"
+                    >
+                        {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
                 <i class="fa-solid fa-search"></i>
-            </span> --}}
-           {{#each category}}
-                <input type="hidden" name="category" value="{{this}}">
-            {{/each}}
-            {{#each brand}}
-                <input type="hidden" name="brand" value="{{this}}">
-            {{/each}}
-            <input type="hidden" name="minPrice" value="{{minPrice}}">
-            <input type="hidden" name="maxPrice" value="{{maxPrice}}">
-            {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
-            <input type="hidden" name="sort" value="{{sort}}">
-            <input type="text" name="search" id="search"
-                class="hidden w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
-                placeholder="search" value="{{search}}">
-            <button
-                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
-                Search
-            </button>
-          </form>
-        </div>
-    
-        <div class="flex items-center space-x-4">
-          <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
-            <div class="text-2xl">
-              <i class="fa-regular fa-heart"></i>
-            </div>
-            <div class="text-xs leading-3">Wishlist</div>
-            <div
-              class="absolute right-0 flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -top-1 bg-primary">
-              8</div>
-          </a>
-            <a href="/cart" id="cart-link" class="relative text-center text-gray-700 transition hover:text-primary">
-                <div class="text-2xl">
-                    <i class="fa-solid fa-bag-shopping"></i>
+            </span> }}
+                        {{#each category}}
+                            <input
+                                type="hidden"
+                                name="category"
+                                value="{{this}}"
+                            />
+                        {{/each}}
+                        {{#each brand}}
+                            <input
+                                type="hidden"
+                                name="brand"
+                                value="{{this}}"
+                            />
+                        {{/each}}
+                        <input
+                            type="hidden"
+                            name="minPrice"
+                            value="{{minPrice}}"
+                        />
+                        <input
+                            type="hidden"
+                            name="maxPrice"
+                            value="{{maxPrice}}"
+                        />
+                        {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
+                        <input type="hidden" name="sort" value="{{sort}}" />
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            class="hidden w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
+                            placeholder="search"
+                            value="{{search}}"
+                        />
+                        <button
+                            class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->"
+                        >
+                            Search
+                        </button>
+                    </form>
                 </div>
-                <div class="text-xs leading-3">Cart</div>
-                <div id="cart-count" 
-                    class="absolute flex items-center justify-center hidden w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary">
-                    0
+
+                <div class="flex items-center space-x-4">
+                    <a
+                        href="#"
+                        class="relative text-center text-gray-700 transition hover:text-primary"
+                    >
+                        <div class="text-2xl">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                        <div class="text-xs leading-3">Wishlist</div>
+                        <div
+                            class="absolute right-0 flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -top-1 bg-primary"
+                        >
+                            8</div>
+                    </a>
+                    <a
+                        href="/cart"
+                        id="cart-link"
+                        class="relative text-center text-gray-700 transition hover:text-primary"
+                    >
+                        <div class="text-2xl">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <div class="text-xs leading-3">Cart</div>
+                        <div
+                            id="cart-count"
+                            class="absolute flex items-center justify-center hidden w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary"
+                        >
+                            0
+                        </div>
+                    </a>
+                    <a
+                        href="#"
+                        class="relative text-center text-gray-700 transition hover:text-primary"
+                    >
+                        <div class="text-2xl">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <div class="text-xs leading-3">Account</div>
+                    </a>
                 </div>
-            </a>
-          <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
-            <div class="text-2xl">
-              <i class="fa-regular fa-user"></i>
             </div>
-            <div class="text-xs leading-3">Account</div>
-          </a>
-        </div>
-      </div>
-    </header>
-    <!-- ./header -->
+        </header>
+        <!-- ./header -->
 
-    <!-- navbar -->
-    <nav class="bg-gray-800">
-        <div class="container flex">
-            <div class="relative items-center hidden px-8 py-4 cursor-pointer bg-primary md:flex group">
-                <span class="text-white">
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-                <span class="hidden ml-2 text-white capitalize">All Categories</span>
+        <!-- navbar -->
+        <nav class="bg-gray-800">
+            <div class="container flex">
+                <div
+                    class="relative items-center hidden px-8 py-4 cursor-pointer bg-primary md:flex group"
+                >
+                    <span class="text-white">
+                        <i class="fa-solid fa-bars"></i>
+                    </span>
+                    <span class="hidden ml-2 text-white capitalize">All
+                        Categories</span>
 
-                <!-- dropdown -->
-                {{!-- <div
+                    <!-- dropdown -->
+                    {{! <div
                     class="absolute left-0 invisible w-full py-3 transition duration-300 bg-white divide-y divide-gray-300 shadow-md opacity-0 top-full divide-dashed group-hover:opacity-100 group-hover:visible">
                     <a href="#" class="flex items-center px-6 py-3 transition hover:bg-gray-100">
                         <img src="assets/images/icons/sofa.svg" alt="sofa" class="object-contain w-5 h-5">
@@ -125,108 +177,183 @@
                         <img src="assets/images/icons/bed-2.svg" alt="Mattress" class="object-contain w-5 h-5">
                         <span class="ml-6 text-sm text-gray-600">Mattress</span>
                     </a>
-                </div> --}}
-            </div>
-
-            <div class="flex items-center justify-between flex-grow py-5 md:pl-12">
-                <div class="flex items-center space-x-6 capitalize">
-                    <a href="/" class="text-gray-200 transition hover:text-white">Home</a>
-                    <a href="/product" class="text-gray-200 transition hover:text-white">Shop</a>
-                    <a href="#" class="text-gray-200 transition hover:text-white">About us</a>
-                    <a href="#" class="text-gray-200 transition hover:text-white">Contact us</a>
+                </div> }}
                 </div>
-                <a href="/user/login" class="text-gray-200 transition hover:text-white">Login</a>
+
+                <div
+                    class="flex items-center justify-between flex-grow py-5 md:pl-12"
+                >
+                    <div class="flex items-center space-x-6 capitalize">
+                        <a
+                            href="/"
+                            class="text-gray-200 transition hover:text-white"
+                        >Home</a>
+                        <a
+                            href="/product"
+                            class="text-gray-200 transition hover:text-white"
+                        >Shop</a>
+                        <a
+                            href="#"
+                            class="text-gray-200 transition hover:text-white"
+                        >About us</a>
+                        <a
+                            href="#"
+                            class="text-gray-200 transition hover:text-white"
+                        >Contact us</a>
+                    </div>
+                    <a
+                        href="/user/login"
+                        class="text-gray-200 transition hover:text-white"
+                    >Login</a>
+                </div>
+            </div>
+        </nav>
+        <!-- ./navbar -->
+        {{!-- {{/if}} --}}
+        {{{body}}}
+        {{!-- {{#if notAJAX}} --}}
+        <!-- footer -->
+        <footer class="pt-16 pb-12 bg-white border-t border-gray-100">
+            <div class="container grid grid-cols-1">
+                <div class="col-span-1 space-y-4">
+                    <img src="/images/logo.svg" alt="logo" class="w-30" />
+                    <div class="mr-2">
+                        <p class="text-gray-500">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Quia, hic?
+                        </p>
+                    </div>
+                    <div class="flex space-x-5">
+                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                                class="fa-brands fa-facebook-square"
+                            ></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                                class="fa-brands fa-instagram-square"
+                            ></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                                class="fa-brands fa-twitter-square"
+                            ></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i class="fa-brands fa-github-square"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 col-span-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 md:gap-8">
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Solutions</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Marketing</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Analitycs</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Commerce</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Insights</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Support</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Pricing</a>
+                                <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Guides</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >API Status</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Solutions</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Marketing</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Analitycs</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Commerce</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Insights</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Support</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Pricing</a>
+                                <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Guides</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >API Status</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- ./footer -->
+
+        <!-- copyright -->
+        <div class="py-4 bg-gray-800">
+            <div class="container flex items-center justify-between">
+                <p class="text-white">&copy; TailCommerce - All Right Reserved</p>
+                <div>
+                    <img src="/images/methods.png" alt="methods" class="h-5" />
+                </div>
             </div>
         </div>
-    </nav>
-    <!-- ./navbar -->
-    {{!-- {{/if}} --}}
-    {{{body}}}
-    {{!-- {{#if notAJAX}} --}}
-    <!-- footer -->
-    <footer class="pt-16 pb-12 bg-white border-t border-gray-100">
-        <div class="container grid grid-cols-1 ">
-            <div class="col-span-1 space-y-4">
-                <img src="/images/logo.svg" alt="logo" class="w-30">
-                <div class="mr-2">
-                    <p class="text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, hic?
-                    </p>
-                </div>
-                <div class="flex space-x-5">
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-facebook-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-instagram-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-twitter-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <i class="fa-brands fa-github-square"></i>
-                    </a>
-                </div>
-            </div>
+        <!-- ./copyright -->
+        {{!-- {{/if}} --}}
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"
+        ></script>
+        <script
+            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"
+        ></script>
 
-            <div class="grid grid-cols-2 col-span-2 gap-4">
-                <div class="grid grid-cols-2 gap-4 md:gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Marketing</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Analitycs</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Commerce</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Insights</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Pricing</a>
-                            <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Guides</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">API Status</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Marketing</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Analitycs</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Commerce</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Insights</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Pricing</a>
-                            <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Guides</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">API Status</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ./footer -->
-
-    <!-- copyright -->
-    <div class="py-4 bg-gray-800">
-        <div class="container flex items-center justify-between">
-            <p class="text-white">&copy; TailCommerce - All Right Reserved</p>
-            <div>
-                <img src="/images/methods.png" alt="methods" class="h-5">
-            </div>
-        </div>
-    </div>
-    <!-- ./copyright -->
-    {{!-- {{/if}} --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-        
-</body>
+    </body>
 </html>
