@@ -9,7 +9,7 @@ const homeRouter = require("../app/home/route");
 const adminRouter = require("../app/admin/route");
 const middleware = require("../app/middleware/middleware");
 const cartRouter = require("../app/cart/route");
-const userProfileRouter = require("../app/userprofile/route");
+const userProfileRouter = require("../app/userProfile/route");
 
 function route(app) {
     app.use(middleware.isBan);

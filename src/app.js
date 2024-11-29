@@ -57,6 +57,7 @@ app.use((req, res, next) => {
         userAvatar = req.user.user_image;
     }
     res.locals.isAuthen = isAuth;
+    
     res.locals.userName = userName;
     res.locals.userAvatar = userAvatar;
     res.locals.fullName = fullName;
