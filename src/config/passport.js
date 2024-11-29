@@ -4,7 +4,10 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
 const { sendEmail } = require("../utils/sendVerify");
-const bcrypt = require("bcrypt");
+
+const routehttp = process.env.PUBLIC_ROUTE || "http://localhost:4000/";
+const callbackURL = `${routehttp}auth/google/callback`;
+const callbackURLGithub = `${routehttp}auth/github/callback`;
 
 const User = require("../app/user/service");
 //User sử dụng Prismas
@@ -104,13 +107,14 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: "http://localhost:4000/auth/google/callback",
+            callbackURL: callbackURL,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
+                console.log("profile", profile);
                 let user = await User.findUserBySocialId(profile.id);
                 if (!user) {
-                    const email = profile.emails && profile.emails[0].value;
+                    const email = null;
                     const avatar = profile.photos[0].value;
                     user = await User.createUserGoogle(
                         profile.displayName,
@@ -122,6 +126,7 @@ passport.use(
 
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
             } catch (error) {
+                console.log("error google ở đây", error);
                 return done(error, false, { message: error.message }); // Trả về lỗi nếu có
             }
         }
@@ -133,16 +138,18 @@ passport.use(
         {
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: "http://localhost:4000/auth/github/callback",
+            callbackURL: callbackURLGithub,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
+                console.log("profile", profile);
                 let user = await User.findUserBySocialId(profile.id);
                 if (!user) {
                     const email = profile.emails && profile.emails[0].value;
                     const avatar = profile.photos[0].value;
+                    const fullName = profile.displayName || profile.username;
                     user = await User.createUserGithub(
-                        profile.displayName,
+                        fullName,
                         profile.id,
                         email,
                         avatar
@@ -150,6 +157,7 @@ passport.use(
                 }
                 return done(null, user); // Trả về thông tin người dùng đã xác thực
             } catch (error) {
+                console.log("error github ở đây", error);
                 return done(error, false, { message: error.message }); // Trả về lỗi nếu có
             }
         }

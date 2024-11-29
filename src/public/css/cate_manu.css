@@ -1,0 +1,154 @@
+/* Tổng quan chung */
+body {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+}
+/* Container chính */
+.cate__manu.container {
+    color: #333;
+}
+.cate__manu {
+    padding-bottom: 50px;
+}
+/* Header */
+.header {
+    margin-bottom: 30px;
+}
+
+.heading {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+/* Menu điều hướng */
+nav {
+    margin-bottom: 20px;
+}
+
+.menu {
+    display: flex;
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    padding: 10px 30px;
+
+    padding-left: 0;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #555;
+    transition: color 0.3s, background-color 0.3s, transform 0.3s;
+}
+
+.menu li:hover {
+    transform: scale(1.05);
+}
+
+.decor__nav {
+    position: absolute;
+    width: 135px;
+    bottom: 0;
+    left: 0;
+
+    height: 2px;
+    background-color: #007bff;
+    margin-top: 5px;
+}
+
+/* Item chung */
+.cate__item,
+.manu__item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.cate__manu-heading {
+    display: flex;
+    margin-bottom: 30px;
+    margin-top: 40px;
+    gap: 80px;
+}
+.cate__item:hover,
+.manu__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.add__new {
+    font-size: 18px; /* Kích thước chữ vừa phải */
+    border: none; /* Loại bỏ viền */
+    cursor: pointer; /* Con trỏ hiển thị "pointer" khi hover */
+    padding: 0 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng chuyển đổi mượt */
+}
+
+.add__new:hover {
+    transform: scale(1.05);
+}
+.menu__active {
+    color: #dc0707 !important;
+}
+/* Hình ảnh */
+.cate__item-image,
+.manu__item-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Tiêu đề */
+.cate__item-title,
+.manu__item-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Mô tả */
+.cate__item-description,
+.manu__item-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Nút thêm mới */
+
+/* Input tìm kiếm */
+.search-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}

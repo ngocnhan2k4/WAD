@@ -46,6 +46,12 @@ const Admin = {
         const count = await User.countSearch(user_search);
         users.forEach((user) => {
             user.registration_time = formatDateSimple(user.registration_time);
+            if (user.username === null && user.type === "github") {
+                user.username = "Github account";
+            }
+            if (user.username === null && user.type === "google") {
+                user.username = "Google account";
+            }
         });
 
         const pages = Math.ceil(count / 10);
@@ -127,6 +133,12 @@ const Admin = {
         const users = await User.sortUser(field);
         users.forEach((user) => {
             user.registration_time = formatDateSimple(user.registration_time);
+            if (user.username === null && user.type === "github") {
+                user.username = "Github account";
+            }
+            if (user.username === null && user.type === "google") {
+                user.username = "Google account";
+            }
         });
         res.json(users);
     },
@@ -167,6 +179,12 @@ const Admin = {
             res.redirect("/admin/viewaccount");
             return;
         }
+        if (user.username === null && user.type === "github") {
+            user.username = "Github account";
+        }
+        if (user.username === null && user.type === "google") {
+            user.username = "Google account";
+        }
         const total_pay = await User.getTotalPayment(id);
         const categories_favorite = await User.getCateFavorite(id);
         const products_favorite = await User.getProductFavorite(id);
@@ -195,6 +213,11 @@ const Admin = {
         const products = await User.searchProducts(search);
         const products_Id = products.map((product) => product.product_id);
         res.json(products_Id);
+    },
+    viewCateManu: async (req, res) => {
+        res.render("view_cate_manu", {
+            page_style: "/css/cate_manu.css",
+        });
     },
 };
 

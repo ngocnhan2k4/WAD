@@ -1,13 +1,16 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Page</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shop Page</title>
 
-    <link rel="shortcut icon" href="/images/favicon/favicon.ico" type="image/x-icon">
+        <link
+            rel="shortcut icon"
+            href="/images/favicon/favicon.ico"
+            type="image/x-icon"
+        />
 
     <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
@@ -23,19 +26,24 @@
     <link rel="stylesheet" href="{{page_style}}" />
 </head>
 
-<body>
-     {{!-- {{#if notAJAX}} --}}
-    <!-- header -->
-    <header class="py-4 bg-white shadow-sm">
-      <div class="container flex items-center justify-between">
-        <!--logo-->
-        <a href="/">
-          <img src="/images/logo.svg" alt="Logo" class="w-32">
-        </a>
-        <!--searchbar-->
-        <div class="relative flex w-full max-w-xl">
-            <form metod="GET" action="/product" class="flex w-full" id="search-form">
-            {{!-- <span class="absolute text-lg text-gray-400 left-4 top-3">
+    <body>
+        {{!-- {{#if notAJAX}} --}}
+        <!-- header -->
+        <header class="py-4 bg-white shadow-sm">
+            <div class="container flex items-center justify-between">
+                <!--logo-->
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Logo" class="w-32" />
+                </a>
+                <!--searchbar-->
+                <div class="relative flex w-full max-w-xl">
+                    <form
+                        metod="GET"
+                        action="/product"
+                        class="flex w-full"
+                        id="search-form"
+                    >
+                        {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
                 <i class="fa-solid fa-search"></i>
             </span> --}}
            {{#each category}}
@@ -129,17 +137,20 @@
     </header>
     <!-- ./header -->
 
-    <!-- navbar -->
-    <nav class="bg-gray-800">
-        <div class="container flex">
-            <div class="relative items-center hidden px-8 py-4 cursor-pointer bg-primary md:flex group">
-                <span class="text-white">
-                    <i class="fa-solid fa-bars"></i>
-                </span>
-                <span class="hidden ml-2 text-white capitalize">All Categories</span>
+        <!-- navbar -->
+        <nav class="bg-gray-800">
+            <div class="container flex">
+                <div
+                    class="relative items-center hidden px-8 py-4 cursor-pointer bg-primary md:flex group"
+                >
+                    <span class="text-white">
+                        <i class="fa-solid fa-bars"></i>
+                    </span>
+                    <span class="hidden ml-2 text-white capitalize">All
+                        Categories</span>
 
-                <!-- dropdown -->
-                {{!-- <div
+                    <!-- dropdown -->
+                    {{! <div
                     class="absolute left-0 invisible w-full py-3 transition duration-300 bg-white divide-y divide-gray-300 shadow-md opacity-0 top-full divide-dashed group-hover:opacity-100 group-hover:visible">
                     <a href="#" class="flex items-center px-6 py-3 transition hover:bg-gray-100">
                         <img src="assets/images/icons/sofa.svg" alt="sofa" class="object-contain w-5 h-5">
@@ -165,8 +176,8 @@
                         <img src="assets/images/icons/bed-2.svg" alt="Mattress" class="object-contain w-5 h-5">
                         <span class="ml-6 text-sm text-gray-600">Mattress</span>
                     </a>
-                </div> --}}
-            </div>
+                </div> }}
+                </div>
 
             <div class="flex items-center justify-between flex-grow py-5 md:pl-12">
                 <div class="flex items-center space-x-6 capitalize">
@@ -210,53 +221,103 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 col-span-2 gap-4">
-                <div class="grid grid-cols-2 gap-4 md:gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Marketing</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Analitycs</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Commerce</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Insights</a>
+                <div class="grid grid-cols-2 col-span-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 md:gap-8">
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Solutions</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Marketing</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Analitycs</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Commerce</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Insights</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Pricing</a>
-                            <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Guides</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">API Status</a>
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Support</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Pricing</a>
+                                <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Guides</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >API Status</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Marketing</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Analitycs</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Commerce</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Insights</a>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Solutions</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Marketing</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Analitycs</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Commerce</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Insights</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Pricing</a>
-                            <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Guides</a>
-                            <a href="#" class="block text-base text-gray-500 hover:text-gray-900">API Status</a>
+                        <div>
+                            <h3
+                                class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
+                            >Support</h3>
+                            <div class="mt-4 space-y-4">
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Pricing</a>
+                                <!-- <a href="#" class="block text-base text-gray-500 hover:text-gray-900">Documentation</a> -->
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >Guides</a>
+                                <a
+                                    href="#"
+                                    class="block text-base text-gray-500 hover:text-gray-900"
+                                >API Status</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- ./footer -->
+        </footer>
+        <!-- ./footer -->
 
     <!-- copyright -->
     <div class="py-4 bg-gray-800">
@@ -271,7 +332,7 @@
     {{!-- {{/if}} --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-    <script>
+      <script>
         let subMenu = document.getElementById("subMenu");
 
         function toggleMenu(){

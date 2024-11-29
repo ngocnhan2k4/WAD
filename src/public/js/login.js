@@ -46,7 +46,7 @@ btn_submit.addEventListener("click", async (e) => {
             annouce.style.color = "white";
         }
     } else {
-        window.location.href = "/product";
+        window.location.href = "/";
     }
     btn_submit.disabled = false;
 });

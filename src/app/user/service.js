@@ -52,16 +52,13 @@ const User = {
                 username: email,
                 role: "user",
                 registration_time: gmt7,
-                user_image: image,
+                user_image: image || "/images/avatar/avatar_placeholder.png",
                 state: "noban",
             },
         });
     },
     createUserGithub: (fullName, socialId, email, image) => {
         const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
-        if (email == null) {
-            email = "No email";
-        }
         return prisma.User.create({
             data: {
                 fullName: fullName,
@@ -71,7 +68,7 @@ const User = {
                 username: email,
                 role: "user",
                 registration_time: gmt7,
-                user_image: image,
+                user_image: image || "/images/avatar/avatar_placeholder.png",
                 state: "noban",
             },
         });

@@ -1,4 +1,5 @@
 const prisma = require("../../config/database/db.config");
+const bcrypt = require("bcrypt");
 
 const User = {
     findUserByUsername: (username) =>
@@ -13,15 +14,17 @@ const User = {
                 id: id,
             },
         }),
-    updatePassword: (id, password) =>
-        prisma.User.update({
+    updatePassword: (id, password) => {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        return prisma.User.update({
             where: {
                 id: id,
             },
             data: {
-                password: password,
+                password: hashedPassword,
             },
-        }),
+        });
+    },
     verifyUser: (Token) => {
         return prisma.User.updateMany({
             where: {
@@ -32,7 +35,6 @@ const User = {
             },
         });
     },
-   
 };
 
 module.exports = User;
