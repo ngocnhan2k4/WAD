@@ -73,6 +73,7 @@ add__new_cate.addEventListener("click", () => {
     add__new_cate.classList.add("active");
     add__new_manu.classList.remove("active");
     dialog.id = "category";
+    dialog_status.textContent = "";
     document.querySelector(".dialog-header").textContent = "Add new category";
     document.querySelector("#input").placeholder = "Category name";
 });
@@ -81,6 +82,7 @@ add__new_manu.addEventListener("click", () => {
     add__new_manu.classList.add("active");
     add__new_cate.classList.remove("active");
     dialog.id = "manufacturer";
+    dialog_status.textContent = "";
     document.querySelector(".dialog-header").textContent =
         "Add new manufacturer";
     document.querySelector("#input").placeholder = "Manufacturer name";

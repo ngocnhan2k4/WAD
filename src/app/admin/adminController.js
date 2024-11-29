@@ -411,6 +411,97 @@ const Admin = {
             res.json({ status: "fail" });
         }
     },
+    Product: async (req, res) => {
+        const products = await User.getAllProducts();
+        const categories = await User.getCategoriesWithoutCount();
+        const manufacturers = await User.getManufacturersWithoutCount();
+
+        res.render("update_create_product", {
+            page_style: "/css/update_create_product.css",
+            products: products,
+            categories: categories,
+            manufacturers: manufacturers,
+        });
+    },
+    createProduct: async (req, res) => {
+        const {
+            product_name,
+            product_price,
+            product_quantity,
+            product_description,
+            category_id,
+            manufacturer_id,
+        } = req.body;
+        if (
+            product_name === undefined ||
+            product_price === undefined ||
+            product_quantity === undefined ||
+            product_description === undefined ||
+            category_id === undefined ||
+            manufacturer_id === undefined
+        ) {
+            res.json({ status: "fail" });
+            return;
+        }
+        if (
+            product_name === "" ||
+            isNaN(product_price) ||
+            isNaN(product_quantity) ||
+            product_quantity < 0 ||
+            product_price < 0 ||
+            !Number.isInteger(Number(product_quantity)) ||
+            product_description === "" ||
+            isNaN(category_id) ||
+            isNaN(manufacturer_id) ||
+            category_id < 1 ||
+            manufacturer_id < 1
+        ) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const product = await User.getProductByName(product_name);
+        if (product !== null) {
+            res.json({
+                status: "fail",
+                message: "Name product already exists",
+            });
+            return;
+        }
+
+        const product_images = req.files;
+        if (product_images === undefined || product_images.length === 0) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const filePaths = [];
+        for (let i = 0; i < product_images.length; i++) {
+            const filePath = `/images/products/${product_images[i].filename}`;
+            filePaths.push(filePath);
+        }
+        try {
+            const result = await User.createProduct(
+                product_name,
+                product_price,
+                product_quantity,
+                product_description,
+                category_id,
+                manufacturer_id,
+                filePaths
+            );
+            if (result) {
+                const productInsert = await User.getProductByNameIncludeImage(
+                    product_name
+                );
+                res.json({ status: "success", product: productInsert });
+            } else {
+                res.json({ status: "fail" });
+            }
+        } catch (err) {
+            console.log(err);
+            res.json({ status: "fail" });
+            return;
+        }
+    },
 };
 
 module.exports = Admin;

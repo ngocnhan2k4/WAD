@@ -2,6 +2,25 @@ const express = require("express");
 const isAdmin = require("./middleware.js");
 const router = express.Router();
 const adminController = require("./adminController");
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(
+            null,
+            path.join(__dirname, "..", "..", "public", "images", "products")
+        );
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const filename = Date.now() + ext;
+        cb(null, filename);
+    },
+});
+
+// Tạo middleware Multer
+const upload = multer({ storage: storage });
 
 // router.use(isAdmin);
 router.use("/viewaccount/:id", adminController.viewDetail);
@@ -22,7 +41,12 @@ router.use(
     "/deleteproductsfrommanufacturer",
     adminController.deleteProductsFromManufacturer
 );
-
 router.use("/deletecategory", adminController.deleteCategory);
 router.use("/deletemanufacturer", adminController.deleteManufacturer);
+router.use("/product", adminController.Product);
+router.use(
+    "/createproduct",
+    upload.array("product_images", 4),
+    adminController.createProduct
+);
 module.exports = router;

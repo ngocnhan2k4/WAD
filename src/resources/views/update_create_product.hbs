@@ -1,0 +1,204 @@
+<main class="product__list container">
+    <div class="header">
+        <div class="create__inner">
+            <h1 class="heading">Products List</h1>
+            <button class="create__btn">Create</button>
+        </div>
+        <div class="view__product__search">
+            <input
+                type="text"
+                class="view__product__search__input"
+                placeholder="Search product"
+            />
+            <button class="view__product__search__button">Search</button>
+        </div>
+    </div>
+    <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
+        {{#each products}}
+            <div
+                id={{product_id}}
+                class="product__item bg-white rounded shadow group"
+            >
+                <div class="relative">
+                    <a href="/product/productDetail?id={{this.product_id}}"><img
+                            src={{Images.0.directory_path}}
+                            alt="product{{@index}}"
+                            class="product__image w-full"
+                        /></a>
+                </div>
+                <img
+                    src="/images/icons/close-button.png"
+                    class="delete__product"
+                    id="{{product_id}}"
+                />
+                <div class="product__content px-4 pt-4 pb-3">
+                    <a href="/product/productDetail?id={{this.product_id}}">
+                        <h4
+                            class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                        >
+                            {{product_name}}</h4>
+                    </a>
+                    <div class="flex mt-auto items-baseline mb-1 space-x-2">
+                        <p
+                            class="text-xl font-semibold text-primary"
+                        >{{current_price}}</p>
+                        <p
+                            class="text-sm text-gray-400 line-through"
+                        >{{original_price}}</p>
+                    </div>
+                </div>
+                <a
+                    href="#"
+                    class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
+                >Add to cart</a>
+            </div>
+
+        {{/each}}
+    </div>
+</main>
+<div class="overlay">
+</div>
+<div class="dialog">
+    <button class="dialog-close" id="closeDialogBtn">&times;</button>
+    <div class="dialog-header">Are you sure ?</div>
+    <div class="form">
+        <div class="dialog-buttons">
+            <button class="cancel-btn" id="cancelBtn">Cancel</button>
+            <button class="delete-btn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div class="create__product-inner">
+    <div class="create__product parent">
+        <div class="create__product__header">
+            <h2 class="create__product__title">New Product</h2>
+        </div>
+        <div class="create__product__form">
+            <div class="form__group">
+                <label for="productName">Name Product</label>
+                <input
+                    type="text"
+                    id="productName"
+                    name="productName"
+                    placeholder="Example: Main Header, Blog Page, Search Results"
+                    required
+                />
+            </div>
+            <div class="form__group-inner">
+                <div class="form__group">
+                    <label for="productQuantity">Quantity</label>
+                    <input
+                        type="number"
+                        id="productQuantity"
+                        name="productQuantity"
+                        placeholder="100"
+                        required
+                    />
+                </div>
+                <div class="form__group">
+                    <label for="productPrice">Price</label>
+                    <input
+                        type="number"
+                        id="productPrice"
+                        name="productPrice"
+                        placeholder="10"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="form__group-inner">
+                <div class="form__group">
+                    <label for="Category">Category</label>
+                    <input
+                        type="text"
+                        id="Category"
+                        name="Category"
+                        list="category-list"
+                        placeholder="Choose a category"
+                    />
+                    <datalist id="category-list">
+                        {{#each categories}}
+                            <option
+                                id="{{category_id}}"
+                                value={{category_name}}
+                            ></option>
+                        {{/each}}
+                    </datalist>
+                </div>
+                <div class="form__group">
+                    <label for="Manufactory">Manufactory</label>
+                    <input
+                        type="text"
+                        id="Manufactory"
+                        name="Manufactory"
+                        list="manufactory-list"
+                        placeholder="Choose a manufactory"
+                    />
+                    <datalist id="manufactory-list">
+                        {{#each manufacturers}}
+                            <option
+                                id="{{supplier_id}}"
+                                value="{{brand}}"
+                            ></option>
+                        {{/each}}
+                    </datalist>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="imageUpload" class="form-label">Upload Image(max 4
+                    pics)</label>
+                <div class="image-upload-container">
+                    <div class="image-upload-preview image-upload__add">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            class="image-upload__input"
+                            style="display: none;"
+                        />
+                    </div>
+
+                    <div class="image-upload-preview image-upload-placeholder">
+                        <p>No image selected</p>
+                    </div>
+                    <div class="image-upload-preview image-upload-placeholder">
+                        <p>No image selected</p>
+                    </div>
+                    <div class="image-upload-preview image-upload-placeholder">
+                        <p>No image selected</p>
+                    </div>
+                    <div class="image-upload-preview image-upload-placeholder">
+                        <p>No image selected</p>
+                    </div>
+                </div>
+            </div>
+            <div class="description-container">
+                <label
+                    for="description"
+                    class="description-label"
+                >Description</label>
+                <textarea
+                    id="productDescription"
+                    class="description-textarea"
+                    placeholder="Write your description here..."
+                ></textarea>
+            </div>
+            <div class="buttons floating__btn">
+                <button class="btn save__btn">Save</button>
+                <button class="btn cancel__btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog__status" class="dialog__status hidden__status">
+    <div class="dialog__status-content">
+        <span
+            id="close-dialog__status"
+            class="dialog__status-close-btn"
+        >&times;</span>
+        <p id="dialog__status-message"></p>
+    </div>
+</div>
+
+<script src="/js/update_create_product.js"></script>

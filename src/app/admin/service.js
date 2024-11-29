@@ -1,4 +1,5 @@
 const prisma = require("../../config/database/db.config");
+const { DateTime } = require("luxon");
 
 function funcountSearch(user_search) {
     return prisma.User.count({
@@ -370,6 +371,7 @@ const User = {
         }
         return categories;
     },
+    getCategoriesWithoutCount: () => prisma.Categories.findMany(),
     getManufacturers: async () => {
         const manufacturers = await prisma.Suppliers.findMany();
         for (let i = 0; i < manufacturers.length; i++) {
@@ -379,6 +381,7 @@ const User = {
         }
         return manufacturers;
     },
+    getManufacturersWithoutCount: () => prisma.Suppliers.findMany(),
     updateManuOrCate: async (type, name) => {
         if (type === "category") {
             const cate = await prisma.Categories.findFirst({
@@ -698,6 +701,67 @@ const User = {
         } catch (e) {
             return false;
         }
+    },
+    getAllProducts: () =>
+        prisma.Product.findMany({
+            include: {
+                Images: true,
+            },
+        }),
+    createProduct: async (
+        product_name,
+        product_price,
+        product_quantity,
+        product_description,
+        category_id,
+        manufacturer_id,
+        filePaths
+    ) => {
+        try {
+            const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
+            const product = await prisma.Product.create({
+                data: {
+                    creation_time: gmt7,
+                    product_name: product_name,
+                    original_price: Number(product_price),
+                    current_price: Number(product_price),
+                    stock_quantity: Number(product_quantity),
+                    description: product_description,
+                    category_id: Number(category_id),
+                    total_purchase: 0,
+                    manufacturer: Number(manufacturer_id),
+                },
+            });
+            for (let i = 0; i < filePaths.length; i++) {
+                await prisma.Images.create({
+                    data: {
+                        product_id: product.product_id,
+                        directory_path: filePaths[i],
+                        ordinal_numbers: i + 1,
+                    },
+                });
+            }
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    getProductByName: async (product_name) => {
+        return prisma.Product.findFirst({
+            where: {
+                product_name: product_name,
+            },
+        });
+    },
+    getProductByNameIncludeImage: async (product_name) => {
+        return prisma.Product.findFirst({
+            where: {
+                product_name: product_name,
+            },
+            include: {
+                Images: true,
+            },
+        });
     },
 };
 

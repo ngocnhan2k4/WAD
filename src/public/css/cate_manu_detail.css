@@ -321,6 +321,21 @@ button {
     padding: 10px;
     font-size: 16px;
 }
+.product__item {
+    display: flex;
+    flex-direction: column;
+}
+.product__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+.product__image {
+    height: 310px;
+    object-fit: contain;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .grid {
