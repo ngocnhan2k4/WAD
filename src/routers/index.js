@@ -13,6 +13,7 @@ const userProfileRouter = require("../app/userProfile/route");
 
 function route(app) {
     app.use(middleware.isBan);
+    app.use(middleware.checkAuthentication);
     app.use("/user", userRouter);
     app.use("/product", productRouter);
     app.use("/auth", authRouter);
