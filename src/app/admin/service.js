@@ -412,6 +412,293 @@ const User = {
             throw new Error(`Invalid type: ${type}`);
         }
     },
+    getCategoryById: async (id) => {
+        id = Number(id);
+        const category = await prisma.Categories.findUnique({
+            where: {
+                category_id: id,
+            },
+        });
+        if (!category) {
+            return null;
+        }
+        category.count = await countProductsBelongToCategory(id);
+        return category;
+    },
+    getTotalPayCate: async (id) => {
+        id = Number(id);
+        let Orders = await prisma.Orders.findMany({
+            where: {
+                status: "Completed",
+            },
+            include: {
+                OrderDetail: {
+                    include: {
+                        Product: {
+                            include: {
+                                Categories: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        let total = 0;
+        let count = 0;
+        Orders.forEach((order) => {
+            order.OrderDetail.forEach((detail) => {
+                if (detail.Product.category_id === id) {
+                    total += detail.quantity * detail.Product.current_price;
+                    count += detail.quantity;
+                }
+            });
+        });
+        return {
+            total: total,
+            count: count,
+        };
+    },
+    getUsersFavoriteCate: async (id) => {
+        id = Number(id);
+        const users = await prisma.User.findMany();
+        const result = [];
+        for (let i = 0; i < users.length; i++) {
+            const orders = await prisma.Orders.findMany({
+                where: {
+                    user_id: users[i].id,
+                    status: "Completed",
+                },
+                include: {
+                    OrderDetail: {
+                        include: {
+                            Product: {
+                                include: {
+                                    Categories: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+            const cate = {};
+            orders.forEach((order) => {
+                order.OrderDetail.forEach((detail) => {
+                    const product = detail.Product;
+                    if (cate[product.category_id] === undefined) {
+                        cate[product.category_id] = {
+                            id: product.category_id,
+                            name: product.Categories.category_name,
+                            count: detail.quantity,
+                        };
+                    } else {
+                        cate[product.category_id].count += detail.quantity;
+                    }
+                });
+            });
+
+            const favorite = Object.values(cate);
+            favorite.sort((a, b) => b.count - a.count);
+            if (favorite.length !== 0) {
+                if (favorite[0].id === id) {
+                    result.push(users[i]);
+                }
+            }
+        }
+        return result.length;
+    },
+    getProductsCate: async (id) => {
+        id = Number(id);
+        const products = await prisma.Product.findMany({
+            where: {
+                category_id: id,
+            },
+            include: {
+                Images: true,
+            },
+        });
+        return products;
+    },
+    getManufacturerById: async (id) => {
+        id = Number(id);
+        const manufacturer = await prisma.Suppliers.findUnique({
+            where: {
+                supplier_id: id,
+            },
+        });
+        if (!manufacturer) {
+            return null;
+        }
+        manufacturer.count = await countProductsBelongManufacturer(id);
+        return manufacturer;
+    },
+    getTotalPayManu: async (id) => {
+        id = Number(id);
+        let Orders = await prisma.Orders.findMany({
+            where: {
+                status: "Completed",
+            },
+            include: {
+                OrderDetail: {
+                    include: {
+                        Product: {
+                            include: {
+                                Suppliers: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        let total = 0;
+        let count = 0;
+        Orders.forEach((order) => {
+            order.OrderDetail.forEach((detail) => {
+                if (detail.Product.manufacturer === id) {
+                    total += detail.quantity * detail.Product.current_price;
+                    count += detail.quantity;
+                }
+            });
+        });
+        return {
+            total: total,
+            count: count,
+        };
+    },
+    getUsersFavoriteManu: async (id) => {
+        id = Number(id);
+        const users = await prisma.User.findMany();
+        const result = [];
+        for (let i = 0; i < users.length; i++) {
+            const orders = await prisma.Orders.findMany({
+                where: {
+                    user_id: users[i].id,
+                    status: "Completed",
+                },
+                include: {
+                    OrderDetail: {
+                        include: {
+                            Product: {
+                                include: {
+                                    Suppliers: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+            const manufac = {};
+            orders.forEach((order) => {
+                order.OrderDetail.forEach((detail) => {
+                    const product = detail.Product;
+                    if (manufac[product.manufacturer] === undefined) {
+                        manufac[product.manufacturer] = {
+                            id: product.manufacturer,
+                            name: product.Suppliers.brand,
+                            count: detail.quantity,
+                        };
+                    } else {
+                        manufac[product.manufacturer].count += detail.quantity;
+                    }
+                });
+            });
+            const favorite = Object.values(manufac);
+            favorite.sort((a, b) => b.count - a.count);
+            if (favorite.length !== 0) {
+                if (favorite[0].id === id) {
+                    result.push(users[i]);
+                }
+            }
+        }
+        return result.length;
+    },
+    getProductsManu: async (id) => {
+        id = Number(id);
+        const products = await prisma.Product.findMany({
+            where: {
+                manufacturer: id,
+            },
+            include: {
+                Images: true,
+            },
+        });
+        return products;
+    },
+    deleteProductsFromCategory: async (product_detele) => {
+        try {
+            for (let i = 0; i < product_detele.length; i++) {
+                await prisma.Product.update({
+                    where: {
+                        product_id: product_detele[i],
+                    },
+                    data: {
+                        category_id: 20, //Category Other
+                    },
+                });
+            }
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    deleteProductsFromManufacturer: async (product_detele) => {
+        try {
+            for (let i = 0; i < product_detele.length; i++) {
+                await prisma.Product.update({
+                    where: {
+                        product_id: product_detele[i],
+                    },
+                    data: {
+                        manufacturer: 20, //Manufacturer Other
+                    },
+                });
+            }
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    deleteCategory: async (id) => {
+        id = Number(id);
+        try {
+            await prisma.Product.updateMany({
+                where: {
+                    category_id: id,
+                },
+                data: {
+                    category_id: 20, //Category Other
+                },
+            });
+            await prisma.Categories.delete({
+                where: {
+                    category_id: id,
+                },
+            });
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    deleteManufacturer: async (id) => {
+        id = Number(id);
+        try {
+            await prisma.Product.updateMany({
+                where: {
+                    manufacturer: id,
+                },
+                data: {
+                    manufacturer: 20, //Manufacturer Other
+                },
+            });
+            await prisma.Suppliers.delete({
+                where: {
+                    supplier_id: id,
+                },
+            });
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
 };
 
 module.exports = User;

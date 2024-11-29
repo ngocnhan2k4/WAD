@@ -14,5 +14,15 @@ router.use("/cate/:id", adminController.viewCateDetail);
 router.use("/manu/:id", adminController.viewManuDetail);
 router.use("/viewcatemanu", adminController.viewCateManu);
 router.use("/updatemanuorcate", adminController.updateManuOrCate);
+router.use(
+    "/deleteproductsfromcategory",
+    adminController.deleteProductsFromCategory
+);
+router.use(
+    "/deleteproductsfrommanufacturer",
+    adminController.deleteProductsFromManufacturer
+);
 
+router.use("/deletecategory", adminController.deleteCategory);
+router.use("/deletemanufacturer", adminController.deleteManufacturer);
 module.exports = router;

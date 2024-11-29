@@ -276,14 +276,140 @@ const Admin = {
         }
     },
     viewCateDetail: async (req, res) => {
+        const id = req.params.id;
+        if (isNaN(id) || id < 1) {
+            res.redirect("/admin/viewcatemanu");
+            return;
+        }
+        const category = await User.getCategoryById(id);
+        if (category === null) {
+            res.redirect("/admin/viewcatemanu");
+            return;
+        }
+        const CM = {
+            id: category.category_id,
+            name: category.category_name,
+            count: category.count,
+            img: "/images/img/cate01.png",
+            type: "category",
+        };
+
+        const total_pay = await User.getTotalPayCate(id);
+        const users_favorite = await User.getUsersFavoriteCate(id);
+        const products = await User.getProductsCate(id);
+        CM.total_pay = total_pay;
+        CM.users_favorite = users_favorite;
         res.render("view_cate_manu_detail", {
             page_style: "/css/cate_manu_detail.css",
+            CM: CM,
+            products: products,
         });
     },
     viewManuDetail: async (req, res) => {
+        const id = req.params.id;
+        if (isNaN(id) || id < 1) {
+            res.redirect("/admin/viewcatemanu");
+            return;
+        }
+        const manufacturer = await User.getManufacturerById(id);
+        if (manufacturer === null) {
+            res.redirect("/admin/viewcatemanu");
+            return;
+        }
+        const CM = {
+            id: manufacturer.supplier_id,
+            name: manufacturer.brand,
+            count: manufacturer.count,
+            img: "/images/img/manu01.png",
+            type: "manufacturer",
+        };
+
+        const total_pay = await User.getTotalPayManu(id);
+        const users_favorite = await User.getUsersFavoriteManu(id);
+        const products = await User.getProductsManu(id);
+        CM.total_pay = total_pay;
+        CM.users_favorite = users_favorite;
         res.render("view_cate_manu_detail", {
             page_style: "/css/cate_manu_detail.css",
+            CM: CM,
+            products: products,
         });
+    },
+    deleteProductsFromCategory: async (req, res) => {
+        const { product_detele, id } = req.body;
+        if (
+            product_detele === undefined ||
+            id === undefined ||
+            Number(id) < 1 ||
+            isNaN(Number(id)) ||
+            Number(id) === 20
+        ) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.deleteProductsFromCategory(product_detele);
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
+        }
+    },
+    deleteProductsFromManufacturer: async (req, res) => {
+        const { product_detele, id } = req.body;
+        if (
+            product_detele === undefined ||
+            id === undefined ||
+            Number(id) < 1 ||
+            isNaN(Number(id)) ||
+            Number(id) === 20
+        ) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.deleteProductsFromManufacturer(
+            product_detele
+        );
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
+        }
+    },
+    deleteCategory: async (req, res) => {
+        let { id } = req.body;
+        if (id === undefined || Number(id) === 20) {
+            res.json({ status: "fail" });
+            return;
+        }
+        id = Number(id);
+        if (isNaN(id) || id < 1) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.deleteCategory(id);
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
+        }
+    },
+    deleteManufacturer: async (req, res) => {
+        let { id } = req.body;
+        if (id === undefined || Number(id) === 20) {
+            res.json({ status: "fail" });
+            return;
+        }
+        id = Number(id);
+        if (isNaN(id) || id < 1) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.deleteManufacturer(id);
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
+        }
     },
 };
 
