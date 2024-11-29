@@ -11,7 +11,7 @@
 
     <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
-
+    <link rel="stylesheet" href="/css/userprofile.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,12 +78,52 @@
                     0
                 </div>
             </a>
-          <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
+          <a {{#unless isAuthen}} href="/user/login" {{/unless}}class="relative text-center text-gray-700 transition hover:text-primary" >
             <div class="text-2xl">
+            {{#if isAuthen}}
+               <img src="{{userAvatar}}" alt="This is userAvatar" class="w-8 h-8 ml-4 rounded-full" onclick="toggleMenu()">
+            {{else}}
               <i class="fa-regular fa-user"></i>
+            {{/if}}
             </div>
+            {{#if isAuthen}}
+            <div class="text-xs leading-3">{{userName}}</div>
+            {{else}}
             <div class="text-xs leading-3">Account</div>
+            {{/if}}
           </a>
+          <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="{{userAvatar}}">
+                    <h3>{{fullName}}</h3>
+                </div>
+                <hr>
+
+                <a href="/userprofile" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/profile.png">
+                    <p>Profile</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/setting.png">
+                    <p>Change Password</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <i class="fa-solid fa-cart-shopping mr-6 pl-3"></i>
+                    <p>History</p>
+                    <span>></span>
+                </a>
+                
+                <a href="/auth/logout" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/logout.png">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -135,7 +175,11 @@
                     <a href="#" class="text-gray-200 transition hover:text-white">About us</a>
                     <a href="#" class="text-gray-200 transition hover:text-white">Contact us</a>
                 </div>
+                {{#if isAuthen}}
+                <a href="/auth/logout" class="text-gray-200 transition hover:text-white">Logout</a>
+                {{else}}
                 <a href="/user/login" class="text-gray-200 transition hover:text-white">Login</a>
+                {{/if}}
             </div>
         </div>
     </nav>
@@ -227,6 +271,12 @@
     {{!-- {{/if}} --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-        
+    <script>
+        let subMenu = document.getElementById("subMenu");
+
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
 </body>
 </html>

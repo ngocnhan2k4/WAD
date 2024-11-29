@@ -4,9 +4,11 @@ const handlebars = require("express-handlebars");
 const dotenv = require("dotenv");
 const passport = require("./config/passport");
 const session = require("express-session");
+
 dotenv.config();
 
 const app = express();
+
 // Đăng ký các helper Handlebars
 require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
@@ -37,6 +39,29 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+//add middleware to check isAuthen
+app.use((req, res, next) => {
+    let isAuth = false;
+    let userName = "";
+    let userAvatar = "";
+    let fullName = "";
+    if(req.user){
+        isAuth = true;
+        if(req.user.fullName.length <=9)
+            userName = req.user.fullName;
+        else
+        userName = req.user.fullName.slice(0, 9) + '...';
+        fullName = req.user.fullName;
+
+        userAvatar = req.user.user_image;
+    }
+    res.locals.isAuthen = isAuth;
+    res.locals.userName = userName;
+    res.locals.userAvatar = userAvatar;
+    res.locals.fullName = fullName;
+    next();
+});
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");

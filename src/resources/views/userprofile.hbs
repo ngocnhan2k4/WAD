@@ -1,0 +1,139 @@
+ <div class="container-user">
+    <div class="column-user column-user-4">
+        <img src="{{userAvatar}}" id="avatar-preview">
+        <h2>{{fullName}}</h2>
+        <button id="update-avatar-btn">Update Avatar</button>
+        <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+    </div>
+    <div class="column-user column-user-8">
+        <h1>Profile</h1>
+        <div class="user-info1">
+            <p><strong>Email:</strong> tranngocnhannt2004@gmail.com</p>
+            <p><strong>Phone:</strong> 0123456789</p>
+            <p><strong>Address:</strong> Ktx khu B</p>
+            <p><strong>Birthday:</strong>05/07/2004</p>
+        </div>
+        <button >Edit Profile</button>
+        
+    </div>
+    <div class="orders-container">
+    <h2>Order History</h2>
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Total Amount</th>
+                <th>Creation Time</th>
+                <th>STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1001</td>
+                <td>$3000</td>
+                <td>24/12/2024</td>
+                <td><span class="status progress">Progress</span></td>
+            </tr>
+            <tr>
+                <td>1001</td>
+                <td>$3000</td>
+                <td>24/12/2024</td>
+                <td><span class="status open">Open</span></td>
+            </tr>
+            <tr>
+                <td>1001</td>
+                <td>$3000</td>
+                <td>24/12/2024</td>
+                <td><span class="status hold">On hold</span></td>
+            </tr>
+            <tr>
+                <td>1001</td>
+                <td>$3000</td>
+                <td>24/12/2024</td>
+                <td><span class="status progress">Progress</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+ <div class="orders-container">
+        <h2>Product History</h2>
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
+            <!-- Sản phẩm 1 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
+                </div>
+                <div class="product-info">
+                    <a href="/product/productDetail?id=1">
+                        <h4 class="product-name">ABC</h4>
+                    </a>
+                    <div class="price">
+                        <span class="price-current">$100</span>
+                        <span class="price-old">$200</span>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
+                </div>
+                <div class="product-info">
+                    <a href="/product/productDetail?id=1">
+                        <h4 class="product-name">ABC</h4>
+                    </a>
+                    <div class="price">
+                        <span class="price-current">$100</span>
+                        <span class="price-old">$200</span>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
+                </div>
+                <div class="product-info">
+                    <a href="/product/productDetail?id=1">
+                        <h4 class="product-name">ABC</h4>
+                    </a>
+                    <div class="price">
+                        <span class="price-current">$100</span>
+                        <span class="price-old">$200</span>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    
+</div>
+{{!-- <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
+               
+                <div class="overflow-hidden bg-white rounded shadow group">
+                    <div class="relative">
+                        <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1" class="w-full"></a>
+                    </div>
+                    <div class="px-4 pt-4 pb-3">
+                        <a href="/product/productDetail?id=1">
+                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
+                                ABC</h4>
+                        </a>
+                        <div class="flex items-baseline mb-1 space-x-2 g">
+                            <p class="text-xl font-semibold text-primary">100</p>
+                            <p class="text-sm text-gray-400 line-through">200</p>
+                        </div>
+                       
+                    </div>
+                    <button id="add-to-cart-1" 
+                            data-product-id="1" 
+                            class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                        Add to cart
+                    </button>
+                </div>
+                
+            </div> --}}
+
+
+<script src="/js/profile.js"></script>

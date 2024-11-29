@@ -9,6 +9,8 @@ const homeRouter = require("../app/home/route");
 const adminRouter = require("../app/admin/route");
 const middleware = require("../app/middleware/middleware");
 const cartRouter = require("../app/cart/route");
+const userProfileRouter = require("../app/userprofile/route");
+
 function route(app) {
     app.use(middleware.isBan);
     app.use("/user", userRouter);
@@ -17,6 +19,7 @@ function route(app) {
     app.use("/admin", adminRouter);
     app.use("/cart", cartRouter);
     app.use("/", homeRouter);
+    app.use("/userprofile", userProfileRouter);
 }
 
 module.exports = route;
