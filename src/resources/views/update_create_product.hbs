@@ -20,7 +20,7 @@
                 class="product__item bg-white rounded shadow group"
             >
                 <div class="relative">
-                    <a href="/product/productDetail?id={{this.product_id}}"><img
+                    <a href="#!"><img
                             src={{Images.0.directory_path}}
                             alt="product{{@index}}"
                             class="product__image w-full"
@@ -29,10 +29,10 @@
                 <img
                     src="/images/icons/close-button.png"
                     class="delete__product"
-                    id="{{product_id}}"
+                    id_product="{{product_id}}"
                 />
                 <div class="product__content px-4 pt-4 pb-3">
-                    <a href="/product/productDetail?id={{this.product_id}}">
+                    <a href="#!">
                         <h4
                             class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
                         >
@@ -102,6 +102,16 @@
                         type="number"
                         id="productPrice"
                         name="productPrice"
+                        placeholder="10"
+                        required
+                    />
+                </div>
+                <div class="form__group group__currentPrice">
+                    <label for="productCurrentPrice">Current Price</label>
+                    <input
+                        type="number"
+                        id="productCurrentPrice"
+                        name="productCurrentPrice"
                         placeholder="10"
                         required
                     />
@@ -187,6 +197,7 @@
             <div class="buttons floating__btn">
                 <button class="btn save__btn">Save</button>
                 <button class="btn cancel__btn">Cancel</button>
+                <button class="btn delete__btn-product">Delete</button>
             </div>
         </div>
     </div>

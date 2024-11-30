@@ -49,4 +49,11 @@ router.use(
     upload.array("product_images", 4),
     adminController.createProduct
 );
+router.use(
+    "/updateproduct",
+    upload.array("product_images", 4),
+    adminController.updateProduct
+);
+router.use("/getproduct/:id", adminController.getProduct);
+router.use("/deleteproduct/:id", adminController.deleteProduct);
 module.exports = router;

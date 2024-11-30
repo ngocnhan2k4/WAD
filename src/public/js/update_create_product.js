@@ -13,7 +13,9 @@ const dialog_close_dialog = document.querySelector(".dialog-close");
 const create__product_inner = document.querySelector(".create__product-inner");
 const image_upload__add = document.querySelector(".image-upload__add");
 const image_upload__input = document.querySelector(".image-upload__input");
+const delete__btn_product = document.querySelector(".delete__btn-product");
 const upload_images = [];
+let id_product_edit = 0;
 let position = [false, false, false, false];
 const image_upload_previews = document.querySelectorAll(
     ".image-upload-placeholder"
@@ -21,6 +23,8 @@ const image_upload_previews = document.querySelectorAll(
 const dialogStatus = document.getElementById("dialog__status");
 const closeDialogStatus = document.getElementById("close-dialog__status");
 const dialogStatusMessage = document.getElementById("dialog__status-message");
+
+let type_edit = "";
 
 // Hàm để bật dialog
 function showDialogStatus(message, isSuccess) {
@@ -85,17 +89,16 @@ function showOverlay(this_dialog) {
         dialog.style.display = "block";
     }
 }
-// overlay.classList.add("overlay-active"); //xí nữa xóa
-// document.body.style.overflow = "hidden"; //xí nữa xóa
-
 overlay.addEventListener("click", function () {
     overlay.classList.remove("overlay-active");
     document.body.style.overflow = "auto";
     dialog.style.display = "none";
 });
 cancel_btn_dialog.addEventListener("click", () => {
-    overlay.classList.remove("overlay-active");
-    document.body.style.overflow = "auto";
+    if (create__product_inner.style.display == "none") {
+        overlay.classList.remove("overlay-active");
+        document.body.style.overflow = "auto";
+    }
     dialog.style.display = "none";
 });
 dialog_close_dialog.addEventListener("click", () => {
@@ -103,7 +106,21 @@ dialog_close_dialog.addEventListener("click", () => {
     document.body.style.overflow = "auto";
     dialog.style.display = "none";
 });
-delete_btn_dialog.addEventListener("click", async () => {});
+delete_btn_dialog.addEventListener("click", async () => {
+    overlay.classList.remove("overlay-active");
+    document.body.style.overflow = "auto";
+    dialog.style.display = "none";
+    const path = `/admin/deleteproduct/${id_product_edit}`;
+    const result = await fetch(path).then((res) => res.json());
+    if (result.status === "success") {
+        showDialogStatus("Delete product successfully", true);
+        document.getElementById(id_product_edit).remove();
+        cancel__btn.click();
+    } else {
+        showDialogStatus("Delete product failed", false);
+        overlay.classList.add("overlay-active");
+    }
+});
 
 function displayProductItems(ids) {
     product__items.forEach((product__item) => {
@@ -115,6 +132,82 @@ function displayProductItems(ids) {
         }
     });
 }
+
+product__items.forEach((product__item) => {
+    product__item.addEventListener("click", async () => {
+        const id = product__item.getAttribute("id");
+        id_product_edit = id;
+        type_edit = "update";
+        showOverlay(create__product_inner);
+        document.querySelector(".group__currentPrice").style.display = "block";
+        delete__btn_product.style.display = "block";
+        clearAll();
+        document.querySelector(".create__product__title").textContent =
+            "Update Product";
+        const path = `/admin/getproduct/${id}`;
+        const result = await fetch(path).then((res) => res.json());
+        if (result.status === "success" && result.product) {
+            const product = result.product;
+            document.querySelector("#productName").value = product.product_name;
+            document.querySelector("#productPrice").value =
+                product.original_price;
+            document.querySelector("#productCurrentPrice").value =
+                product.current_price;
+            document.querySelector("#productQuantity").value =
+                product.stock_quantity;
+            document.querySelector("#productDescription").value =
+                product.description;
+            categori_option = product.category_id;
+            manufacturer_option = product.manufacturer;
+            categoryInput.value = product.Categories.category_name;
+            manufacturerInput.value = product.Suppliers.brand;
+
+            for (const [index, image] of product.Images.entries()) {
+                const img = document.createElement("img");
+                img.src = image.directory_path;
+                img.classList.add("image-upload");
+
+                const close = document.createElement("img");
+                close.src = "/images/icons/close-button.png";
+                close.classList.add("close__img");
+
+                let pos = 0;
+                let isExist = false;
+                for (let i = 0; i < 4; i++) {
+                    if (!position[i]) {
+                        position[i] = true;
+                        pos = i;
+                        isExist = true;
+                        break;
+                    }
+                }
+
+                if (!isExist) {
+                    return;
+                }
+
+                image_upload_previews[pos].innerHTML = "";
+                image_upload_previews[pos].appendChild(img);
+                image_upload_previews[pos].appendChild(close);
+
+                const blob = await fetch(image.directory_path).then(
+                    (response) => response.blob()
+                );
+                const file = new File([blob], `image_${index}`, {
+                    type: blob.type,
+                });
+                upload_images.splice(pos, 0, file);
+
+                close.addEventListener("click", () => {
+                    image_upload_previews[pos].innerHTML =
+                        "<p>No image selected</p>";
+                    position[pos] = false;
+                    upload_images.splice(pos, 1);
+                });
+            }
+        }
+    });
+});
 search__button.addEventListener("click", async () => {
     search__button.disable = true;
     const search = document.querySelector(
@@ -132,13 +225,25 @@ search__button.addEventListener("click", async () => {
     search__button.disable = false;
 });
 delete__products.forEach((delete__product) => {
-    delete__product.addEventListener("click", () => {
+    delete__product.addEventListener("click", (event) => {
+        event.stopPropagation();
         showOverlay(dialog);
+        id_product_edit = delete__product.getAttribute("id_product");
     });
+});
+
+delete__btn_product.addEventListener("click", async () => {
+    showOverlay(dialog);
 });
 
 create__btn.addEventListener("click", () => {
     showOverlay(create__product_inner);
+    type_edit = "create";
+    document.querySelector(".create__product__title").textContent =
+        "New Product";
+    document.querySelector(".group__currentPrice").style.display = "none";
+    delete__btn_product.style.display = "none";
+    clearAll();
 });
 
 cancel__btn.addEventListener("click", () => {
@@ -216,6 +321,10 @@ document.querySelector("#productDescription").addEventListener("input", () => {
     borderNone(document.querySelector("#productDescription"));
 });
 
+document.querySelector("#productCurrentPrice").addEventListener("input", () => {
+    borderNone(document.querySelector("#productCurrentPrice"));
+});
+
 function clearAll() {
     document.querySelector("#productName").value = "";
     document.querySelector("#productPrice").value = "";
@@ -231,43 +340,6 @@ function clearAll() {
 }
 
 function createProduct(product) {
-    // <div
-    //             id={{product_id}}
-    //             class="product__item bg-white rounded shadow group"
-    //         >
-    //             <div class="relative">
-    //                 <a href="/product/productDetail?id={{this.product_id}}"><img
-    //                         src={{Images.0.directory_path}}
-    //                         alt="product{{@index}}"
-    //                         class="product__image w-full"
-    //                     /></a>
-    //             </div>
-    //             <img
-    //                 src="/images/icons/close-button.png"
-    //                 class="delete__product"
-    //                 id="{{product_id}}"
-    //             />
-    //             <div class="product__content px-4 pt-4 pb-3">
-    //                 <a href="/product/productDetail?id={{this.product_id}}">
-    //                     <h4
-    //                         class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
-    //                     >
-    //                         {{product_name}}</h4>
-    //                 </a>
-    //                 <div class="flex mt-auto items-baseline mb-1 space-x-2">
-    //                     <p
-    //                         class="text-xl font-semibold text-primary"
-    //                     >{{current_price}}</p>
-    //                     <p
-    //                         class="text-sm text-gray-400 line-through"
-    //                     >{{original_price}}</p>
-    //                 </div>
-    //             </div>
-    //             <a
-    //                 href="#"
-    //                 class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
-    //             >Add to cart</a>
-    //         </div>
     const product__item = document.createElement("div");
     product__item.id = product.product_id;
     product__item.classList.add(
@@ -346,6 +418,77 @@ function createProduct(product) {
     });
 }
 
+function updateProduct(product) {
+    const product__item = document.getElementById(product.product_id);
+    product__item.innerHTML = "";
+    const relative = document.createElement("div");
+    relative.classList.add("relative");
+    const a = document.createElement("a");
+    a.href = `/product/productDetail?id=${product.product_id}`;
+    const img = document.createElement("img");
+    img.src = product.Images[0].directory_path;
+    img.alt = `product${product.product_id}`;
+    img.classList.add("product__image", "w-full");
+    a.appendChild(img);
+    relative.appendChild(a);
+    product__item.appendChild(relative);
+    const delete__product = document.createElement("img");
+    delete__product.src = "/images/icons/close-button.png";
+    delete__product.classList.add("delete__product");
+    delete__product.id = product.product_id;
+    product__item.appendChild(delete__product);
+    const product__content = document.createElement("div");
+    product__content.classList.add("product__content", "px-4", "pt-4", "pb-3");
+    const a2 = document.createElement("a");
+    a2.href = `/product/productDetail?id=${product.product_id}`;
+    const h4 = document.createElement("h4");
+    h4.classList.add(
+        "mb-2",
+        "text-xl",
+        "font-medium",
+        "text-gray-800",
+        "uppercase",
+        "transition",
+        "hover:text-primary"
+    );
+    h4.textContent = product.product_name;
+    a2.appendChild(h4);
+    product__content.appendChild(a2);
+    const div = document.createElement("div");
+    div.classList.add("flex", "mt-auto", "items-baseline", "mb-1", "space-x-2");
+    const p = document.createElement("p");
+    p.classList.add("text-xl", "font-semibold", "text-primary");
+    p.textContent = product.current_price;
+    const p2 = document.createElement("p");
+    p2.classList.add("text-sm", "text-gray-400", "line-through");
+    p2.textContent = product.original_price;
+    div.appendChild(p);
+    div.appendChild(p2);
+    product__content.appendChild(div);
+    product__item.appendChild(product__content);
+    const a3 = document.createElement("a");
+    a3.href = "#";
+    a3.classList.add(
+        "block",
+        "w-full",
+        "py-1",
+        "text-center",
+        "text-white",
+        "transition",
+        "border",
+        "rounded-b",
+        "bg-primary",
+        "border-primary",
+        "hover:bg-transparent",
+        "hover:text-primary"
+    );
+    a3.textContent = "Add to cart";
+    product__item.appendChild(a3);
+    delete__product.addEventListener("click", () => {
+        showOverlay(dialog);
+    });
+}
+
 save__btn.addEventListener("click", async () => {
     const product_name = document.querySelector("#productName").value;
     if (product_name === "") {
@@ -356,6 +499,15 @@ save__btn.addEventListener("click", async () => {
     if (product_price === "" || isNaN(product_price) || product_price < 0) {
         borderRed(document.querySelector("#productPrice"));
         return;
+    }
+    const current_price = Number(
+        document.querySelector("#productCurrentPrice").value
+    );
+    if (current_price === "" || isNaN(current_price) || current_price < 0) {
+        if (type_edit === "update") {
+            borderRed(document.querySelector("#productCurrentPrice"));
+            return;
+        }
     }
     const product_quantity = Number(
         document.querySelector("#productQuantity").value
@@ -390,25 +542,50 @@ save__btn.addEventListener("click", async () => {
         return;
     }
     const formData = new FormData();
+    if (type_edit === "update") {
+        if (id_product_edit > 0) formData.append("product_id", id_product_edit);
+        else return;
+        formData.append("current_price", current_price);
+    }
     formData.append("product_name", product_name);
-    formData.append("product_price", product_price);
+    if (type_edit === "create") formData.append("product_price", product_price);
+    //khi ở create thì gửi product_price
+    else formData.append("original_price", product_price); //khi ở update thì gửi original_price
     formData.append("product_quantity", product_quantity);
     formData.append("product_description", product_description);
     formData.append("category_id", categori_option);
     formData.append("manufacturer_id", manufacturer_option);
+
     upload_images.forEach((image) => {
         formData.append("product_images", image);
     });
-    const result = await fetch("/admin/createproduct", {
+
+    const path =
+        type_edit === "create"
+            ? "/admin/createproduct"
+            : "/admin/updateproduct";
+
+    const result = await fetch(path, {
         method: "POST",
         body: formData,
     }).then((res) => res.json());
     if (result.status === "success") {
-        showDialogStatus("Create product successfully", true);
-        createProduct(result.product);
-        clearAll();
+        if (type_edit === "create") {
+            showDialogStatus("Create product successfully", true);
+            createProduct(result.product);
+            clearAll();
+        } else {
+            showDialogStatus("Update product successfully", true);
+            updateProduct(result.product); // viết sau
+        }
     } else {
-        const message = result.message || "Create product failure";
+        let message = "Create product failed";
+        if (type_edit === "update") {
+            message = "Update product failed";
+        }
+        if (result.message) {
+            message += `: ${result.message}`;
+        }
         showDialogStatus(message, false);
     }
 });

@@ -231,6 +231,11 @@ body {
     background: #ccc;
     margin-right: 10px;
 }
+.cancel__btn:hover {
+    background-color: #888; /* Màu nền khi hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
 .dialog-buttons {
     color: white;
 }
@@ -536,6 +541,7 @@ body {
     background-color: #ccc; /* Màu nền của Cancel */
     color: white; /* Màu chữ */
     width: 100px; /* Độ rộng */
+    transition: all 0.3s ease;
 }
 
 .cancel__btn:hover {
@@ -613,6 +619,19 @@ body {
 .product__image {
     height: 310px;
     object-fit: contain;
+}
+.group__currentPrice {
+    display: none;
+}
+.delete__btn-product {
+    background: #eb1c1c;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+.delete__btn-product:hover {
+    background: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 768px) {
     .image-upload-preview {

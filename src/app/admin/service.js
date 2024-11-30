@@ -746,6 +746,52 @@ const User = {
             return false;
         }
     },
+    updateProduct: async (
+        product_id,
+        product_name,
+        original_price,
+        current_price,
+        product_quantity,
+        product_description,
+        category_id,
+        manufacturer_id,
+        filePaths
+    ) => {
+        try {
+            await prisma.Product.update({
+                where: {
+                    product_id: Number(product_id),
+                },
+                data: {
+                    product_name: product_name,
+                    original_price: Number(original_price),
+                    current_price: Number(current_price),
+                    stock_quantity: Number(product_quantity),
+                    description: product_description,
+                    category_id: Number(category_id),
+                    manufacturer: Number(manufacturer_id),
+                },
+            });
+            await prisma.Images.deleteMany({
+                where: {
+                    product_id: Number(product_id),
+                },
+            });
+            for (let i = 0; i < filePaths.length; i++) {
+                await prisma.Images.create({
+                    data: {
+                        product_id: Number(product_id),
+                        directory_path: filePaths[i],
+                        ordinal_numbers: i + 1,
+                    },
+                });
+            }
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    },
     getProductByName: async (product_name) => {
         return prisma.Product.findFirst({
             where: {
@@ -762,6 +808,59 @@ const User = {
                 Images: true,
             },
         });
+    },
+    getProductById: async (product_id) => {
+        return prisma.Product.findUnique({
+            where: {
+                product_id: Number(product_id),
+            },
+            include: {
+                Images: true,
+                Suppliers: true,
+                Categories: true,
+            },
+        });
+    },
+    getProductByIdWithoutInclude: async (product_id) => {
+        return prisma.Product.findUnique({
+            where: {
+                product_id: Number(product_id),
+            },
+        });
+    },
+    deleteProduct: async (product_id) => {
+        try {
+            const orderDetails = await prisma.OrderDetail.findMany({
+                where: {
+                    product_id: Number(product_id),
+                },
+            });
+            if (orderDetails.length > 0) {
+                return false;
+            }
+            const reviews = await prisma.Reviews.findMany({
+                where: {
+                    product_id: Number(product_id),
+                },
+            });
+            if (reviews.length > 0) {
+                return false;
+            }
+            await prisma.Images.deleteMany({
+                where: {
+                    product_id: Number(product_id),
+                },
+            });
+            await prisma.Product.delete({
+                where: {
+                    product_id: Number(product_id),
+                },
+            });
+            return true;
+        } catch (e) {
+            console.error("Error deleting product:", e);
+            return false;
+        }
     },
 };
 

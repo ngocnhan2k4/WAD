@@ -41,7 +41,6 @@ const Admin = {
             page: currentPage,
             user_search: user_search,
         };
-        console.log(field);
         const users = await User.sortUser(field);
         const count = await User.countSearch(user_search);
         users.forEach((user) => {
@@ -445,16 +444,16 @@ const Admin = {
         }
         if (
             product_name === "" ||
-            isNaN(product_price) ||
-            isNaN(product_quantity) ||
-            product_quantity < 0 ||
-            product_price < 0 ||
+            isNaN(Number(product_price)) ||
+            isNaN(Number(product_quantity)) ||
+            Number(product_quantity) < 0 ||
+            Number(product_price) < 0 ||
             !Number.isInteger(Number(product_quantity)) ||
             product_description === "" ||
-            isNaN(category_id) ||
-            isNaN(manufacturer_id) ||
-            category_id < 1 ||
-            manufacturer_id < 1
+            isNaN(Number(category_id)) ||
+            isNaN(Number(manufacturer_id)) ||
+            Number(category_id) < 1 ||
+            Number(manufacturer_id) < 1
         ) {
             res.json({ status: "fail" });
             return;
@@ -500,6 +499,128 @@ const Admin = {
             console.log(err);
             res.json({ status: "fail" });
             return;
+        }
+    },
+    getProduct: async (req, res) => {
+        const id = Number(req.params.id);
+        if (isNaN(id) || id < 1) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const product = await User.getProductById(id);
+        if (product === null) {
+            res.json({ status: "fail" });
+            return;
+        }
+        res.json({ status: "success", product: product });
+    },
+    updateProduct: async (req, res) => {
+        const {
+            product_id,
+            product_name,
+            original_price,
+            current_price,
+            product_quantity,
+            product_description,
+            category_id,
+            manufacturer_id,
+        } = req.body;
+        if (
+            product_id === undefined ||
+            product_name === undefined ||
+            original_price === undefined ||
+            current_price === undefined ||
+            product_quantity === undefined ||
+            product_description === undefined ||
+            category_id === undefined ||
+            manufacturer_id === undefined
+        ) {
+            console.log("undefined");
+            res.json({ status: "fail" });
+            return;
+        }
+        if (
+            isNaN(Number(product_id)) ||
+            Number(product_id) < 1 ||
+            product_name === "" ||
+            isNaN(Number(original_price)) ||
+            isNaN(Number(current_price)) ||
+            isNaN(Number(product_quantity)) ||
+            Number(product_quantity) < 0 ||
+            !Number.isInteger(Number(product_quantity)) ||
+            product_description === "" ||
+            isNaN(Number(category_id)) ||
+            isNaN(Number(manufacturer_id)) ||
+            Number(category_id) < 1 ||
+            Number(manufacturer_id) < 1
+        ) {
+            console.log("id", product_id);
+            console.log("product_name", product_name);
+            console.log("original_price", original_price);
+            console.log("current_price", current_price);
+            console.log("product_quantity", product_quantity);
+            console.log("product_description", product_description);
+            console.log("category_id", category_id);
+            console.log("manufacturer_id", manufacturer_id);
+
+            res.json({ status: "fail" });
+            return;
+        }
+        const product = await User.getProductByIdWithoutInclude(
+            Number(product_id)
+        );
+        if (product === null) {
+            console.log("null");
+            res.json({ status: "fail" });
+            return;
+        }
+        const product_images = req.files;
+        if (product_images === undefined) {
+            console.log("undefined");
+            res.json({ status: "fail" });
+            return;
+        }
+        const filePaths = [];
+        for (let i = 0; i < product_images.length; i++) {
+            const filePath = `/images/products/${product_images[i].filename}`;
+            filePaths.push(filePath);
+        }
+        try {
+            const result = await User.updateProduct(
+                product_id,
+                product_name,
+                original_price,
+                current_price,
+                product_quantity,
+                product_description,
+                category_id,
+                manufacturer_id,
+                filePaths
+            );
+            if (result) {
+                const productUpdate = await User.getProductById(product_id);
+                res.json({ status: "success", product: productUpdate });
+            } else {
+                console.log("fail");
+                res.json({ status: "fail" });
+            }
+        } catch (err) {
+            console.log(err);
+            res.json({ status: "fail" });
+            return;
+        }
+    },
+    deleteProduct: async (req, res) => {
+        const id = Number(req.params.id);
+        if (isNaN(id) || id < 1) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.deleteProduct(id);
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
         }
     },
 };
