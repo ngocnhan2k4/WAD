@@ -11,6 +11,7 @@ const btn__filter = document.querySelector(".btn__filter");
 const status__orders = document.querySelectorAll(".status__order");
 const acc_accepts = document.querySelectorAll(".acc_accept");
 const acc_notaccepct = document.querySelectorAll(".acc_notaccepct");
+const row__orders = document.querySelectorAll(".row__order");
 
 btn__filter.addEventListener("click", () => {
     whichFilter = (whichFilter + 1) % filter.length;
@@ -104,5 +105,12 @@ acc_accepts.forEach((acc) => {
                 "icon__input--inputed"
             );
         }
+    });
+});
+
+row__orders.forEach((row) => {
+    row.addEventListener("click", () => {
+        const id = row.id;
+        window.location.href = `/admin/vieworder/${id}`;
     });
 });

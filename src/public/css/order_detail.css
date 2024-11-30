@@ -47,6 +47,10 @@ body {
     flex-direction: column;
     position: relative;
 }
+.product__item img {
+    height: 230px;
+    object-fit: contain;
+}
 .product__content {
     display: flex;
     flex: 1;
@@ -242,4 +246,12 @@ body {
 }
 .quatity__product strong {
     color: #0056b3;
+}
+
+@media (max-width: 470px) {
+    .view__product__header {
+        align-items: start;
+        flex-direction: column;
+        gap: 20px;
+    }
 }
