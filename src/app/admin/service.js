@@ -862,6 +862,28 @@ const User = {
             return false;
         }
     },
+    getAllOrders: () =>
+        prisma.Orders.findMany({
+            orderBy: {
+                creation_time: "desc",
+            },
+        }),
+    updateOrderStatus: async (orderID, status) => {
+        try {
+            orderID = Number(orderID);
+            await prisma.Orders.update({
+                where: {
+                    order_id: orderID,
+                },
+                data: {
+                    status: status,
+                },
+            });
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
 };
 
 module.exports = User;

@@ -56,4 +56,6 @@ router.use(
 );
 router.use("/getproduct/:id", adminController.getProduct);
 router.use("/deleteproduct/:id", adminController.deleteProduct);
+router.use("/vieworder", adminController.viewOrder);
+router.use("/updateorderstatus", adminController.updateOrderStatus);
 module.exports = router;

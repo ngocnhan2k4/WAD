@@ -554,15 +554,6 @@ const Admin = {
             Number(category_id) < 1 ||
             Number(manufacturer_id) < 1
         ) {
-            console.log("id", product_id);
-            console.log("product_name", product_name);
-            console.log("original_price", original_price);
-            console.log("current_price", current_price);
-            console.log("product_quantity", product_quantity);
-            console.log("product_description", product_description);
-            console.log("category_id", category_id);
-            console.log("manufacturer_id", manufacturer_id);
-
             res.json({ status: "fail" });
             return;
         }
@@ -617,6 +608,46 @@ const Admin = {
             return;
         }
         const result = await User.deleteProduct(id);
+        if (result) {
+            res.json({ status: "success" });
+        } else {
+            res.json({ status: "fail" });
+        }
+    },
+    viewOrder: async (req, res) => {
+        const orders = await User.getAllOrders();
+        orders.forEach((order) => {
+            order.creation_time = formatDateSimple(order.creation_time);
+        });
+        res.render("view_order", {
+            page_style: "/css/view_order.css",
+            orders: orders,
+        });
+    },
+    updateOrderStatus: async (req, res) => {
+        let { orderID, status } = req.body;
+
+        if (orderID === undefined || status === undefined) {
+            res.json({ status: "fail" });
+            return;
+        }
+        orderID = Number(orderID);
+        if (isNaN(orderID) || orderID < 1) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const filter = [
+            "Completed",
+            "Processing",
+            "Pending",
+            "Cancelled",
+            "Shipped",
+        ];
+        if (!filter.includes(status)) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const result = await User.updateOrderStatus(orderID, status);
         if (result) {
             res.json({ status: "success" });
         } else {
