@@ -1,5 +1,5 @@
 const userProfile = require('./service');
-
+const cloudinary = require('cloudinary').v2;
 const userProfileController = {
     getUserProfile: async (req,res)=>{
         try{
@@ -16,9 +16,7 @@ const userProfileController = {
           return res.status(400).send("No file uploaded.");
         }
       
-        const filePath = `/images/avatar/${req.file.filename}`;
-        
-        
+        const filePath = req.file.path; // URL của ảnh trên Cloudinary
         await userProfile.updateImage(req.user.id, filePath);
 
         
