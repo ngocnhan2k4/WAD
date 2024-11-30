@@ -97,13 +97,13 @@ update__btn.addEventListener("click", async () => {
     if (type !== "category") {
         url = "/admin/deleteproductsfrommanufacturer";
     }
-
+    const name = heading.textContent;
     const res = await fetch(`${url}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ product_detele, id }),
+        body: JSON.stringify({ product_detele, id, name }),
     }).then((res) => res.json());
     if (res.status === "success") {
         view__status.textContent = "Update success";

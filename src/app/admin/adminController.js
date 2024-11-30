@@ -335,21 +335,37 @@ const Admin = {
         });
     },
     deleteProductsFromCategory: async (req, res) => {
-        const { product_detele, id } = req.body;
-        if (
-            product_detele === undefined ||
-            id === undefined ||
-            Number(id) < 1 ||
-            isNaN(Number(id)) ||
-            Number(id) === 20
-        ) {
-            res.json({ status: "fail" });
-            return;
-        }
-        const result = await User.deleteProductsFromCategory(product_detele);
-        if (result) {
-            res.json({ status: "success" });
-        } else {
+        const { product_detele, id, name } = req.body;
+        try {
+            if (
+                product_detele === undefined ||
+                id === undefined ||
+                Number(id) < 1 ||
+                isNaN(Number(id)) ||
+                Number(id) === 20
+            ) {
+                res.json({ status: "fail" });
+                return;
+            }
+            const updateName = await User.updateNameManuOrCate(
+                "category",
+                name,
+                id
+            );
+            if (updateName === null) {
+                res.json({ status: "fail" });
+                return;
+            }
+            const result = await User.deleteProductsFromCategory(
+                product_detele
+            );
+            if (result) {
+                res.json({ status: "success" });
+            } else {
+                res.json({ status: "fail" });
+            }
+        } catch (err) {
+            console.log(err);
             res.json({ status: "fail" });
         }
     },
@@ -653,6 +669,38 @@ const Admin = {
         } else {
             res.json({ status: "fail" });
         }
+    },
+    viewOrderDetail: async (req, res) => {
+        const id = req.params.id;
+        if (isNaN(id) || id < 1) {
+            res.redirect("/admin/vieworder");
+            return;
+        }
+        const order = await User.getOrderById(id);
+        let count_number_product = 0;
+        order.OrderDetail.forEach((OD) => {
+            count_number_product += OD.quantity;
+        });
+        order.count_number_product = count_number_product;
+        const products = [];
+        order.OrderDetail.forEach((OD) => {
+            const product = OD.Product;
+            product.quantity = OD.quantity;
+            products.push(product);
+        });
+        order.creation_time = formatDateSimple(order.creation_time);
+        if (order === null) {
+            res.redirect("/admin/vieworder");
+            return;
+        }
+        order.creation_time = formatDateSimple(order.creation_time);
+        const Payments = order.Payments[0];
+        order.Payments = Payments;
+        res.render("order_detail", {
+            page_style: "/css/order_detail.css",
+            order: order,
+            products: products,
+        });
     },
 };
 

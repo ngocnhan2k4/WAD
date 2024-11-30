@@ -415,6 +415,46 @@ const User = {
             throw new Error(`Invalid type: ${type}`);
         }
     },
+    updateNameManuOrCate: async (type, name, id) => {
+        id = Number(id);
+        if (type === "category") {
+            const cate = await prisma.Categories.findFirst({
+                where: {
+                    category_name: name,
+                },
+            });
+            if (cate) {
+                return null;
+            }
+            return prisma.Categories.update({
+                where: {
+                    category_id: id,
+                },
+                data: {
+                    category_name: name,
+                },
+            });
+        } else if (type === "manufacturer") {
+            const manu = await prisma.Suppliers.findFirst({
+                where: {
+                    brand: name,
+                },
+            });
+            if (manu) {
+                return null;
+            }
+            return prisma.Suppliers.update({
+                where: {
+                    supplier_id: id,
+                },
+                data: {
+                    brand: name,
+                },
+            });
+        } else {
+            throw new Error(`Invalid type: ${type}`);
+        }
+    },
     getCategoryById: async (id) => {
         id = Number(id);
         const category = await prisma.Categories.findUnique({
@@ -883,6 +923,27 @@ const User = {
         } catch (e) {
             return false;
         }
+    },
+    getOrderById: async (orderID) => {
+        orderID = Number(orderID);
+        return prisma.Orders.findUnique({
+            where: {
+                order_id: orderID,
+            },
+            include: {
+                OrderDetail: {
+                    include: {
+                        Product: {
+                            include: {
+                                Images: true,
+                            },
+                        },
+                    },
+                },
+                Payments: true,
+                User: true,
+            },
+        });
     },
 };
 
