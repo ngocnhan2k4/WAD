@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lấy tất cả các nút "Add to cart"
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
-
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault(); // Ngăn chặn hành vi mặc định của nút

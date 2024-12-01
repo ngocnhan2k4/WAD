@@ -67,58 +67,62 @@ document.addEventListener('DOMContentLoaded', function() {
             const productElement = document.createElement('div');
             productElement.classList.add('bg-white', 'shadow', 'rounded', 'overflow-hidden', 'group');
             productElement.innerHTML = `
-            <div class="relative">
-            <a href="/product/productDetail?id=${product.product_id}">
-                <img src="${product.Images[0].directory_path}" alt="product${product.product_id}" class="w-full">
-            </a>
-        </div>
-        <div class="px-4 pt-4 pb-3">
-            <a href="/product/productDetail?id=${product.product_id}">
-                <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
-                    ${product.product_name}
-                </h4>
-            </a>
-            <div class="flex items-baseline mb-1 space-x-2">
-                <p class="text-xl font-semibold text-primary">${product.current_price}</p>
-                <p class="text-sm text-gray-400 line-through">${product.original_price}</p>
-            </div>
-            ${data.admin ? `
-            <div class="flex items-center">
-                <h4 class="text-xl font-medium">Total Purchase: </h4>
-                <span class="text-xl font-semibold text-blue-600 ml-2">${product.total_purchase}</span>
-            </div>` : ''}
-        </div>
-        <a href="#" class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary">
-            Add to cart
-        </a>
-    `;
-    gridContainer.appendChild(productElement);
-});
+                <div class="relative">
+                <a href="/product/productDetail?id=${product.product_id}">
+                    <img src="${product.Images[0].directory_path}" alt="product${product.product_id}" class="w-full">
+                </a>
+                </div>
+                <div class="px-4 pt-4 pb-3">
+                <a href="/product/productDetail?id=${product.product_id}">
+                    <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
+                        ${product.product_name}
+                    </h4>
+                </a>
+                <div class="flex items-baseline mb-1 space-x-2">
+                    <p class="text-xl font-semibold text-primary">${product.current_price}</p>
+                    <p class="text-sm text-gray-400 line-through">${product.original_price}</p>
+                </div>
+                ${data.admin ? `
+                <div class="flex items-center">
+                    <h4 class="text-xl font-medium">Total Purchase: </h4>
+                    <span class="text-xl font-semibold text-blue-600 ml-2">${product.total_purchase}</span>
+                </div>` : ''}
+                </div>
+                <button id="add-to-cart-${product.product_id}" 
+                        data-product-id="${product.product_id}" 
+                        class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                    Add to cart
+                </button>  
+            `;
+            gridContainer.appendChild(productElement);
+        });
+
+        addToCartHandler();
     
-     const paginationNav = document.createElement('nav');
-     paginationNav.classList.add('flex', 'justify-center', 'mt-10');
-     paginationNav.innerHTML = `
-         <ul class="inline-flex items-center -space-x-px">
-             ${data.hasPreviousPage ? `
-             <li>
-                 <a href="?page=${data.previousPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                    class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
-             </li>` : ''}
-             ${data.pages.map(page => `
-                 <li>
-                     <a href="?page=${page}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                        class="pagination-link py-2 px-3 leading-tight text-black border border-gray-300 hover:text-gray-700 ${page === data.currentPage ? 'bg-primary text-white' : ''}">
-                        ${page}
-                     </a>
-                 </li>
-             `).join('')}
-             ${data.hasNextPage ? `
-             <li>
-                 <a href="?page=${data.nextPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                    class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
-             </li>` : ''}
-         </ul>
-     `;
+        const paginationNav = document.createElement('nav');
+        paginationNav.classList.add('flex', 'justify-center', 'mt-10');
+        paginationNav.innerHTML = `
+            <ul class="inline-flex items-center -space-x-px">
+                ${data.hasPreviousPage ? `
+                <li>
+                    <a href="?page=${data.previousPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
+                        class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
+                </li>` : ''}
+                ${data.pages.map(page => `
+                    <li>
+                        <a href="?page=${page}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
+                            class="pagination-link py-2 px-3 leading-tight text-black border border-gray-300 hover:text-gray-700 ${page === data.currentPage ? 'bg-primary text-white' : ''}">
+                            ${page}
+                        </a>
+                    </li>
+                `).join('')}
+                ${data.hasNextPage ? `
+                <li>
+                    <a href="?page=${data.nextPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
+                        class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
+                </li>` : ''}
+            </ul>
+        `;
             productList.appendChild(paginationNav);
             updateForms(searchParams); // Cập nhật các form với giá trị mới
         })
@@ -144,3 +148,61 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+function addToCartHandler() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn hành vi mặc định của nút
+
+            // Kiểm tra người dùng đã đăng nhập chưa
+            fetch('/auth/check-login')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.loggedIn) {
+                        // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+                        window.location.href = '/user/login';
+                        return;
+                    }
+
+                    // Nếu đã đăng nhập, thêm sản phẩm vào giỏ hàng
+                    const productId = this.getAttribute('data-product-id');
+                    const quantity = 1;
+
+                    fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ productId: parseInt(productId, 10), quantity }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            alert(data.message); // Hiển thị thông báo
+                            fetch('/cart/count')
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.cartCount > 0) {
+                                        const cartCountElement = document.querySelector('#cart-count');
+                                        cartCountElement.textContent = data.cartCount;
+                                        cartCountElement.classList.remove('hidden');
+                                    }
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding to cart:', error);
+                        alert('An error occurred while adding the item to the cart.');
+                    });
+                })
+                .catch(error => {
+                    console.error('Error checking login:', error);
+                    window.location.href = '/user/login'; // Chuyển hướng nếu có lỗi
+                });
+        });
+    });
+}
+
+// Gọi hàm này lần đầu tiên khi tải trang
+addToCartHandler();
