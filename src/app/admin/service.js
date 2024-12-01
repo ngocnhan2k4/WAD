@@ -73,6 +73,40 @@ function formatWeekWithJS(date) {
 
     return `Week ${weekNumber} of ${jsDate.getFullYear()}`;
 }
+function getMonthNow() {
+    const date = new Date();
+    return date.getMonth() + 1;
+}
+function getWeekNow() {
+    const date = new Date();
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+    const weekNumber = Math.ceil(
+        (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
+    );
+    return weekNumber;
+}
+function getDayNow() {
+    const date = new Date();
+    return date.getDate();
+}
+function getWeekFrom(date) {
+    //timestamp(3) của Postgres
+    const dateNow = new Date();
+    const dateOrder = new Date(date);
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(Math.abs((dateOrder - dateNow) / oneDay));
+    const week = Math.ceil(diffDays / 7);
+    return week;
+}
+function getDayFrom(date) {
+    //timestamp(3) của Postgres
+    const dateNow = new Date();
+    const dateOrder = new Date(date);
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(Math.abs((dateOrder - dateNow) / oneDay));
+    return diffDays;
+}
 const User = {
     getAll: () => prisma.User.findMany(),
     getAllUser: () => prisma.User.findMany(),
@@ -1074,6 +1108,85 @@ const User = {
             result[keys[i]] = data[keys[i]];
         }
         return result;
+    },
+    getTopProductsByMonth: async () => {
+        const products = await prisma.Product.findMany({
+            include: {
+                Images: true,
+                OrderDetail: {
+                    include: {
+                        Orders: true,
+                    },
+                },
+            },
+        });
+        const month_now = getMonthNow();
+        products.forEach((product) => {
+            product.total = 0;
+            product.OrderDetail.forEach((detail) => {
+                if (
+                    DateTime.fromJSDate(detail.Orders.creation_time).month ==
+                        month_now &&
+                    detail.Orders.status === "Completed"
+                ) {
+                    product.total += detail.quantity * product.current_price;
+                }
+            });
+        });
+        products.sort((a, b) => b.total - a.total);
+        return products;
+    },
+    getTopProductsByWeek: async () => {
+        const products = await prisma.Product.findMany({
+            include: {
+                Images: true,
+                OrderDetail: {
+                    include: {
+                        Orders: true,
+                    },
+                },
+            },
+        });
+        const week_now = getWeekNow();
+        products.forEach((product) => {
+            product.total = 0;
+            product.OrderDetail.forEach((detail) => {
+                if (
+                    getWeekFrom(detail.Orders.creation_time) == week_now &&
+                    detail.Orders.status === "Completed"
+                ) {
+                    product.total += detail.quantity * product.current_price;
+                }
+            });
+        });
+        products.sort((a, b) => b.total - a.total);
+        return products;
+    },
+    getTopProductByDay: async () => {
+        const products = await prisma.Product.findMany({
+            include: {
+                Images: true,
+                OrderDetail: {
+                    include: {
+                        Orders: true,
+                    },
+                },
+            },
+        });
+        const day_now = getDayNow();
+        products.forEach((product) => {
+            product.total = 0;
+            product.OrderDetail.forEach((detail) => {
+                if (
+                    getDayFrom(detail.Orders.creation_time) == day_now &&
+                    detail.Orders.status === "Completed"
+                ) {
+                    product.total += detail.quantity * product.current_price;
+                }
+            });
+        });
+        products.sort((a, b) => b.total - a.total);
+        return products;
     },
 };
 

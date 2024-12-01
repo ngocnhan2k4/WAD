@@ -787,10 +787,12 @@ const Admin = {
             standardizeDate(label_and_data, "month"),
             "month"
         );
+        const products = await User.getTopProductsByMonth();
         res.render("view_revenue", {
             page_style: "/css/view_revenue.css",
             dataChart: JSON.stringify(data),
             data: raw_data,
+            products: products,
         });
     },
     getRevenue: async (req, res) => {
@@ -802,17 +804,33 @@ const Admin = {
                 "month"
             );
             res.json(data);
-        }
-        if (time === "day") {
+            return;
+        } else if (time === "day") {
             const label_and_data = await User.getDataRevenueDay();
             //{ '23/12': 200, '23/11': 650, '21/12': 150 }
             const data = createDataForChart(label_and_data, "day");
             res.json(data);
-        }
-        if (time === "week") {
+            return;
+        } else if (time === "week") {
             const label_and_data = await User.getDataRevenueWeek();
 
             const data = createDataForChart(label_and_data, "week");
+            res.json(data);
+            return;
+        } else {
+            res.json({ status: "fail" });
+        }
+    },
+    getProductRevenue: async (req, res) => {
+        const time = req.params.date;
+        if (time === "month") {
+            const data = await User.getTopProductsByMonth();
+            res.json(data);
+        } else if (time === "day") {
+            const data = await User.getTopProductByDay();
+            res.json(data);
+        } else if (time === "week") {
+            const data = await User.getTopProductsByWeek();
             res.json(data);
         } else {
             res.json({ status: "fail" });
