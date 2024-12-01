@@ -15,6 +15,7 @@
     <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/userprofile.css">
+    <link rel="stylesheet" href="/css/notification.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,7 +120,7 @@
                     <span>></span>
                 </a>
                 <a href="#" class="sub-menu-link">
-                    <i class="fa-solid fa-cart-shopping mr-6 pl-3"></i>
+                    <i class="pl-3 mr-6 fa-solid fa-cart-shopping"></i>
                     <p>History</p>
                     <span>></span>
                 </a>
@@ -330,6 +331,38 @@
     </div>
     <!-- ./copyright -->
     {{!-- {{/if}} --}}
+
+    {{#if notification}}
+        <div id="notification-overlay" class="fixed inset-0 z-50 pointer-events-none">
+            <!-- Khung thông báo -->
+            <div id="notification" class="relative z-50 p-6 mx-auto mt-20 text-center bg-white rounded shadow-lg pointer-events-auto">
+                <p class="text-lg font-semibold">{{notification.message}}</p>
+                <button id="notification-ok" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-700">
+                    OK
+                </button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const overlay = document.getElementById('notification-overlay');
+                const okButton = document.getElementById('notification-ok');
+
+                const hideNotification = () => {
+                    overlay.remove(); // Xóa toàn bộ thông báo
+                };
+
+                // Đóng thông báo khi bấm "OK"
+                okButton.addEventListener('click', hideNotification);
+
+                // Tự động đóng sau 5 giây
+                setTimeout(hideNotification, 5000);
+            });
+        </script>
+    {{/if}}
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
       <script>

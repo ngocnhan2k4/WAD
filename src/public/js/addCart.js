@@ -1,3 +1,5 @@
+import { showNotification } from './notification.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const cartCountElement = document.getElementById('cart-count');
 
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Nếu đã đăng nhập, tiếp tục thêm sản phẩm vào giỏ
                     const productId = this.getAttribute('data-product-id');
                     const quantity = 1;
+                    console.log("k");
 
                     fetch('/cart/add', {
                         method: 'POST',
@@ -58,15 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.message) {
-                            alert(data.message); // Hiển thị thông báo thành công
-                            fetch('/cart/count')
-                                    .then((response) => response.json())
-                                    .then((data) => {
-                                        if (data.cartCount > 0) {
-                                            cartCountElement.textContent = data.cartCount;
-                                            cartCountElement.classList.remove('hidden');
-                                        }
-                                    });
+                            showNotification(data.message, data.type);
+                            updateCartCount();
                         }
                     })
                     .catch(error => {
@@ -76,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch(error => {
                     console.error('Error checking login:', error);
-                    window.location.href = '/user/login'; // Chuyển hướng nếu có lỗi
+                    showNotification('An error occurred while adding the item to the cart.', 'error');
                 });
         });
     });
