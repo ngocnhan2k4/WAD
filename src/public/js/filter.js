@@ -149,6 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+import { showNotification } from './notification.js'; // Import hàm thông báo
+
 function addToCartHandler() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     addToCartButtons.forEach(button => {
@@ -179,7 +181,10 @@ function addToCartHandler() {
                     .then(response => response.json())
                     .then(data => {
                         if (data.message) {
-                            alert(data.message); // Hiển thị thông báo
+                            // Hiển thị thông báo với kiểu thông báo success
+                            showNotification(data.message, 'success');
+
+                            // Cập nhật số lượng giỏ hàng
                             fetch('/cart/count')
                                 .then(response => response.json())
                                 .then(data => {
@@ -193,7 +198,7 @@ function addToCartHandler() {
                     })
                     .catch(error => {
                         console.error('Error adding to cart:', error);
-                        alert('An error occurred while adding the item to the cart.');
+                        showNotification('An error occurred while adding the item to the cart.', 'error');
                     });
                 })
                 .catch(error => {
