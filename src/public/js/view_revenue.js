@@ -159,7 +159,7 @@ menu__navs.forEach((menu__nav) => {
             revenue__top.style.display = "none";
         } else if (e.target.id === "menu2__nav") {
             decor__nav.style.left =
-                document.getElementById("menu1__nav").offsetWidth + "px";
+                document.getElementById("menu1__nav").offsetWidth + 20 + "px";
             const clientWidth = e.target.clientWidth;
             const style = window.getComputedStyle(e.target);
             const paddingLeft = parseFloat(style.paddingLeft);
@@ -208,17 +208,32 @@ window.addEventListener("resize", () => {
     const menu2__nav = document.getElementById("menu2__nav");
     if (menu1__nav.classList.contains("menu__active")) {
         decor__nav.style.left = "0";
-        decor__nav.style.width = menu1__nav.clientWidth + "px";
+        const style = window.getComputedStyle(menu1__nav);
+        const paddingLeft = parseFloat(style.paddingLeft);
+        const paddingRight = parseFloat(style.paddingRight);
+        decor__nav.style.width =
+            menu1__nav.clientWidth - paddingLeft - paddingRight + "px";
     } else if (menu2__nav.classList.contains("menu__active")) {
-        decor__nav.style.left =
-            document.getElementById("menu1__nav").offsetWidth + "px";
-        decor__nav.style.width = menu2__nav.clientWidth + "px";
+        decor__nav.style.left = menu1__nav.clientWidth + 20 + "px";
+        const style = window.getComputedStyle(menu2__nav);
+        const paddingLeft = parseFloat(style.paddingLeft);
+        const paddingRight = parseFloat(style.paddingRight);
+        decor__nav.style.width =
+            menu2__nav.clientWidth - paddingLeft - paddingRight + "px";
     }
 });
 
 window.addEventListener("DOMContentLoaded", () => {
     const menu1__nav = document.getElementById("menu1__nav");
+    const decor__nav = document.querySelector(".decor__nav");
     decor__nav.style.left = "0";
-    decor__nav.style.width = menu1__nav.clientWidth + "px";
+    const style = window.getComputedStyle(menu1__nav);
+    const paddingLeft = parseFloat(style.paddingLeft);
+    const paddingRight = parseFloat(style.paddingRight);
+    decor__nav.style.width =
+        menu1__nav.clientWidth - paddingLeft - paddingRight + "px";
+    menu1__nav.classList.add("menu__active");
+    revenue__report.style.display = "block";
+    revenue__top.style.display = "none";
     decor__nav.style.display = "block";
 });
