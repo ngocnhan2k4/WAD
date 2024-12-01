@@ -11,6 +11,7 @@ const save__btn = document.querySelector(".save__btn");
 const delete_btn_dialog = document.querySelector(".delete-btn");
 const dialog_close_dialog = document.querySelector(".dialog-close");
 const create__product_inner = document.querySelector(".create__product-inner");
+create__product_inner.style.display = "none";
 const image_upload__add = document.querySelector(".image-upload__add");
 const image_upload__input = document.querySelector(".image-upload__input");
 const delete__btn_product = document.querySelector(".delete__btn-product");
@@ -95,6 +96,7 @@ overlay.addEventListener("click", function () {
     dialog.style.display = "none";
 });
 cancel_btn_dialog.addEventListener("click", () => {
+    console.log(create__product_inner.style.display);
     if (create__product_inner.style.display == "none") {
         overlay.classList.remove("overlay-active");
         document.body.style.overflow = "auto";

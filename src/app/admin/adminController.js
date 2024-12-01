@@ -418,10 +418,12 @@ const Admin = {
             if (
                 product_detele === undefined ||
                 id === undefined ||
+                name === undefined ||
                 Number(id) < 1 ||
                 isNaN(Number(id)) ||
                 Number(id) === 20
             ) {
+                console.log("undefined");
                 res.json({ status: "fail" });
                 return;
             }
@@ -448,14 +450,24 @@ const Admin = {
         }
     },
     deleteProductsFromManufacturer: async (req, res) => {
-        const { product_detele, id } = req.body;
+        const { product_detele, id, name } = req.body;
         if (
             product_detele === undefined ||
             id === undefined ||
+            name === undefined ||
             Number(id) < 1 ||
             isNaN(Number(id)) ||
             Number(id) === 20
         ) {
+            res.json({ status: "fail" });
+            return;
+        }
+        const updateName = await User.updateNameManuOrCate(
+            "manufacturer",
+            name,
+            id
+        );
+        if (updateName === null) {
             res.json({ status: "fail" });
             return;
         }
