@@ -39,6 +39,40 @@ async function countProductsBelongManufacturer(manufacturer) {
         },
     });
 }
+function formatDateSimpleDay(date) {
+    if (!date) return "Invalid DateTime";
+
+    try {
+        const jsDate = new Date(date);
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" });
+        if (!parsedDate.isValid) {
+            console.error("Invalid DateTime:", date);
+            return "Invalid DateTime";
+        }
+        return parsedDate.toFormat("dd/MM");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return "Invalid DateTime";
+    }
+}
+function formatWeekWithJS(date) {
+    if (!date) return "Invalid DateTime";
+
+    const jsDate = new Date(date);
+    if (isNaN(jsDate)) {
+        console.error("Invalid DateTime:", date);
+        return "Invalid DateTime";
+    }
+
+    // Lấy tuần và năm
+    const firstDayOfYear = new Date(jsDate.getFullYear(), 0, 1);
+    const pastDaysOfYear = (jsDate - firstDayOfYear) / 86400000;
+    const weekNumber = Math.ceil(
+        (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
+    );
+
+    return `Week ${weekNumber} of ${jsDate.getFullYear()}`;
+}
 const User = {
     getAll: () => prisma.User.findMany(),
     getAllUser: () => prisma.User.findMany(),
@@ -944,6 +978,102 @@ const User = {
                 User: true,
             },
         });
+    },
+    getDataRevenueMonth: async () => {
+        const orders = await prisma.Orders.findMany({
+            where: {
+                status: "Completed",
+            },
+        });
+        const data = {};
+        orders.forEach((order) => {
+            const month = DateTime.fromJSDate(order.creation_time).toFormat(
+                "MM"
+            );
+            if (data[month] === undefined) {
+                data[month] = order.total_amount;
+            } else {
+                data[month] += order.total_amount;
+            }
+        });
+        const keys = Object.keys(data);
+        keys.sort((a, b) => (a > b ? -1 : 1));
+        const result = {};
+        for (let i = 0; i < 5 && i < keys.length; i++) {
+            result[Number(keys[i])] = data[keys[i]];
+        }
+        return result;
+    },
+    getDataRevenueDay: async () => {
+        const orders = await prisma.Orders.findMany({
+            where: {
+                status: "Completed",
+            },
+        });
+        const data = {};
+        orders.forEach((order) => {
+            const day = formatDateSimpleDay(order.creation_time);
+            if (data[day] === undefined) {
+                data[day] = order.total_amount;
+            } else {
+                data[day] += order.total_amount;
+            }
+        });
+        const keys = Object.keys(data);
+
+        // Sắp xếp theo ngày/tháng
+        keys.sort((a, b) => {
+            const [dayA, monthA] = a.split("/").map(Number);
+            const [dayB, monthB] = b.split("/").map(Number);
+
+            const dateA = new Date(2024, monthA - 1, dayA);
+            const dateB = new Date(2024, monthB - 1, dayB);
+
+            return dateA - dateB;
+        });
+
+        const result = {};
+        for (let i = 0; i < 5 && i < keys.length; i++) {
+            result[keys[i]] = data[keys[i]];
+        }
+        return result;
+    },
+    getDataRevenueWeek: async () => {
+        const orders = await prisma.Orders.findMany({
+            where: {
+                status: "Completed",
+            },
+        });
+        const data = {};
+        orders.forEach((order) => {
+            const week = formatWeekWithJS(order.creation_time);
+            if (data[week] === undefined) {
+                data[week] = order.total_amount;
+            } else {
+                data[week] += order.total_amount;
+            }
+        });
+        const keys = Object.keys(data);
+
+        // Sắp xếp theo tuần
+        keys.sort((a, b) => {
+            // Tách chuỗi 'Week 52 of 2024' thành tuần và năm
+            const [weekA, yearA] = a.match(/\d+/g).map(Number); // Lấy tất cả số trong chuỗi
+            const [weekB, yearB] = b.match(/\d+/g).map(Number);
+
+            // So sánh năm trước, nếu năm giống nhau thì so sánh tuần
+            if (yearA === yearB) {
+                return weekA - weekB; // Sắp xếp theo tuần
+            } else {
+                return yearA - yearB; // Sắp xếp theo năm
+            }
+        });
+
+        const result = {};
+        for (let i = 0; i < 5 && i < keys.length; i++) {
+            result[keys[i]] = data[keys[i]];
+        }
+        return result;
     },
 };
 

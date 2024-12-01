@@ -7,6 +7,84 @@ function formatDateSimple(date) {
 function isEmptyObject(obj) {
     return Object.keys(obj).length === 0;
 }
+function standardizeDate(label_and_data, type) {
+    if (type === "month") {
+        const arrayofDate = Object.entries(label_and_data);
+        arrayofDate.sort((a, b) => {
+            return a[0] - b[0];
+        });
+        const labels = [];
+        const data = [];
+        arrayofDate.forEach((date) => {
+            if (Number(date[0]) === 1) labels.push("January");
+            if (Number(date[0]) === 2) labels.push("February");
+            if (Number(date[0]) === 3) labels.push("March");
+            if (Number(date[0]) === 4) labels.push("April");
+            if (Number(date[0]) === 5) labels.push("May");
+            if (Number(date[0]) === 6) labels.push("June");
+            if (Number(date[0]) === 7) labels.push("July");
+            if (Number(date[0]) === 8) labels.push("August");
+            if (Number(date[0]) === 9) labels.push("September");
+            if (Number(date[0]) === 10) labels.push("October");
+            if (Number(date[0]) === 11) labels.push("November");
+            if (Number(date[0]) === 12) labels.push("December");
+            data.push(date[1]);
+        });
+        return { labels: labels, data: data };
+    }
+}
+function createDataNormal(label_and_data, type) {
+    if (type === "month") {
+        const data = standardizeDate(label_and_data, "month");
+        const raw_data = [];
+        for (let i = 0; i < data.labels.length; i++) {
+            raw_data.push({
+                month: data.labels[i],
+                revenue: data.data[i],
+            });
+        }
+        return raw_data;
+    }
+}
+function createDataForChart(dataDate, type) {
+    if (type === "month") {
+        let label = "Monthly Revenue ($)";
+
+        const data = {
+            labels: dataDate.labels,
+            datasets: [
+                {
+                    label: label,
+                    data: dataDate.data,
+                    backgroundColor: "rgba(76, 175, 80, 0.2)",
+                    borderColor: "rgba(76, 175, 80, 1)",
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                },
+            ],
+        };
+        return data;
+    }
+    if (type === "day" || type === "week") {
+        let label = "Daily Revenue ($)";
+        const data = {
+            labels: Object.keys(dataDate),
+            datasets: [
+                {
+                    label: label,
+                    data: Object.values(dataDate),
+                    backgroundColor: "rgba(76, 175, 80, 0.2)",
+                    borderColor: "rgba(76, 175, 80, 1)",
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                },
+            ],
+        };
+        return data;
+    }
+}
 const Admin = {
     viewAccount: async (req, res) => {
         const user_search = req.query.search ? req.query.search : "";
@@ -701,6 +779,44 @@ const Admin = {
             order: order,
             products: products,
         });
+    },
+    viewRevenue: async (req, res) => {
+        const label_and_data = await User.getDataRevenueMonth();
+        const raw_data = createDataNormal(label_and_data, "month");
+        const data = createDataForChart(
+            standardizeDate(label_and_data, "month"),
+            "month"
+        );
+        res.render("view_revenue", {
+            page_style: "/css/view_revenue.css",
+            dataChart: JSON.stringify(data),
+            data: raw_data,
+        });
+    },
+    getRevenue: async (req, res) => {
+        const time = req.params.date;
+        if (time === "month") {
+            const label_and_data = await User.getDataRevenueMonth();
+            const data = createDataForChart(
+                standardizeDate(label_and_data, "month"),
+                "month"
+            );
+            res.json(data);
+        }
+        if (time === "day") {
+            const label_and_data = await User.getDataRevenueDay();
+            //{ '23/12': 200, '23/11': 650, '21/12': 150 }
+            const data = createDataForChart(label_and_data, "day");
+            res.json(data);
+        }
+        if (time === "week") {
+            const label_and_data = await User.getDataRevenueWeek();
+
+            const data = createDataForChart(label_and_data, "week");
+            res.json(data);
+        } else {
+            res.json({ status: "fail" });
+        }
     },
 };
 
