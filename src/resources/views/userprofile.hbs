@@ -1,139 +1,156 @@
- <div class="container-user">
+<div class="container-user">
+
     <div class="column-user column-user-4">
+        <h1 id="profileh1">Profile</h1>
         <img src="{{userAvatar}}" id="avatar-preview">
         <h2>{{fullName}}</h2>
         <button id="update-avatar-btn">Update Avatar</button>
         <input type="file" id="avatar-input" accept="image/*" style="display: none;">
     </div>
+
     <div class="column-user column-user-8">
-        <h1>Profile</h1>
         <div class="user-info1">
             <p><strong>Email:</strong> tranngocnhannt2004@gmail.com</p>
             <p><strong>Phone:</strong> 0123456789</p>
             <p><strong>Address:</strong> Ktx khu B</p>
             <p><strong>Birthday:</strong>05/07/2004</p>
         </div>
-        <button >Edit Profile</button>
-        
-    </div>
-    <div class="orders-container">
-    <h2>Order History</h2>
-    <table class="orders-table">
-        <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Total Amount</th>
-                <th>Creation Time</th>
-                <th>STATUS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1001</td>
-                <td>$3000</td>
-                <td>24/12/2024</td>
-                <td><span class="status progress">Progress</span></td>
-            </tr>
-            <tr>
-                <td>1001</td>
-                <td>$3000</td>
-                <td>24/12/2024</td>
-                <td><span class="status open">Open</span></td>
-            </tr>
-            <tr>
-                <td>1001</td>
-                <td>$3000</td>
-                <td>24/12/2024</td>
-                <td><span class="status hold">On hold</span></td>
-            </tr>
-            <tr>
-                <td>1001</td>
-                <td>$3000</td>
-                <td>24/12/2024</td>
-                <td><span class="status progress">Progress</span></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+        <button>Edit Profile</button>
 
- <div class="orders-container">
-        <h2>Product History</h2>
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
-            <!-- Sản phẩm 1 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
-                </div>
-                <div class="product-info">
-                    <a href="/product/productDetail?id=1">
-                        <h4 class="product-name">ABC</h4>
-                    </a>
-                    <div class="price">
-                        <span class="price-current">$100</span>
-                        <span class="price-old">$200</span>
-                    </div>
-                </div>
-               
-            </div>
-            <div class="product-card">
-                <div class="product-img">
-                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
-                </div>
-                <div class="product-info">
-                    <a href="/product/productDetail?id=1">
-                        <h4 class="product-name">ABC</h4>
-                    </a>
-                    <div class="price">
-                        <span class="price-current">$100</span>
-                        <span class="price-old">$200</span>
-                    </div>
-                </div>
-               
-            </div>
-            <div class="product-card">
-                <div class="product-img">
-                    <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1"></a>
-                </div>
-                <div class="product-info">
-                    <a href="/product/productDetail?id=1">
-                        <h4 class="product-name">ABC</h4>
-                    </a>
-                    <div class="price">
-                        <span class="price-current">$100</span>
-                        <span class="price-old">$200</span>
-                    </div>
-                </div>
-               
-            </div>
+    </div>
+    <div class="column-user column-user-4">
+        <h1 id="historyh1">History</h1>
+        <div class="navbar">
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item {{#if (eq activeTab 'orders')}}active{{/if}}" data-target="orders-container">Order</a></li>
+                <li><a href="#" class="nav-item {{#if (eq activeTab 'products')}}active{{/if}}" data-target="products-container">Product</a></li>
+            </ul>
         </div>
     </div>
-    
-</div>
-{{!-- <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
-               
-                <div class="overflow-hidden bg-white rounded shadow group">
-                    <div class="relative">
-                        <a href="/product/productDetail?id=1"><img src="/images/products/product1.jpg" alt="product1" class="w-full"></a>
-                    </div>
-                    <div class="px-4 pt-4 pb-3">
-                        <a href="/product/productDetail?id=1">
-                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
-                                ABC</h4>
-                        </a>
-                        <div class="flex items-baseline mb-1 space-x-2 g">
-                            <p class="text-xl font-semibold text-primary">100</p>
-                            <p class="text-sm text-gray-400 line-through">200</p>
-                        </div>
-                       
-                    </div>
-                    <button id="add-to-cart-1" 
-                            data-product-id="1" 
-                            class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
-                        Add to cart
-                    </button>
+
+    <div id="orders-container" class="content {{#if (eq activeTab 'orders')}}active{{/if}}">
+
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Total Amount</th>
+                    <th>Creation Time</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each paginatedOrders}}
+                <tr>
+                    <td>{{this.order_id}}</td>
+                    <td>{{this.total_amount}}</td>
+                    <td>{{this.creation_time}}</td>
+                    {{#if (eq this.status "Completed")}}
+                    <td><span class="status Completed">{{this.status}}</span></td>
+                    {{/if}}
+                    {{#if (eq this.status "Pending")}}
+                    <td><span class="status Pending">{{this.status}}</span></td>
+                    {{/if}}
+                    {{#if (eq this.status "Cancelled")}}
+                    <td><span class="status Cancelled">{{this.status}}</span></td>
+                    {{/if}}
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <div class="flex justify-center mt-10">
+            <nav>
+                <ul class="inline-flex items-center -space-x-px">
+                    {{#if hasPreviousOrderPage}}
+                    <li>
+                        <a href="?pageOrders={{previousOrderPage}}&activeTab=orders#historyh1"
+                            class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-primary hover:text-gray-700">Previous</a>
+                    </li>
+                    {{/if}}
+                    {{#each Orderpages}}
+                    {{#if (shouldShowPage @index ../currentOrderPage ../totalOrderPages)}}
+                    <li>
+                        <a href="?pageOrders={{this}}&activeTab=orders#historyh1"
+                            class="py-2 px-3 leading-tight text-black  border border-gray-300  hover:text-gray-700 {{#if (eq this ../currentOrderPage)}}bg-primary text-white{{/if}} ">{{this}}</a>
+                    </li>
+                    
+                    {{else if (shouldShowEllipsis @index ../currentOrderPage ../totalOrderPages)}}
+                    <li>
+                        <span
+                            class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 ">...</span>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                    {{#if hasNextOrderPage}}
+                    <li>
+                        <a href="?pageOrders={{nextOrderPage}}&activeTab=orders#historyh1"
+                            class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg hover:bg-primary hover:text-gray-700">Next</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div id="products-container" class="content {{#if (eq activeTab 'products')}}active{{/if}}">
+
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
+
+            {{#each paginatedProducts}}
+            <div class="product-card">
+                <div class="product-img">
+                    <a href="/product/productDetail?id={{this.Product.product_id}}"><img
+                            src={{this.Product.Images.[0].directory_path}}></a>
                 </div>
-                
-            </div> --}}
+                <div class="product-info">
+                    <a href="/product/productDetail?id=1">
+                        <h4 class="product-name">{{this.Product.product_name}}</h4>
+                    </a>
+                    <div class="price">
+                        <span class="price-current">{{this.Product.current_price}}</span>
+                        <span class="price-old">{{this.Product.original_price}}</span>
+                    </div>
+                </div>
 
+            </div>
+            {{/each}}
+        </div>
 
+        <div class="flex justify-center mt-10">
+            <nav>
+                <ul class="inline-flex items-center -space-x-px">
+                    {{#if hasPreviousProductPage}}
+                    <li>
+                        <a href="?pageProducts={{previousProductPage}}&activeTab=products#historyh1"
+                            class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-primary hover:text-gray-700">Previous</a>
+                    </li>
+                    {{/if}}
+                    {{#each Productpages}}
+                    {{#if (shouldShowPage @index ../currentProductPage ../totalProductPages)}}
+                    <li>
+                        <a href="?pageProducts={{this}}&activeTab=products#historyh1"
+                            class="py-2 px-3 leading-tight text-black  border border-gray-300  hover:text-gray-700 {{#if (eq this ../currentProductPage)}}bg-primary text-white{{/if}} ">{{this}}</a>
+                    </li>
+                    
+                    {{else if (shouldShowEllipsis @index ../currentProductPage ../totalProductPages)}}
+                    <li>
+                        <span
+                            class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 ">...</span>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                    {{#if hasNextProductPage}}
+                    <li>
+                        <a href="?pageProducts={{nextProductPage}}&activeTab=products#historyh1"
+                            class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg hover:bg-primary hover:text-gray-700">Next</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
 <script src="/js/profile.js"></script>

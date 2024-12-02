@@ -3,7 +3,6 @@
       grid-template-columns: repeat(12, 1fr); 
       gap: 16px; 
       padding: 16px;
-      margin-top: 20px;
     }
     
     .column-user {
@@ -15,19 +14,25 @@
     .column-user-4 {
       grid-column: span 4; 
       display: flex;
-      margin-top: 80px;
+      /* margin-top: 80px; */
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); */
     }
     
-  
-
     .column-user-4 img{
       width: 150px;
       height: 150px;
       border-radius: 50%;
+    }
+
+    .column-user-4 h1{
+      align-self:flex-start;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: grey;
+      margin-bottom: 20px;
     }
 
     .column-user-4 h2{
@@ -37,6 +42,7 @@
       color: grey;
     }
 
+
     .column-user-4 button{
       background-color: lightblue;
       margin-top: 40px;
@@ -44,7 +50,6 @@
       font-size: 16px;
       font-weight:500;
       border-radius: 8px;
-    
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       border: none;
     }
@@ -61,17 +66,13 @@
 
     .column-user-8 {
       grid-column: span 8; 
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); */
       display: flex;
       flex-direction: column;
+      padding-top: 83px;
       /* background-color: #28a745;  */
     }
 
-    .column-user-8 h1{
-      font-size: 2.8rem;
-      font-weight: 600;
-      color: grey;
-    }
 
     #avatar-preview {
       width: 150px;
@@ -81,10 +82,8 @@
   }
 
   .column-user-8 .user-info1 {
-  
     display: flex;
     flex-direction: column;
-  
   }
 
   .column-user-8 .user-info1 p {
@@ -120,21 +119,26 @@
   }
 
 
-  .orders-container {
+  #orders-container {
     grid-column: span 12; /* Chiếm toàn bộ chiều ngang */
     max-width: 100%; /* Đảm bảo nó chiếm toàn bộ chiều ngang grid */
     padding: 20px;
+    padding-top: 0px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.orders-container h2 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
+#products-container {
+  grid-column: span 12; /* Chiếm toàn bộ chiều ngang */
+  max-width: 100%; /* Đảm bảo nó chiếm toàn bộ chiều ngang grid */
+  /* padding: 20px; */
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .orders-table {
     width: 100%;
@@ -169,16 +173,16 @@
     font-weight: bold;
 }
 
-.status.progress {
-    background-color: #28a745; /* Green */
+.status.Completed {
+    background-color: #28a745; 
 }
 
-.status.open {
-    background-color: #ffc107; /* Yellow */
+.status.Pending {
+    background-color: #ffc107; 
 }
 
-.status.hold {
-    background-color: #dc3545; /* Red */
+.status.Cancelled {
+    background-color: #dc3545; 
 }
 
 
@@ -236,26 +240,82 @@
   text-decoration: line-through;
 }
 
-/* Nút thêm vào giỏ hàng */
-.btn-add-to-cart {
-  display: block;
+
+.navbar {
+  align-self: flex-start;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  position: relative; /* Để chứa pseudo-element */
+}
+
+/* Gạch dưới tổng thể */
+.nav-links::after {
+  content: '';
+  position: absolute;
+  bottom: 0; /* Dưới cùng của thanh navigation */
+  left: 0; /* Vị trí ban đầu */
+  height: 2px;
+  width: 0; /* Ban đầu không hiển thị */
+  background-color: #2cf1c8; /* Màu gạch dưới */
+  transition: left 0.3s ease, width 0.3s ease; /* Hiệu ứng mượt mà */
+}
+
+/* Khi hover qua mục, gạch dưới di chuyển tới mục đó */
+.nav-links li a {
+  position: relative;
+  text-decoration: none;
+  padding: 10px 20px;
+  color: grey;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: color 0.3s ease; /* Hiệu ứng màu chữ */
+}
+
+.nav-links li a:hover {
+  color: #4eb9a5; /* Màu chữ khi hover */
+}
+
+/* Di chuyển gạch dưới theo mục đang hover */
+.nav-links li a:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Phủ toàn bộ mục đang hover */
+  height: 2px;
+  background-color: #2cf1c8;
+  transition: all 0.3s ease; /* Mượt mà khi chuyển */
+}
+
+/* Khi mục active */
+.nav-links li a.active {
+  color: #2cf1c8; /* Màu chữ cho mục active */
+}
+
+.nav-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: lightblue;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.2s;
+  height: 2px;
+  background-color: #2cf1c8;
 }
 
-.btn-add-to-cart:hover {
-  background-color: rgb(165, 204, 217);
-  transform: translateY(-3px);
+
+.content {
+  display: none;
 }
 
-.btn-add-to-cart:active {
-  transform: translateY(1px);
+.content.active {
+  display: block;
 }
