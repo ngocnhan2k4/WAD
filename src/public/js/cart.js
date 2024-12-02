@@ -114,4 +114,35 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector('.float-right h1').textContent = `$${subtotal}`;
     }
+
+
+    const checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', async () => {
+        try {
+            // Gọi API để tạo URL thanh toán VNPay
+            const response = await fetch('/api/vnpay/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to process checkout.');
+            }
+
+            const { paymentUrl } = await response.json();
+
+            if (paymentUrl) {
+                // Chuyển hướng người dùng tới URL thanh toán của VNPay
+                window.location.href = paymentUrl;
+            } else {
+                alert('Failed to get payment URL. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Checkout error:', error.message);
+            alert('An error occurred during checkout. Please try again.');
+        }
+    });
 });

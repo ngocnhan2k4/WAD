@@ -72,9 +72,9 @@ const cartController = {
             const result = await Cart.addProductToCart(userId, productId, quantity);
     
             if (result) {
-                res.status(200).json({ message: "Product added to cart successfully!" });
+                res.json({ message: "Product added to cart successfully!", type: "success" });
             } else {
-                res.status(400).json({ message: "Failed to add product to cart." });
+                res.status(400).json({ message: "Failed to add product to cart.", type: "error" });
             }
         } catch (err) {
             console.error("Error adding product to cart:", err);

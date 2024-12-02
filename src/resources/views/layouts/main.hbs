@@ -12,11 +12,10 @@
             type="image/x-icon"
         />
 
-        <script
-            src="https://kit.fontawesome.com/1cbed95cdb.js"
-            crossorigin="anonymous"
-        ></script>
-        <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://kit.fontawesome.com/1cbed95cdb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/userprofile.css">
+    <link rel="stylesheet" href="/css/notification.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,92 +54,100 @@
                     >
                         {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
                 <i class="fa-solid fa-search"></i>
-            </span> }}
-                        {{#each category}}
-                            <input
-                                type="hidden"
-                                name="category"
-                                value="{{this}}"
-                            />
-                        {{/each}}
-                        {{#each brand}}
-                            <input
-                                type="hidden"
-                                name="brand"
-                                value="{{this}}"
-                            />
-                        {{/each}}
-                        <input
-                            type="hidden"
-                            name="minPrice"
-                            value="{{minPrice}}"
-                        />
-                        <input
-                            type="hidden"
-                            name="maxPrice"
-                            value="{{maxPrice}}"
-                        />
-                        {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
-                        <input type="hidden" name="sort" value="{{sort}}" />
-                        <input
-                            type="text"
-                            name="search"
-                            id="search"
-                            class="hidden w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
-                            placeholder="search"
-                            value="{{search}}"
-                        />
-                        <button
-                            class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->"
-                        >
-                            Search
-                        </button>
-                    </form>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <a
-                        href="#"
-                        class="relative text-center text-gray-700 transition hover:text-primary"
-                    >
-                        <div class="text-2xl">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                        <div class="text-xs leading-3">Wishlist</div>
-                        <div
-                            class="absolute right-0 flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -top-1 bg-primary"
-                        >
-                            8</div>
-                    </a>
-                    <a
-                        href="/cart"
-                        id="cart-link"
-                        class="relative text-center text-gray-700 transition hover:text-primary"
-                    >
-                        <div class="text-2xl">
-                            <i class="fa-solid fa-bag-shopping"></i>
-                        </div>
-                        <div class="text-xs leading-3">Cart</div>
-                        <div
-                            id="cart-count"
-                            class="absolute flex items-center justify-center hidden w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary"
-                        >
-                            0
-                        </div>
-                    </a>
-                    <a
-                        href="#"
-                        class="relative text-center text-gray-700 transition hover:text-primary"
-                    >
-                        <div class="text-2xl">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <div class="text-xs leading-3">Account</div>
-                    </a>
-                </div>
+            </span> --}}
+           {{#each category}}
+                <input type="hidden" name="category" value="{{this}}">
+            {{/each}}
+            {{#each brand}}
+                <input type="hidden" name="brand" value="{{this}}">
+            {{/each}}
+            <input type="hidden" name="minPrice" value="{{minPrice}}">
+            <input type="hidden" name="maxPrice" value="{{maxPrice}}">
+            {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
+            <input type="hidden" name="sort" value="{{sort}}">
+            <input type="text" name="search" id="search"
+                class="hidden w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
+                placeholder="search" value="{{search}}">
+            <button
+                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
+                Search
+            </button>
+          </form>
+        </div>
+    
+        <div class="flex items-center space-x-4">
+          <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
+            <div class="text-2xl">
+              <i class="fa-regular fa-heart"></i>
             </div>
-        </header>
-        <!-- ./header -->
+            <div class="text-xs leading-3">Wishlist</div>
+            <div
+              class="absolute right-0 flex items-center justify-center w-5 h-5 text-xs text-white rounded-full -top-1 bg-primary">
+              8</div>
+          </a>
+            <a href="/cart" id="cart-link" class="relative text-center text-gray-700 transition hover:text-primary">
+                <div class="text-2xl">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <div class="text-xs leading-3">Cart</div>
+                <div id="cart-count" 
+                    class="absolute flex items-center justify-center hidden w-5 h-5 text-xs text-white rounded-full -right-3 -top-1 bg-primary">
+                    0
+                </div>
+            </a>
+          <a {{#unless isAuthen}} href="/user/login" {{/unless}}class="relative text-center text-gray-700 transition hover:text-primary" >
+            <div class="text-2xl">
+            {{#if isAuthen}}
+               <img src="{{userAvatar}}" alt="This is userAvatar" class="w-8 h-8 ml-4 rounded-full" onclick="toggleMenu()">
+            {{else}}
+              <i class="fa-regular fa-user"></i>
+            {{/if}}
+            </div>
+            {{#if isAuthen}}
+            <div class="text-xs leading-3">{{userName}}</div>
+            {{else}}
+            <div class="text-xs leading-3">Account</div>
+            {{/if}}
+          </a>
+          <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="{{userAvatar}}">
+                    <h3>{{fullName}}</h3>
+                </div>
+                <hr>
+
+                <a href="/userprofile#profileh1" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/profile.png">
+                    <p>Profile</p>
+                    <span>></span>
+                </a>
+                {{!-- <a href="#" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/setting.png">
+                    <p>Change Password</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <i class="pl-3 mr-6 fa-solid fa-cart-shopping"></i>
+                </a> --}}
+                <a href="/userprofile#historyh1" class="sub-menu-link">
+                    <i class="pl-3 mr-6 fa-solid fa-cart-shopping"></i>
+                    <p>History</p>
+                    <span>></span>
+                </a>
+                
+                <a href="/auth/logout" class="sub-menu-link">
+                    <img src="/images/dropdownprofile/logout.png">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ./header -->
 
         <!-- navbar -->
         <nav class="bg-gray-800">
@@ -184,64 +191,47 @@
                 </div> }}
                 </div>
 
-                <div
-                    class="flex items-center justify-between flex-grow py-5 md:pl-12"
-                >
-                    <div class="flex items-center space-x-6 capitalize">
-                        <a
-                            href="/"
-                            class="text-gray-200 transition hover:text-white"
-                        >Home</a>
-                        <a
-                            href="/product"
-                            class="text-gray-200 transition hover:text-white"
-                        >Shop</a>
-                        <a
-                            href="#"
-                            class="text-gray-200 transition hover:text-white"
-                        >About us</a>
-                        <a
-                            href="#"
-                            class="text-gray-200 transition hover:text-white"
-                        >Contact us</a>
-                    </div>
-                    <a
-                        href="/user/login"
-                        class="text-gray-200 transition hover:text-white"
-                    >Login</a>
+            <div class="flex items-center justify-between flex-grow py-5 md:pl-12">
+                <div class="flex items-center space-x-6 capitalize">
+                    <a href="/" class="text-gray-200 transition hover:text-white">Home</a>
+                    <a href="/product" class="text-gray-200 transition hover:text-white">Shop</a>
+                    <a href="#" class="text-gray-200 transition hover:text-white">About us</a>
+                    <a href="#" class="text-gray-200 transition hover:text-white">Contact us</a>
+                </div>
+                {{#if isAuthen}}
+                <a href="/auth/logout" class="text-gray-200 transition hover:text-white">Logout</a>
+                {{else}}
+                <a href="/user/login" class="text-gray-200 transition hover:text-white">Login</a>
+                {{/if}}
+            </div>
+        </div>
+    </nav>
+    <!-- ./navbar -->
+    {{!-- {{/if}} --}}
+    {{{body}}}
+    {{!-- {{#if notAJAX}} --}}
+    <!-- footer -->
+    <footer class="pt-16 pb-12 bg-white border-t border-gray-100">
+        <div class="container grid grid-cols-1 ">
+            <div class="col-span-1 space-y-4">
+                <img src="/images/logo.svg" alt="logo" class="w-30">
+                <div class="mr-2">
+                    <p class="text-gray-500">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, hic?
+                    </p>
+                </div>
+                <div class="flex space-x-5">
+                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                            class="fa-brands fa-facebook-square"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                            class="fa-brands fa-instagram-square"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
+                            class="fa-brands fa-twitter-square"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-500">
+                        <i class="fa-brands fa-github-square"></i>
+                    </a>
                 </div>
             </div>
-        </nav>
-        <!-- ./navbar -->
-        {{!-- {{/if}} --}}
-        {{{body}}}
-        {{!-- {{#if notAJAX}} --}}
-        <!-- footer -->
-        <footer class="pt-16 pb-12 bg-white border-t border-gray-100">
-            <div class="container grid grid-cols-1">
-                <div class="col-span-1 space-y-4">
-                    <img src="/images/logo.svg" alt="logo" class="w-30" />
-                    <div class="mr-2">
-                        <p class="text-gray-500">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Quia, hic?
-                        </p>
-                    </div>
-                    <div class="flex space-x-5">
-                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                                class="fa-brands fa-facebook-square"
-                            ></i></a>
-                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                                class="fa-brands fa-instagram-square"
-                            ></i></a>
-                        <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                                class="fa-brands fa-twitter-square"
-                            ></i></a>
-                        <a href="#" class="text-gray-400 hover:text-gray-500">
-                            <i class="fa-brands fa-github-square"></i>
-                        </a>
-                    </div>
-                </div>
 
                 <div class="grid grid-cols-2 col-span-2 gap-4">
                     <div class="grid grid-cols-2 gap-4 md:gap-8">
@@ -341,23 +331,57 @@
         </footer>
         <!-- ./footer -->
 
-        <!-- copyright -->
-        <div class="py-4 bg-gray-800">
-            <div class="container flex items-center justify-between">
-                <p class="text-white">&copy; TailCommerce - All Right Reserved</p>
-                <div>
-                    <img src="/images/methods.png" alt="methods" class="h-5" />
-                </div>
+    <!-- copyright -->
+    <div class="py-4 bg-gray-800">
+        <div class="container flex items-center justify-between">
+            <p class="text-white">&copy; TailCommerce - All Right Reserved</p>
+            <div>
+                <img src="/images/methods.png" alt="methods" class="h-5">
             </div>
         </div>
-        <!-- ./copyright -->
-        {{!-- {{/if}} --}}
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"
-        ></script>
-        <script
-            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"
-        ></script>
+    </div>
+    <!-- ./copyright -->
+    {{!-- {{/if}} --}}
 
-    </body>
+    {{#if notification}}
+        <div id="notification-overlay" class="fixed inset-0 z-50 pointer-events-none">
+            <!-- Khung thông báo -->
+            <div id="notification" class="relative z-50 p-6 mx-auto mt-20 text-center bg-white rounded shadow-lg pointer-events-auto">
+                <p class="text-lg font-semibold">{{notification.message}}</p>
+                <button id="notification-ok" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-700">
+                    OK
+                </button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const overlay = document.getElementById('notification-overlay');
+                const okButton = document.getElementById('notification-ok');
+
+                const hideNotification = () => {
+                    overlay.remove(); // Xóa toàn bộ thông báo
+                };
+
+                // Đóng thông báo khi bấm "OK"
+                okButton.addEventListener('click', hideNotification);
+
+                // Tự động đóng sau 5 giây
+                setTimeout(hideNotification, 5000);
+            });
+        </script>
+    {{/if}}
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+      <script>
+        let subMenu = document.getElementById("subMenu");
+
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
 </html>

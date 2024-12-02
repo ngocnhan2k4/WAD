@@ -4,9 +4,12 @@ const handlebars = require("express-handlebars");
 const dotenv = require("dotenv");
 const passport = require("./config/passport");
 const session = require("express-session");
+const notification = require('./app/middleware/notification');
+
 dotenv.config();
 
 const app = express();
+
 // Đăng ký các helper Handlebars
 require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
@@ -37,6 +40,16 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(session({
+    secret: 'notification',
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.use(notification);
+
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");

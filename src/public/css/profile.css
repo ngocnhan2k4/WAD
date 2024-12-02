@@ -1,0 +1,321 @@
+  .container-user {
+      display: grid; 
+      grid-template-columns: repeat(12, 1fr); 
+      gap: 16px; 
+      padding: 16px;
+    }
+    
+    .column-user {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 50px;
+    }
+    
+    .column-user-4 {
+      grid-column: span 4; 
+      display: flex;
+      /* margin-top: 80px; */
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); */
+    }
+    
+    .column-user-4 img{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    .column-user-4 h1{
+      align-self:flex-start;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: grey;
+      margin-bottom: 20px;
+    }
+
+    .column-user-4 h2{
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 15px;
+      color: grey;
+    }
+
+
+    .column-user-4 button{
+      background-color: lightblue;
+      margin-top: 40px;
+      padding: 10px;
+      font-size: 16px;
+      font-weight:500;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
+
+    .column-user-4 button:hover {
+      background-color: rgb(165, 204, 217); 
+      transform: translateY(-3px);
+    }
+    
+    .column-user-4 button:active {
+      transform: translateY(1px);
+    }
+
+
+    .column-user-8 {
+      grid-column: span 8; 
+      /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); */
+      display: flex;
+      flex-direction: column;
+      padding-top: 83px;
+      /* background-color: #28a745;  */
+    }
+
+
+    #avatar-preview {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+  }
+
+  .column-user-8 .user-info1 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .column-user-8 .user-info1 p {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-top: 23px;
+  }
+
+  .column-user-8 .user-info1 strong {
+    color: grey;
+    margin-right: 5px;
+  }
+
+  .column-user-8 button{
+    background-color: lightblue;
+    margin-top: 40px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight:500;
+    border-radius: 8px;
+    width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+
+  .column-user-8 button:hover {
+    background-color: rgb(165, 204, 217); 
+    transform: translateY(-3px);
+  }
+
+  .column-user-8 button:active {
+    transform: translateY(1px);
+  }
+
+
+  #orders-container {
+    grid-column: span 12; /* Chiếm toàn bộ chiều ngang */
+    max-width: 100%; /* Đảm bảo nó chiếm toàn bộ chiều ngang grid */
+    padding: 20px;
+    padding-top: 0px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#products-container {
+  grid-column: span 12; /* Chiếm toàn bộ chiều ngang */
+  max-width: 100%; /* Đảm bảo nó chiếm toàn bộ chiều ngang grid */
+  /* padding: 20px; */
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 16px;
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.orders-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.orders-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.orders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.status.Completed {
+    background-color: #28a745; 
+}
+
+.status.Pending {
+    background-color: #ffc107; 
+}
+
+.status.Cancelled {
+    background-color: #dc3545; 
+}
+
+
+/* Định dạng ảnh sản phẩm */
+.product-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-img img {
+  width: 100%;
+  height: auto;
+}
+
+.product-info {
+  padding: 16px;
+  text-align: center;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: grey;
+  margin-bottom: 8px;
+  transition: color 0.3s;
+}
+
+.product-name:hover {
+  color: #007bff;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price-current {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #28a745;
+}
+
+.price-old {
+  font-size: 1rem;
+  color: grey;
+  text-decoration: line-through;
+}
+
+
+.navbar {
+  align-self: flex-start;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  position: relative; /* Để chứa pseudo-element */
+}
+
+/* Gạch dưới tổng thể */
+.nav-links::after {
+  content: '';
+  position: absolute;
+  bottom: 0; /* Dưới cùng của thanh navigation */
+  left: 0; /* Vị trí ban đầu */
+  height: 2px;
+  width: 0; /* Ban đầu không hiển thị */
+  background-color: #2cf1c8; /* Màu gạch dưới */
+  transition: left 0.3s ease, width 0.3s ease; /* Hiệu ứng mượt mà */
+}
+
+/* Khi hover qua mục, gạch dưới di chuyển tới mục đó */
+.nav-links li a {
+  position: relative;
+  text-decoration: none;
+  padding: 10px 20px;
+  color: grey;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: color 0.3s ease; /* Hiệu ứng màu chữ */
+}
+
+.nav-links li a:hover {
+  color: #4eb9a5; /* Màu chữ khi hover */
+}
+
+/* Di chuyển gạch dưới theo mục đang hover */
+.nav-links li a:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Phủ toàn bộ mục đang hover */
+  height: 2px;
+  background-color: #2cf1c8;
+  transition: all 0.3s ease; /* Mượt mà khi chuyển */
+}
+
+/* Khi mục active */
+.nav-links li a.active {
+  color: #2cf1c8; /* Màu chữ cho mục active */
+}
+
+.nav-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2cf1c8;
+}
+
+
+.content {
+  display: none;
+}
+
+.content.active {
+  display: block;
+}
