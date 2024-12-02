@@ -1,0 +1,126 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<main class="container container__revenue">
+    <ul class="menu">
+        <li id="menu1__nav" class="menu__nav menu__active">Revenue report in
+            time range</li>
+        <li id="menu2__nav" class="menu__nav">Top revenue by product in times</li>
+        <div class="decor__nav"></div>
+    </ul>
+    <div class="revenue__report">
+        <div class="header__inner">
+            <div class="header__revenue">
+                <h1>Revenue Dashboard</h1>
+                <p id="revenue__title">Overview of monthly revenue</p>
+            </div>
+
+            <div class="container__select">
+                <label for="timeRange">View revenue report in time range:</label>
+                <select id="timeRange">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month" selected>Month</option>
+                </select>
+            </div>
+        </div>
+        <section class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:50%" id="table__type">Month</th>
+                        <th style="width:50%">Total Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td>{{month}}</td>
+                            <td>{{revenue}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="chart">
+            <canvas id="revenueChart"></canvas>
+        </section>
+    </div>
+    <div class="revenue__top">
+        <div class="header__inner">
+            <div class="header__revenue-product">
+                <h1>Product Dashboard</h1>
+                <p id="revenue__title-product">Overview of monthly revenue</p>
+            </div>
+
+            <div class="container__select-product">
+                <label for="timeRange-product">View top product in time range:</label>
+                <select id="timeRange-product">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month" selected>Month</option>
+                </select>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="view__product__header">
+            <h2 class="view__heading">Products</h2>
+            <div class="view__product__search">
+                <input
+                    type="text"
+                    class="view__product__search__input"
+                    placeholder="Search product"
+                />
+                <button class="view__product__search__button">Search</button>
+            </div>
+        </div>
+        <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
+            {{#each products}}
+                <div
+                    id={{product_id}}
+                    class="product__item overflow-hidden bg-white rounded shadow group"
+                >
+                    <div class="relative">
+                        <a
+                            href="/product/productDetail?id={{this.product_id}}"
+                        ><img
+                                src={{Images.0.directory_path}}
+                                alt="product{{@index}}"
+                                class="w-full"
+                            /></a>
+                    </div>
+                    <div class="product__content px-4 pt-4 pb-3">
+                        <a href="/product/productDetail?id={{this.product_id}}">
+                            <h4
+                                class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                            >
+                                {{product_name}}</h4>
+                            <h4
+                                class="quatity__product mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                            >
+                                Total sold:
+                                <strong>{{total}} $</strong>
+                            </h4>
+                        </a>
+                        <div class="flex mt-auto items-baseline mb-1 space-x-2">
+                            <p
+                                class="text-xl font-semibold text-primary"
+                            >{{current_price}}</p>
+                            <p
+                                class="text-sm text-gray-400 line-through"
+                            >{{original_price}}</p>
+                        </div>
+                    </div>
+                    <a
+                        href="#"
+                        class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
+                    >Add to cart</a>
+                </div>
+
+            {{/each}}
+        </div>
+    </div>
+</main>
+<script>
+    const data ={{{dataChart}}}
+</script>
+<script src="/js/view_revenue.js"></script>

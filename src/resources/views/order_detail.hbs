@@ -1,0 +1,138 @@
+<main class="view_detail container">
+    <div class="view__inner row gy-4 gx-4">
+        <div class="col-12 col-xl-5">
+            <div class="card shadow-sm rounded mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0">Order Overview</h2>
+                </div>
+                <div class="card-body">
+                    <p class="order__id" id="{{order.order_id}}"><strong>Order
+                            ID:</strong>
+                        {{order.order_id}}</p>
+                    <p><strong>Number of Products:</strong>
+                        {{order.count_number_product}}</p>
+                    <p><strong>Total Amount:</strong> {{order.total_amount}}</p>
+                    <p><strong>Creation Time:</strong>{{order.creation_time}}</p>
+                    <p><strong>Shipping Address:</strong>{{order.shipping_address}}</p>
+                    <div class="status__inner">
+                        <div class="{{order.status}}"><span
+                                class="status__order status__{{order.status}}"
+                            >{{order.status}}</span></div>
+
+                        <div style="position: relative">
+                            <div class="icon__inner">
+                                <img
+                                    class="acc_accept"
+                                    src="/images/icons/check_mark.png"
+                                    alt=""
+                                />
+                                <img
+                                    class="acc_notaccepct"
+                                    src="/images/icons/wrong_mark.png"
+                                    alt=""
+                                />
+                            </div>
+                            <img
+                                class="icon__input"
+                                src="/images/icons/input.png"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- User Section -->
+            <div class="card shadow-sm rounded mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">User Information</h5>
+                </div>
+                <div class="card-body card__body-user">
+                    <img src="{{order.User.user_image}}" alt="" />
+                    <div class="user__info">
+                        <p><strong>User ID:</strong>{{order.user_id}}</p>
+                        <p><strong>Name:</strong>{{order.User.fullName}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Payment Section -->
+            <div class="card shadow-sm rounded">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Payment Methods</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Payment Method:</strong>{{order.Payments.payment_method}}</p>
+                    <p><strong>Payment Status:</strong> Paid</p>
+                    <p><strong>Payment Time:</strong>
+                        {{order.Payments.payment_date}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xl-7">
+            <div class="view__product__header">
+                <h2 class="view__heading">Products: </h2>
+                <div class="view__product__search">
+                    <input
+                        type="text"
+                        class="view__product__search__input"
+                        placeholder="Search product"
+                    />
+                    <button
+                        class="view__product__search__button"
+                    >Search</button>
+                </div>
+            </div>
+            <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {{#each products}}
+                    <div
+                        id={{product_id}}
+                        class="product__item bg-white rounded shadow group"
+                    >
+                        <div class="relative">
+                            <a
+                                href="/product/productDetail?id={{this.product_id}}"
+                            ><img
+                                    src={{Images.0.directory_path}}
+                                    alt="product{{@index}}"
+                                    class="w-full"
+                                /></a>
+                        </div>
+                        <div class="product__content px-4 pt-4 pb-3">
+                            <a
+                                style="display: block; width: 100%;"
+                                href="/product/productDetail?id={{this.product_id}}"
+                            >
+                                <h4
+                                    class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                                >
+                                    {{product_name}}</h4>
+                                <h4
+                                    class="quatity__product mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
+                                >
+                                    Quantity:
+                                    <strong>{{quantity}}</strong>
+                                </h4>
+                            </a>
+                            <div
+                                class="flex mt-auto items-baseline mb-1 space-x-2"
+                            >
+                                <p
+                                    class="text-xl font-semibold text-primary"
+                                >{{current_price}}</p>
+                                <p
+                                    class="text-sm text-gray-400 line-through"
+                                >{{original_price}}</p>
+                            </div>
+                        </div>
+                        <a
+                            href="#"
+                            class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
+                        >Add to cart</a>
+                    </div>
+
+                {{/each}}
+            </div>
+
+        </div>
+    </div>
+</main>
+<script src="/js/order_detail.js"></script>

@@ -1,0 +1,64 @@
+<main class="order__container container">
+    <div class="header">
+        <h1 class="title">Orders List</h1>
+        <div class="actions">
+            <button class="btn btn__filter">
+                <span>⚡</span>
+                Filter
+            </button>
+
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User ID</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#each orders}}
+                    <tr class="row__order" id="{{order_id}}">
+                        <td><span class="order-id">{{order_id}}</span></td>
+                        <td>{{user_id}}</td>
+                        <td>{{total_amount}}</td>
+                        <td class="{{status}}"><span
+                                class="status__order status__{{status}}"
+                            >{{status}}</span></td>
+                        <td>
+                            {{creation_time}}
+                        </td>
+                        <td>
+                            <div class="icon__inner">
+                                <img
+                                    class="acc_accept"
+                                    src="/images/icons/check_mark.png"
+                                    alt=""
+                                />
+                                <img
+                                    class="acc_notaccepct"
+                                    src="/images/icons/wrong_mark.png"
+                                    alt=""
+                                />
+                            </div>
+                            <img
+                                class="icon__input"
+                                src="/images/icons/input.png"
+                                alt=""
+                            />
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script src="/js/view_order.js"></script>

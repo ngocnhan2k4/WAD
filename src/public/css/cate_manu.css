@@ -48,7 +48,7 @@ nav {
 
 .decor__nav {
     position: absolute;
-    width: 135px;
+    width: 108px;
     bottom: 0;
     left: 0;
 
@@ -98,8 +98,9 @@ nav {
 .cate__item-image,
 .manu__item-image {
     width: 100%;
-    height: auto;
+    height: 345px;
     border-radius: 8px;
+    object-fit: cover;
     margin-bottom: 10px;
 }
 
@@ -110,13 +111,14 @@ nav {
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 /* Mô tả */
 .cate__item-description,
 .manu__item-description {
-    font-size: 0.95rem;
-    color: #666;
+    font-size: 30px;
+    color: #101fa3;
     margin-bottom: 15px;
 }
 
@@ -151,4 +153,116 @@ nav {
 
 .search-button:hover {
     background-color: #0056b3;
+}
+.manu__content {
+    display: none;
+}
+.cate__item-info,
+.manu__item-info {
+    margin-top: 25px;
+    text-align: left;
+    align-items: baseline;
+    display: flex;
+}
+.cate__item-info p:first-child,
+.manu__item-info p:first-child {
+    flex: 1;
+}
+.shadow {
+    background-color: #707070;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+}
+.shadow-active {
+    opacity: 0.75;
+    visibility: visible;
+}
+
+/* Dialog container */
+.dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+/* Fade-in animation */
+
+/* Header of the dialog */
+.dialog-header {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Close button styles */
+.dialog-close {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    color: #666;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Input field styles */
+.dialog input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    font-size: 1em;
+}
+
+/* Button styles */
+.dialog-buttons {
+    text-align: right;
+    margin-top: 20px;
+}
+.dialog-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.dialog-buttons .cancel-btn {
+    background: #ccc;
+    margin-right: 10px;
+}
+.dialog-buttons .save-btn {
+    background: #007bff;
+    color: white;
+}
+.dialog_status {
+    display: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+@media (max-width: 767.99px) {
+    .cate__manu-heading {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .add__new {
+        width: 30%;
+    }
 }

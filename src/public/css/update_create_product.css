@@ -1,0 +1,652 @@
+/* Tổng quan chung */
+body {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+}
+/* Container chính */
+.container {
+    color: #333;
+}
+.product__list {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.heading {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+/* Header Styles */
+.header {
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+}
+
+/* Title and Create Button */
+.create__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create__btn {
+    display: inline-block;
+    padding: 9px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.create__btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.create__btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Search Container */
+.search-container {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete__product {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    cursor: pointer;
+    object-fit: cover;
+}
+.product__item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.search-button:hover {
+    background-color: #218838;
+}
+.view__product__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    background: #f9f9f9;
+}
+
+.view__product__search__input {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.view__product__search__input:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+}
+
+.view__product__search__button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #6a11cb, #2f6d08);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view__product__search__button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.view__product__search__button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+.overlay {
+    background-color: #707070;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+}
+.overlay-active {
+    opacity: 0.75;
+    visibility: visible;
+}
+
+/* Dialog container */
+.dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+/* Fade-in animation */
+
+/* Header of the dialog */
+.dialog-header {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Close button styles */
+.dialog-close {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    color: #666;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* Input field styles */
+.dialog input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    font-size: 1em;
+}
+
+/* Button styles */
+.dialog-buttons {
+    text-align: right;
+    margin-top: 20px;
+}
+.dialog-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.dialog-buttons .cancel-btn {
+    background: #ccc;
+    margin-right: 10px;
+}
+.cancel__btn:hover {
+    background-color: #888; /* Màu nền khi hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+.dialog-buttons {
+    color: white;
+}
+.delete-btn {
+    background-color: rgb(203, 13, 13);
+    color: white;
+}
+.dialog_status {
+    display: none;
+    padding: 10px;
+    font-size: 16px;
+}
+.create__product-inner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.create__product {
+    position: relative;
+    width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    padding: 30px;
+    padding-bottom: 90px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create__product__header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.create__product__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.create__product__form .form__group {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.create__product__form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.create__product__form input,
+.create__product__form select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.create__product__form input:focus,
+.create__product__form select:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+}
+
+.conditions__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.add__condition {
+    background-color: #f8f8f8;
+    color: #6a11cb;
+    border: 1px solid #6a11cb;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add__condition:hover {
+    background-color: #6a11cb;
+    color: #fff;
+}
+
+.save__btn {
+    height: 60px;
+    width: 100px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save__btn:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.save__btn:active {
+    transform: translateY(1px);
+}
+.description-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Label for description */
+.description-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Textarea for description */
+.description-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 16px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    resize: none; /* Prevent manual resizing */
+    color: #333;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+/* Focused state of textarea */
+.description-textarea:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Placeholder text styling */
+.description-textarea::placeholder {
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Optional: Adding a subtle hover effect for the textarea */
+.description-textarea:hover {
+    border-color: #007bff;
+}
+.form__group-inner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Form Group Styling */
+
+/* Image upload container */
+.image-upload-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 30px;
+}
+
+/* Input File Styling */
+.image-upload-input {
+    display: none; /* Hide the default file input */
+}
+
+.image-upload-preview {
+    position: relative;
+    width: 30%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.close__img {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    cursor: pointer;
+    object-fit: cover;
+}
+.image-upload-preview:hover {
+    border-color: #007bff;
+    background-color: #e6f4ff;
+}
+
+.image-upload-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Optional: Adding a custom button to trigger file selection */
+.image-upload-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.image-upload-button:hover {
+    background-color: #0056b3;
+}
+#addButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* Size of the button */
+    height: 50px; /* Same as width for a perfect circle */
+    border-radius: 50%; /* Makes the button round */
+    background-color: #007bff; /* Background color */
+    color: white; /* Icon color */
+    font-size: 24px; /* Icon size */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+#addButton:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.image-upload__add {
+    position: relative;
+}
+.image-upload__add::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #fff;
+    background-color: #3683d6;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* Hiệu ứng khi hover lên thanh kéo */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none; /* Xóa border mặc định */
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng hover */
+    height: 45px;
+}
+
+/* Nút Save */
+.save__btn {
+    background-color: #007bff; /* Màu nền */
+    color: white; /* Màu chữ */
+}
+
+.save__btn:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}
+
+/* Nút Cancel */
+.cancel__btn {
+    background-color: #ccc; /* Màu nền của Cancel */
+    color: white; /* Màu chữ */
+    width: 100px; /* Độ rộng */
+    transition: all 0.3s ease;
+}
+
+.cancel__btn:hover {
+    background-color: #888; /* Màu nền khi hover */
+}
+.buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateX(-30px);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+}
+.dialog__status {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    width: 300px;
+    text-align: center;
+    display: none; /* Hidden by default */
+}
+
+/* Hidden state */
+.hidden__status {
+    display: none;
+}
+
+/* Close button */
+.dialog__status-close-btn {
+    position: absolute;
+    top: -30px;
+    right: -12px;
+    cursor: pointer;
+    font-size: 42px;
+}
+
+/* Success styles */
+.dialog__status.success {
+    border-color: #4caf50;
+}
+
+.dialog__status.success p {
+    color: #4caf50;
+}
+
+/* Failure styles */
+.dialog__status.failure {
+    border-color: #f44336;
+}
+
+.dialog__status.failure p {
+    color: #f44336;
+}
+.product__item {
+    display: flex;
+    flex-direction: column;
+}
+.product__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+.product__image {
+    height: 310px;
+    object-fit: contain;
+}
+.group__currentPrice {
+    display: none;
+}
+.delete__btn-product {
+    background: #eb1c1c;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+.delete__btn-product:hover {
+    background: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 768px) {
+    .image-upload-preview {
+        width: 47%;
+    }
+}
+@media (max-width: 634px) {
+    .image-upload-preview {
+        width: 100%;
+    }
+}
+@media (max-width: 450px) {
+    .create__inner {
+        flex-direction: column;
+        gap: 20px;
+        align-items: start;
+    }
+}
