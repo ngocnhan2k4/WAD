@@ -1,0 +1,56 @@
+.result-box {
+    padding: 30px;
+    border: 1px solid #ddd;
+    width: 60%;
+    margin: 50px auto;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-box h2 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.result-box .success-message {
+    color: #28a745;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.result-box .failure-message {
+    color: #dc3545;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.result-box p {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.result-box a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1rem;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.result-box a:hover {
+    background-color: #0056b3;
+}

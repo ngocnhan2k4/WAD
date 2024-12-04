@@ -1,3 +1,5 @@
+import { showNotification } from './notification.js';
+
 document.addEventListener('DOMContentLoaded', function () {
     updateEventListeners();
 
@@ -120,8 +122,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkoutButton.addEventListener('click', async () => {
         try {
+            console.log("check");
+            const cartResponse = await fetch('/cart/check', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (!cartResponse.ok) {
+                throw new Error('Failed to check cart.');
+            }
+
+            const { cartItems } = await cartResponse.json();
+
+            // Kiểm tra xem giỏ hàng có sản phẩm không
+            if (cartItems.length === 0) {
+                showNotification('Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.', 'error');
+                return; // Dừng lại nếu giỏ hàng trống
+            }
+            
             // Gọi API để tạo URL thanh toán VNPay
-            const response = await fetch('/api/vnpay/checkout', {
+            const response = await fetch('/payment/checkout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

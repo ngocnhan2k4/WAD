@@ -124,6 +124,26 @@ const cartController = {
             res.status(500).send("Internal Server Error");
         }
     },
+
+    checkCart: async (req, res) => {
+        try {
+            const userId = req.user.id;
+
+            // Gọi service để kiểm tra giỏ hàng
+            const cartItems = await Cart.checkCart(userId);
+
+            if (!cartItems || cartItems.length === 0) {
+                // Nếu giỏ hàng trống, trả về thông báo
+                return res.status(200).json({ cartItems: [] });
+            }
+
+            // Nếu có sản phẩm, trả về danh sách sản phẩm trong giỏ hàng
+            return res.status(200).json({ cartItems });
+        } catch (error) {
+            console.error('Error checking cart in controller:', error.message);
+            res.status(500).json({ message: 'Error checking cart' });
+        }
+    },
 };
 
 module.exports = cartController;
