@@ -111,6 +111,20 @@ const Cart = {
             throw new Error("Error deleting product");
         }
     },
+
+    checkCart: async (userId) => {
+        try {
+            // Kiểm tra giỏ hàng của người dùng
+            const cartItems = await prisma.userCart.findMany({
+                where: { user_id: userId },
+            });
+
+            return cartItems; // Trả về danh sách sản phẩm trong giỏ hàng
+        } catch (error) {
+            console.error('Error checking cart in service:', error.message);
+            throw new Error('Error checking cart');
+        }
+    },
 };
 
 

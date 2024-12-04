@@ -1,6 +1,9 @@
-module.exports = {
-    vnp_TmnCode: "CGI1PK93", // Thay bằng Merchant Code từ VNPay
-    vnp_HashSecret: "KBQBSSJRVOVOLR7WPO7JZ5RG31KFUI14", // Thay bằng Secret Key từ VNPay
-    vnp_Url: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html", // URL Sandbox của VNPay
-    vnp_ReturnUrl: "http://localhost:4000", // URL callback sau thanh toán
+const vnpayConfig = {
+    vnp_TmnCode: 'CGI1PK93', // Mã terminal
+    vnp_HashSecret: 'KBQBSSJRVOVOLR7WPO7JZ5RG31KFUI14', // Chuỗi bí mật
+    vnp_Url: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html', // URL VNPay
+    vnp_TokenApiUrl: 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction', // API tạo token
+    vnp_ReturnUrl: 'http://localhost:4000/payment/vnpay_return', // URL xử lý kết quả
 };
+
+module.exports = vnpayConfig;

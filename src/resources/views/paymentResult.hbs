@@ -1,0 +1,15 @@
+<div class="result-box" style="padding: 20px; border: 1px solid #ccc; width: 50%; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: Arial, sans-serif;">Transaction Status</h2>
+    {{#if transactionDetails.success}}
+        <p style="color: green; font-family: Arial, sans-serif;">Payment Successful!</p>
+    {{else}}
+        <p style="color: red; font-family: Arial, sans-serif;">Payment Failed!</p>
+    {{/if}}
+
+    <p style="font-family: Arial, sans-serif; font-weight: bold;">Transaction ID: {{transactionDetails.transactionId}}</p>
+    <p style="font-family: Arial, sans-serif; font-weight: bold;">Order Info: {{transactionDetails.orderInfo}}</p>
+    <p style="font-family: Arial, sans-serif; font-weight: bold;">Amount Paid: {{transactionDetails.amount}} VND</p>
+    <p style="font-family: Arial, sans-serif; font-weight: bold;">Payment Date: {{transactionDetails.payDate}}</p>
+
+    <a href="/" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif;">Back to Homepage</a>
+</div>
