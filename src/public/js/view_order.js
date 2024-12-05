@@ -6,34 +6,89 @@ const filter = [
     "Shipped",
     "No Filter",
 ];
-let whichFilter = -1;
+
 const btn__filter = document.querySelector(".btn__filter");
+const status__filter = Array.from(btn__filter.childNodes)
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((node) => node.textContent.trim())
+    .join("");
+let whichFilter = -1;
+whichFilter = filter.indexOf(status__filter);
+console.log(status__filter);
 const status__orders = document.querySelectorAll(".status__order");
 const acc_accepts = document.querySelectorAll(".acc_accept");
 const acc_notaccepct = document.querySelectorAll(".acc_notaccepct");
 const row__orders = document.querySelectorAll(".row__order");
 
+let pages = document.querySelector(".total-pages").textContent;
+const currentPageInput = document.querySelector(".current-page");
+const prev_btn = document.querySelector(".prev-btn");
+const next_btn = document.querySelector(".next-btn");
+let currentPage = currentPageInput.value;
+
+function makePagination(currentPage) {
+    if (currentPage == 1) {
+        prev_btn.setAttribute("disabled", "true");
+    } else {
+        prev_btn.removeAttribute("disabled");
+    }
+
+    if (currentPage == pages) {
+        console.log("pages", pages);
+        next_btn.setAttribute("disabled", "true");
+    } else {
+        next_btn.removeAttribute("disabled");
+    }
+    currentPageInput.value = currentPage;
+}
+makePagination(currentPage);
+
+prev_btn.addEventListener("click", async () => {
+    window.location.href = `/admin/vieworder?page=${
+        Number(currentPage) - 1
+    }&filter=${status__filter}`;
+});
+
+next_btn.addEventListener("click", async () => {
+    window.location.href = `/admin/vieworder?page=${
+        Number(currentPage) + 1
+    }&filter=${status__filter}`;
+});
+
+window.addEventListener("beforeunload", () => {
+    localStorage.setItem("scrollPositionOrder", window.scrollY);
+});
+
+// Khôi phục vị trí cuộn sau khi tải trang
+window.addEventListener("load", () => {
+    const scrollPosition = localStorage.getItem("scrollPositionOrder");
+    if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition, 10));
+        localStorage.removeItem("scrollPositionOrder"); // Xóa sau khi dùng
+    }
+});
+currentPageInput.addEventListener("keypress", async (e) => {
+    if (e.key === "Enter") {
+        if (currentPageInput.value === "" || isNaN(currentPageInput.value)) {
+            currentPageInput.value = currentPage;
+        }
+        const page = currentPageInput.value;
+        if (page > 0 && page <= pages) {
+            window.location.href = `/admin/vieworder?page=${page}&filter=${stutus__filter}`;
+        } else {
+            window.location.href = `/admin/vieworder?page=${currentPage}&filter=${stutus__filter}`;
+        }
+    }
+});
+
 btn__filter.addEventListener("click", () => {
     whichFilter = (whichFilter + 1) % filter.length;
     const filterValue = filter[whichFilter];
     if (filterValue === "No Filter") {
-        const orderList = document.querySelectorAll(".row__order");
-        orderList.forEach((order) => {
-            order.style.display = "table-row";
-        });
-        btn__filter.innerHTML = `<span>⚡</span> No Filter`;
+        window.location.href = "/admin/vieworder";
         return;
     }
-    const orderList = document.querySelectorAll(".row__order");
-    orderList.forEach((order) => {
-        const status = order.querySelector(".status__order").textContent;
-        if (status === filterValue) {
-            order.style.display = "table-row";
-        } else {
-            order.style.display = "none";
-        }
-    });
-    btn__filter.innerHTML = `<span>⚡</span> ${filterValue}`;
+    window.location.href = `/admin/vieworder?page=1&filter=${filterValue}`;
 });
 
 status__orders.forEach((status) => {

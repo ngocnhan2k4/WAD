@@ -29,6 +29,10 @@ router.use("/sortview", adminController.sortView);
 router.use("/countsearch", adminController.countSearch);
 router.use("/updateuser", adminController.updateUser);
 router.use("/searchproducts", adminController.searchProducts);
+router.use(
+    "/searchproductsallattribute",
+    adminController.searchProductsAllAttribute
+);
 router.use("/cate/:id", adminController.viewCateDetail);
 router.use("/manu/:id", adminController.viewManuDetail);
 router.use("/viewcatemanu", adminController.viewCateManu);
