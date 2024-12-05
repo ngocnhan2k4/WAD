@@ -890,6 +890,9 @@ const Admin = {
             res.json({ status: "fail" });
         }
     },
+    index: async (req, res) => {
+        res.render("admin", { page_style: "/css/admin.css" });
+    },
 };
 
 module.exports = Admin;

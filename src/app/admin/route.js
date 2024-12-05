@@ -66,5 +66,5 @@ router.use("/updateorderstatus", adminController.updateOrderStatus);
 router.use("/viewrevenue", adminController.viewRevenue);
 router.use("/getrevenue/:date", adminController.getRevenue);
 router.use("/getproductrevenue/:date", adminController.getProductRevenue);
-
+router.use("/", adminController.index);
 module.exports = router;
