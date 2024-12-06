@@ -4,7 +4,7 @@ const handlebars = require("express-handlebars");
 const dotenv = require("dotenv");
 const passport = require("./config/passport");
 const session = require("express-session");
-const notification = require('./app/middleware/notification');
+const notification = require("./app/middleware/notification");
 
 dotenv.config();
 
@@ -41,15 +41,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(session({
-    secret: 'notification',
-    resave: false,
-    saveUninitialized: true,
-}));
+app.use(
+    session({
+        secret: "notification",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 app.use(notification);
-
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
@@ -65,3 +65,5 @@ app.listen(process.env.PORT, () => {
         `Example app listening at http://localhost:${process.env.port}`
     );
 });
+
+module.exports = app;
