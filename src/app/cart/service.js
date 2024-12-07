@@ -125,6 +125,25 @@ const Cart = {
             throw new Error('Error checking cart');
         }
     },
+
+    getNextOrderId: async () => {
+        try {
+            const maxOrder = await prisma.orders.findFirst({
+                orderBy: {
+                    order_id: 'desc',
+                },
+                select: {
+                    order_id: true,
+                },
+            });
+
+            // Nếu không có bản ghi nào trong bảng Orders, bắt đầu từ 1
+            return maxOrder ? maxOrder.order_id + 1 : 1;
+        } catch (error) {
+            console.error('Error fetching max order_id:', error);
+            throw new Error('Failed to fetch next order_id');
+        }
+    },
 };
 
 

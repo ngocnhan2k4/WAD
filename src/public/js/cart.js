@@ -1,6 +1,8 @@
 import { showNotification } from './notification.js';
+import { showPaymentPopup} from './paymentInfomation.js';
 
 document.addEventListener('DOMContentLoaded', function () {
+
     updateEventListeners();
 
     const cartItems = document.querySelectorAll('[id^="row-"]');
@@ -141,30 +143,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.', 'error');
                 return; // Dừng lại nếu giỏ hàng trống
             }
-            
-            // Gọi API để tạo URL thanh toán VNPay
-            const response = await fetch('/payment/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            console.log("1");
+            showPaymentPopup();
+            console.log("2");
+            // // Gọi API để tạo URL thanh toán VNPay
+            // const response = await fetch('/payment/checkout', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            // });
 
-            if (!response.ok) {
-                throw new Error('Failed to process checkout.');
-            }
+            // if (!response.ok) {
+            //     throw new Error('Failed to process checkout.');
+            // }
 
-            const { paymentUrl } = await response.json();
+            // const { paymentUrl } = await response.json();
 
-            if (paymentUrl) {
-                // Chuyển hướng người dùng tới URL thanh toán của VNPay
-                window.location.href = paymentUrl;
-            } else {
-                alert('Failed to get payment URL. Please try again later.');
-            }
+            // if (paymentUrl) {
+            //     // Chuyển hướng người dùng tới URL thanh toán của VNPay
+            //     window.location.href = paymentUrl;
+            // } else {
+            //     alert('Failed to get payment URL. Please try again later.');
+            // }
         } catch (error) {
             console.error('Checkout error:', error.message);
             alert('An error occurred during checkout. Please try again.');
         }
     });
 });
+
+function updatePaymentButton() {
+    const bankSelect = document.getElementById('popup-bank');
+    const submitButton = document.getElementById('popup-submit-button');
+
+    console.log('Selected bank:', bankSelect.value);
+    // Kiểm tra nếu có chọn ngân hàng
+    if (bankSelect.value) {
+        submitButton.textContent = 'Proceed to Payment';  // Nếu đã chọn ngân hàng
+    } else {
+        submitButton.textContent = 'Redirect Payment';   // Nếu chưa chọn ngân hàng
+    }
+}

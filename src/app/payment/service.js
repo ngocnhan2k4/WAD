@@ -6,29 +6,34 @@ const prisma = require("../../config/database/db.config");
 const axios = require('axios');
 
 const paymentService = {
-    createPayment: async (totalAmount, clientIp, bankCode) => {
+    createPayment: async (clientIp, reqData) => {
         const date = new Date();
         const orderId = moment(date).format('DDHHmmss'); // Định dạng orderId
         const ipv4Address = clientIp.includes(':') ? '127.0.0.1' : clientIp;
+        let createDate = moment(date).format('YYYYMMDDHHmmss');
+        let expiredDate = moment(date).add(5, 'minutes').format('YYYYMMDDHHmmss');
+
+        let amountNumber = reqData.amount.replace(/[^\d]/g, '');  // Loại bỏ mọi ký tự không phải số
+        let amount = parseInt(amountNumber, 10);
 
         const vnpParams = {
-            vnp_Version: '2.1.0',
+            vnp_Version: '2.1.1',
             vnp_Command: 'pay',
             vnp_TmnCode: vnpayConfig.vnp_TmnCode,
-            vnp_Amount: totalAmount * 100 * 25400, // VNPay yêu cầu đơn vị là đồng
+            vnp_Amount: amount, // VNPay yêu cầu đơn vị là đồng
             vnp_CurrCode: 'VND',
             vnp_TxnRef: orderId,
-            vnp_OrderInfo: `Payment for order: ${orderId}`, // Mô tả đơn hàng
-            vnp_Locale: 'vn',
-            vnp_OrderType: 'other',
+            vnp_OrderInfo: reqData.paymentDescription, // Mô tả đơn hàng
+            vnp_Locale: reqData.language,
+            vnp_OrderType: 'topup',
             vnp_ReturnUrl: vnpayConfig.vnp_ReturnUrl, // URL trả về sau thanh toán
             vnp_IpAddr: ipv4Address,
-            vnp_CreateDate: moment(date).format('YYYYMMDDHHmmss'),
-            vnp_BankCode: 'NCB', // Thêm mã ngân hàng NCB
+            vnp_CreateDate: createDate,
+            vnp_ExpireDate: expiredDate,
         };
-        // if(bankCode !== null && bankCode !== ''){
-        //     vnpParams['vnp_BankCode'] = bankCode;
-        // }
+        if (reqData.bank && reqData.bank.trim() !== '') {
+            vnpParams['vnp_BankCode'] = reqData.bank;
+        }    
     
         // Sắp xếp tham số
         const sortedParams = sortObject(vnpParams);
@@ -42,38 +47,11 @@ const paymentService = {
         sortedParams.vnp_SecureHash = signed;
         console.log(sortedParams);
 
-        let vnpUrl = vnpayConfig.vnp_Url; // Đảm bảo vnp_Url đã có cấu hình đúng
+        let vnpUrl = vnpayConfig.vnp_Url;
         vnpUrl += '?' + querystring.stringify(sortedParams, { encode: false });
+        // console.log(vnpUrl);
         
         return vnpUrl;
-    
-        // // Gửi yêu cầu đến VNPay để tạo token
-        // try {
-        //     // Gửi yêu cầu POST đến VNPay API
-        //     const response = await axios.post(
-        //         vnpayConfig.vnp_TokenApiUrl,  // Đảm bảo URL là đúng
-        //         querystring.stringify(sortedParams),  // Đảm bảo sortedParams là chuỗi tham số đúng định dạng
-        //         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-        //     );
-    
-        //     // Kiểm tra nếu phản hồi trả về có token
-        //     if (response && response.data && response.data.token) {
-        //         console.log(response);
-        //         const paymentUrl = `${vnpayConfig.vnp_Url}/Transaction/PaymentMethod.html?token=${response.data.token}`;
-        //         return paymentUrl;
-        //     } else {
-        //         throw new Error('Failed to create payment token');
-        //     }
-        // } catch (error) {
-        //     // Kiểm tra nếu có lỗi và in thông báo lỗi chi tiết
-        //     // Xử lý lỗi và in thông báo chi tiết
-        //     if (error.response) {
-        //         console.error('Error from VNPay API:', error.response.data);
-        //     } else {
-        //         console.error('Error creating VNPay payment:', error.message);
-        //     }
-        //     throw error; // Ném lỗi để xử lý ở controller
-        // }
     },
 
     getCartTotal: (userId) =>
@@ -109,17 +87,13 @@ const paymentService = {
         delete vnpParams['vnp_SecureHashType'];
 
         // Sắp xếp tham số
-        const sortedParams = Object.keys(vnpParams)
-            .sort()
-            .reduce((acc, key) => {
-                acc[key] = vnpParams[key];
-                return acc;
-            }, {});
+        const sortedParams = sortObject(vnpParams);
 
         // Tạo chữ ký bảo mật
         const signData = querystring.stringify(sortedParams, { encode: false });
         const hmac = crypto.createHmac('sha512', vnpayConfig.vnp_HashSecret);
         const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
+        // console.log(signed);
 
         // So sánh chữ ký
         if (secureHash === signed) {
