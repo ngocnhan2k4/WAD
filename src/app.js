@@ -51,6 +51,13 @@ app.use(session({
 app.use(notification);
 
 
+app.use(session({
+    secret: 'shippingAddress',
+    resave: false, 
+    saveUninitialized: true, 
+}));
+
+
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
 route(app);

@@ -26,7 +26,7 @@ const paymentService = {
             vnp_OrderInfo: reqData.paymentDescription, // Mô tả đơn hàng
             vnp_Locale: reqData.language,
             vnp_OrderType: 'topup',
-            vnp_ReturnUrl: vnpayConfig.vnp_ReturnUrl, // URL trả về sau thanh toán
+            vnp_ReturnUrl: vnpayConfig.vnp_ReturnUrl,
             vnp_IpAddr: ipv4Address,
             vnp_CreateDate: createDate,
             vnp_ExpireDate: expiredDate,
@@ -45,6 +45,8 @@ const paymentService = {
         const hmac = crypto.createHmac('sha512', vnpayConfig.vnp_HashSecret);
         const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
         sortedParams.vnp_SecureHash = signed;
+
+        console.log("sent");
         console.log(sortedParams);
 
         let vnpUrl = vnpayConfig.vnp_Url;
@@ -54,12 +56,33 @@ const paymentService = {
         return vnpUrl;
     },
 
-    getCartTotal: (userId) =>
-        prisma.userCart.aggregate({
-            where: { user_id: userId },
-            _sum: { price: true },
-        }),
+    verifyPayment: async (vnpParams) => {
+        const secureHash = vnpParams['vnp_SecureHash'];
 
+        // Loại bỏ các tham số không cần thiết
+        delete vnpParams['vnp_SecureHash'];
+        delete vnpParams['vnp_SecureHashType'];
+
+        // Sắp xếp tham số
+        const sortedParams = sortObject(vnpParams);
+        console.log("sortedParams");
+        console.log(sortedParams);
+
+        // Tạo chữ ký bảo mật
+        const signData = querystring.stringify(sortedParams, { encode: false });
+        const hmac = crypto.createHmac('sha512', vnpayConfig.vnp_HashSecret);
+        const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
+        console.log(signed);
+
+        // So sánh chữ ký
+        if (secureHash === signed) {
+            const responseCode = vnpParams['vnp_ResponseCode'];
+            return { isValid: true, code: responseCode };
+        } else {
+            return { isValid: false, code: '97' };
+        }
+    },
+    
     getNextOrderId: async () => {
         try {
             const maxOrder = await prisma.orders.findFirst({
@@ -79,31 +102,6 @@ const paymentService = {
         }
     },
 
-    verifyPayment: async (vnpParams) => {
-        const secureHash = vnpParams['vnp_SecureHash'];
-
-        // Loại bỏ các tham số không cần thiết
-        delete vnpParams['vnp_SecureHash'];
-        delete vnpParams['vnp_SecureHashType'];
-
-        // Sắp xếp tham số
-        const sortedParams = sortObject(vnpParams);
-
-        // Tạo chữ ký bảo mật
-        const signData = querystring.stringify(sortedParams, { encode: false });
-        const hmac = crypto.createHmac('sha512', vnpayConfig.vnp_HashSecret);
-        const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
-        // console.log(signed);
-
-        // So sánh chữ ký
-        if (secureHash === signed) {
-            const responseCode = vnpParams['vnp_ResponseCode'];
-            return { isValid: true, code: responseCode };
-        } else {
-            return { isValid: false, code: '97' };
-        }
-    },
-
     fetchCartItems: async (userId) => {
         const cartItems = await prisma.userCart.findMany({
             where: { user_id: userId },
@@ -117,15 +115,21 @@ const paymentService = {
         return cartItems;
     },
 
-    createOrder: async (userId, orderId, totalAmount) => {
+    createOrder: async (userId, orderId, totalAmount, success, shippingAddress) => {
+        if (success){
+            stat = 'Completed';
+        }
+        else{
+            stat = 'Cancelled';
+        }
         return prisma.orders.create({
             data: {
                 order_id: orderId,
                 user_id: userId,
                 total_amount: totalAmount,
-                status: 'Completed',
+                status: stat,
                 creation_time: new Date(),
-                // mising shipping address
+                shipping_address: shippingAddress,
             },
         });
     },
@@ -149,7 +153,7 @@ const paymentService = {
         });
     },
 
-    completeOrder: async (userId, orderId, amount, payDate) => {
+    completeOrder: async (userId, orderId, amount, payDate, success, shippingAddress) => {
         try {
             // 1. Lấy danh sách sản phẩm trong giỏ hàng
             const cartItems = await paymentService.fetchCartItems(userId);
@@ -158,29 +162,27 @@ const paymentService = {
                 throw new Error('Cart is empty');
             }
     
-            // 2. Tính tổng tiền từ giỏ hàng
-            const totalAmountResult = await paymentService.getCartTotal(userId);
-            const totalAmount = totalAmountResult._sum.price || 0;
-    
             // 3. Tạo đơn hàng
-            const newOrder = await paymentService.createOrder(userId, orderId, totalAmount);
+            const newOrder = await paymentService.createOrder(userId, orderId, amount, success, shippingAddress);
     
             // 4. Tạo chi tiết đơn hàng
             await paymentService.createOrderDetails(newOrder.order_id, cartItems);
     
-            // 5. Thêm thông tin thanh toán
-            await prisma.payments.create({
-                data: {
-                    order_id: newOrder.order_id,
-                    payment_date: payDate,
-                    amount: amount,
-                    payment_method: 'VNPay', // Hoặc phương thức thanh toán phù hợp
-                },
-            });
-    
-            // 6. Xóa giỏ hàng
-            await paymentService.clearCart(userId);
-    
+            if (success){
+                // 5. Thêm thông tin thanh toán
+                await prisma.payments.create({
+                    data: {
+                        order_id: newOrder.order_id,
+                        payment_date: payDate,
+                        amount: amount,
+                        payment_method: 'VNPay', // Hoặc phương thức thanh toán phù hợp
+                    },
+                });
+
+                // 6. Xóa giỏ hàng
+                await paymentService.clearCart(userId);
+            }
+
             return newOrder; // Trả về thông tin đơn hàng
         } catch (error) {
             console.error('Error completing order:', error.message);
