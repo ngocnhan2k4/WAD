@@ -4,20 +4,38 @@ const router = express.Router();
 const adminController = require("./adminController");
 const multer = require("multer");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(
-            null,
-            path.join(__dirname, "..", "..", "public", "images", "products")
-        );
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const filename = Date.now() + ext;
-        cb(null, filename);
+// Cấu hình Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME_CLOUDINARY,
+    api_key: process.env.API_KEY_CLOUDINARY,
+    api_secret: process.env.API_SECRET_CLOUDINARY,
+});
+
+// Cấu hình Cloudinary Storage
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "product", // Thư mục lưu trữ trên Cloudinary
+        allowed_formats: ["jpg", "png", "jpeg"], // Định dạng file được phép
     },
 });
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(
+//             null,
+//             path.join(__dirname, "..", "..", "public", "images", "products")
+//         );
+//     },
+//     filename: (req, file, cb) => {
+//         const ext = path.extname(file.originalname);
+//         const filename = Date.now() + ext;
+//         cb(null, filename);
+//     },
+// });
 
 // Tạo middleware Multer
 const upload = multer({ storage: storage });

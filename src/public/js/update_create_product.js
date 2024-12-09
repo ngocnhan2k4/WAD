@@ -192,80 +192,84 @@ function displayProductItems(products) {
     makePagination(currentPage);
 }
 
-product__items.forEach((product__item) => {
-    product__item.addEventListener("click", async () => {
-        const id = product__item.getAttribute("id");
-        id_product_edit = id;
-        type_edit = "update";
-        showOverlay(create__product_inner);
-        document.querySelector(".group__currentPrice").style.display = "block";
-        delete__btn_product.style.display = "block";
-        clearAll();
-        document.querySelector(".create__product__title").textContent =
-            "Update Product";
-        const path = `/admin/getproduct/${id}`;
-        const result = await fetch(path).then((res) => res.json());
-        if (result.status === "success" && result.product) {
-            const product = result.product;
-            document.querySelector("#productName").value = product.product_name;
-            document.querySelector("#productPrice").value =
-                product.original_price;
-            document.querySelector("#productCurrentPrice").value =
-                product.current_price;
-            document.querySelector("#productQuantity").value =
-                product.stock_quantity;
-            document.querySelector("#productDescription").value =
-                product.description;
-            categori_option = product.category_id;
-            manufacturer_option = product.manufacturer;
-            categoryInput.value = product.Categories.category_name;
-            manufacturerInput.value = product.Suppliers.brand;
+async function eventItem(product__item) {
+    const id = product__item.getAttribute("id");
+    id_product_edit = id;
+    type_edit = "update";
+    showOverlay(create__product_inner);
+    document.querySelector(".group__currentPrice").style.display = "block";
+    delete__btn_product.style.display = "block";
+    clearAll();
+    document.querySelector(".create__product__title").textContent =
+        "Update Product";
+    const path = `/admin/getproduct/${id}`;
+    const result = await fetch(path).then((res) => res.json());
+    if (result.status === "success" && result.product) {
+        const product = result.product;
+        document.querySelector("#productName").value = product.product_name;
+        document.querySelector("#productPrice").value = product.original_price;
+        document.querySelector("#productCurrentPrice").value =
+            product.current_price;
+        document.querySelector("#productQuantity").value =
+            product.stock_quantity;
+        document.querySelector("#productDescription").value =
+            product.description;
+        categori_option = product.category_id;
+        manufacturer_option = product.manufacturer;
+        categoryInput.value = product.Categories.category_name;
+        manufacturerInput.value = product.Suppliers.brand;
 
-            for (const [index, image] of product.Images.entries()) {
-                const img = document.createElement("img");
-                img.src = image.directory_path;
-                img.classList.add("image-upload");
+        for (const [index, image] of product.Images.entries()) {
+            const img = document.createElement("img");
+            img.src = image.directory_path;
+            img.classList.add("image-upload");
 
-                const close = document.createElement("img");
-                close.src = "/images/icons/close-button.png";
-                close.classList.add("close__img");
+            const close = document.createElement("img");
+            close.src = "/images/icons/close-button.png";
+            close.classList.add("close__img");
 
-                let pos = 0;
-                let isExist = false;
-                for (let i = 0; i < 4; i++) {
-                    if (!position[i]) {
-                        position[i] = true;
-                        pos = i;
-                        isExist = true;
-                        break;
-                    }
+            let pos = 0;
+            let isExist = false;
+            for (let i = 0; i < 4; i++) {
+                if (!position[i]) {
+                    position[i] = true;
+                    pos = i;
+                    isExist = true;
+                    break;
                 }
-
-                if (!isExist) {
-                    return;
-                }
-
-                image_upload_previews[pos].innerHTML = "";
-                image_upload_previews[pos].appendChild(img);
-                image_upload_previews[pos].appendChild(close);
-
-                const blob = await fetch(image.directory_path).then(
-                    (response) => response.blob()
-                );
-                const file = new File([blob], `image_${index}`, {
-                    type: blob.type,
-                });
-                upload_images.splice(pos, 0, file);
-
-                close.addEventListener("click", () => {
-                    image_upload_previews[pos].innerHTML =
-                        "<p>No image selected</p>";
-                    position[pos] = false;
-                    upload_images.splice(pos, 1);
-                });
             }
+
+            if (!isExist) {
+                return;
+            }
+
+            image_upload_previews[pos].innerHTML = "";
+            image_upload_previews[pos].appendChild(img);
+            image_upload_previews[pos].appendChild(close);
+
+            const blob = await fetch(image.directory_path).then((response) =>
+                response.blob()
+            );
+            const file = new File([blob], `image_${index}`, {
+                type: blob.type,
+            });
+
+            upload_images[pos] = file;
+
+            close.addEventListener("click", () => {
+                image_upload_previews[pos].innerHTML =
+                    "<p>No image selected</p>";
+                position[pos] = false;
+                const index = upload_images.indexOf(file);
+                if (index > -1) {
+                    upload_images.splice(index, 1);
+                }
+            });
         }
-    });
+    }
+}
+product__items.forEach((product__item) => {
+    product__item.addEventListener("click", () => eventItem(product__item));
 });
 search__button.addEventListener("click", async () => {
     search__button.disable = true;
@@ -479,6 +483,7 @@ function createProduct(product) {
     delete__product.addEventListener("click", () => {
         showOverlay(dialog);
     });
+    product__item.addEventListener("click", () => eventItem(product__item));
 }
 
 function updateProduct(product) {
@@ -487,7 +492,7 @@ function updateProduct(product) {
     const relative = document.createElement("div");
     relative.classList.add("relative");
     const a = document.createElement("a");
-    a.href = `/product/productDetail?id=${product.product_id}`;
+    a.href = `#`;
     const img = document.createElement("img");
     img.src = product.Images[0].directory_path;
     img.alt = `product${product.product_id}`;
@@ -503,7 +508,7 @@ function updateProduct(product) {
     const product__content = document.createElement("div");
     product__content.classList.add("product__content", "px-4", "pt-4", "pb-3");
     const a2 = document.createElement("a");
-    a2.href = `/product/productDetail?id=${product.product_id}`;
+    a2.href = `#`;
     const h4 = document.createElement("h4");
     h4.classList.add(
         "mb-2",
@@ -592,10 +597,11 @@ save__btn.addEventListener("click", async () => {
         return;
     }
 
-    if (upload_images.length === 0) {
+    if (!upload_images || upload_images.length === 0) {
         alert("Please upload image");
         return;
     }
+    console.log(upload_images);
     const product_description = document.querySelector(
         "#productDescription"
     ).value;

@@ -602,8 +602,12 @@ const Admin = {
         }
         const filePaths = [];
         for (let i = 0; i < product_images.length; i++) {
-            const filePath = `/images/products/${product_images[i].filename}`;
+            //const filePath = `${/images/products/product_images[i].filename}`;
+            const filePath = `${product_images[i].path}`;
             filePaths.push(filePath);
+        }
+        if (product_images.length === 0) {
+            filePaths.push("/images/products/1732899568032.jpg");
         }
         try {
             const result = await User.createProduct(
@@ -701,8 +705,12 @@ const Admin = {
         }
         const filePaths = [];
         for (let i = 0; i < product_images.length; i++) {
-            const filePath = `/images/products/${product_images[i].filename}`;
+            //const filePath = `${/images/products/product_images[i].filename}`;
+            const filePath = `${product_images[i].path}`;
             filePaths.push(filePath);
+        }
+        if (product_images.length === 0) {
+            filePaths.push("/images/products/1732899568032.jpg");
         }
         try {
             const result = await User.updateProduct(
