@@ -1,3 +1,5 @@
+import { showNotification } from './notification.js';
+
 document.addEventListener('DOMContentLoaded', function() {
     const filterForm = document.getElementById('filter-form');
     const sortForm = document.getElementById('sort-form');
@@ -148,8 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
-import { showNotification } from './notification.js'; // Import hàm thông báo
 
 function addToCartHandler() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');

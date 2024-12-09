@@ -14,15 +14,21 @@ const cartController = {
             const cartItems = await Cart.getUserCart(userId);
             const subtotalData = await Cart.getCartTotal(userId);
             const itemCount = await Cart.getNumOfCartItems(userId);
+            const orderID = await Cart.getNextOrderId();
 
             const subtotal = subtotalData._sum.price || 0;
+            const subtotalVND = subtotal * 25400;
 
             const renderData = {
                 cartItems,
                 subtotal,
                 itemCount,
+                subtotalVND,
+                orderID,
             };
             renderData.notAJAX = true;
+
+            console.log(renderData);
 
             // Kiểm tra yêu cầu AJAX
             if (req.headers["x-requested-with"] === "XMLHttpRequest") {
@@ -142,6 +148,18 @@ const cartController = {
         } catch (error) {
             console.error('Error checking cart in controller:', error.message);
             res.status(500).json({ message: 'Error checking cart' });
+        }
+    },
+
+    getTotal: async (req, res) => {
+        try {
+            const userId = req.user.id;
+
+            const subtotalData = await Cart.getCartTotal(userId);
+            return subtotalData;
+        } catch (error) {
+            console.error('Error getting cart total in controller:', error.message);
+            res.status(500).json({ message: 'Error getting cart' });
         }
     },
 };

@@ -4,21 +4,20 @@ const moment = require('moment');
 const paymentController = {
     createPayment: async (req, res) => {
         try {
-            const bankCode = req.body.bankCode;
+            // console.log(req.body);
+            const reqData = req.body
+
+            req.session.shippingAddress = reqData.shippingAddress;
+
             const clientIp =
                 req.headers['x-forwarded-for'] ||
                 req.connection.remoteAddress ||
                 req.socket.remoteAddress ||
                 req.connection.socket.remoteAddress;
 
-            const totalAmount = await paymentService.getCartTotal(req.user.id);
-            const totalPrice = totalAmount._sum.price;
-            console.log(totalPrice);
-
             // Lấy URL trang chọn phương thức thanh toán
-            const paymentUrl = await paymentService.createPayment(totalPrice, clientIp, bankCode);
+            const paymentUrl = await paymentService.createPayment(clientIp, reqData);
             res.json({ paymentUrl });
-            //res.redirect(paymentUrl)
         } catch (error) {
             console.error('Error creating VNPay payment:', error.message);
             res.status(500).json({ message: 'Internal Server Error' });
@@ -28,41 +27,49 @@ const paymentController = {
     paymentReturn: async (req, res) => {
         try {
             const { vnp_TxnRef, vnp_ResponseCode, vnp_OrderInfo, vnp_Amount, vnp_PayDate } = req.query;
+            // console.log(req.query);
 
             const payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').toDate();
-            console.log(payDate);
+            // console.log(payDate);
     
             // Xác thực chữ ký bảo mật
-            // const paymentVerification = await paymentService.verifyPayment(req.query);
+            const paymentVerification = await paymentService.verifyPayment(req.query);
     
-            // if (!paymentVerification.isValid) {
-            //     console.error('Invalid signature detected.');
-            //     return res.status(400).json({ message: 'Invalid signature' });
-            // }
-    
+            if (!paymentVerification.isValid) {
+                console.error('Invalid signature detected.');
+                return res.status(400).json({ message: 'Invalid signature' });
+            }
+            
+            const shippingAddress = req.session.shippingAddress; // Lấy từ session
+
             // Thông tin giao dịch
             const transactionDetails = {
                 transactionId: vnp_TxnRef,
                 responseCode: vnp_ResponseCode,
                 orderInfo: vnp_OrderInfo,
-                amount: vnp_Amount / 100, // Chuyển đổi từ đồng sang VNĐ
+                amount: vnp_Amount,
                 payDate: payDate,
-                success: vnp_ResponseCode === '00', // Kiểm tra giao dịch thành công
+                success: paymentVerification.code === '00', // Kiểm tra giao dịch thành công
             };
-    
+            
+            const userId = req.user.id; // Lấy `userId` từ middleware xác thực
+            const orderId = await paymentService.getNextOrderId();
+
+            transactionDetails.amount = parseInt(transactionDetails.amount, 10)
+
             if (transactionDetails.success) {
-                const userId = req.user.id; // Lấy `userId` từ middleware xác thực
-                const orderId = await paymentService.getNextOrderId();
-    
                 // Chuyển dữ liệu từ UserCart sang Orders, OrderDetails, và Payments
-                const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate);
+                const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
     
                 console.log('Transaction successful:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             } else {
+                const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
                 console.error('Transaction failed:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             }
+
+            delete req.session.shippingAddress;
         } catch (error) {
             console.error('Error processing payment return:', error.message);
             res.status(500).json({ message: 'Internal Server Error' });
