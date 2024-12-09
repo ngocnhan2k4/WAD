@@ -111,6 +111,39 @@ const Cart = {
             throw new Error("Error deleting product");
         }
     },
+
+    checkCart: async (userId) => {
+        try {
+            // Kiểm tra giỏ hàng của người dùng
+            const cartItems = await prisma.userCart.findMany({
+                where: { user_id: userId },
+            });
+
+            return cartItems; // Trả về danh sách sản phẩm trong giỏ hàng
+        } catch (error) {
+            console.error('Error checking cart in service:', error.message);
+            throw new Error('Error checking cart');
+        }
+    },
+
+    getNextOrderId: async () => {
+        try {
+            const maxOrder = await prisma.orders.findFirst({
+                orderBy: {
+                    order_id: 'desc',
+                },
+                select: {
+                    order_id: true,
+                },
+            });
+
+            // Nếu không có bản ghi nào trong bảng Orders, bắt đầu từ 1
+            return maxOrder ? maxOrder.order_id + 1 : 1;
+        } catch (error) {
+            console.error('Error fetching max order_id:', error);
+            throw new Error('Failed to fetch next order_id');
+        }
+    },
 };
 
 

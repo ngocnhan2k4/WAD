@@ -48,7 +48,6 @@ table {
 
 th {
     text-align: left;
-    padding: 12px 16px;
     font-size: 14px;
     color: #64748b;
     border-bottom: 1px solid #e2e8f0;
@@ -74,7 +73,7 @@ th:nth-child(6) {
     width: 10%;
 }
 td {
-    padding: 16px;
+    padding: 24px 16px;
     border-bottom: 1px solid #e2e8f0;
     font-size: 14px;
 }
@@ -210,7 +209,7 @@ td {
 }
 
 th {
-    padding: 14px 16px;
+    padding: 24px 16px;
     background: #121a30;
     color: white;
     font-size: 15px;
@@ -292,7 +291,71 @@ th {
 .status__Shipped:hover {
     box-shadow: 0px 4px 10px rgb(26 52 66 / 45%);
 }
+.pagination__inner {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+.pagination-container {
+    margin-top: 36px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-size: 16px;
+}
+.page-btn {
+    min-width: 100px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.page-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.page-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+.current-page {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+}
+.separator {
+    font-size: 18px;
+    color: #333;
+}
 
+.total-pages {
+    font-weight: bold;
+    color: #555;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Đối với Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 @media (max-width: 767.99px) {
     th:nth-child(3),
     td:nth-child(3) {

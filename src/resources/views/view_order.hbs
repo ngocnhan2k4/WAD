@@ -4,7 +4,7 @@
         <div class="actions">
             <button class="btn btn__filter">
                 <span>⚡</span>
-                Filter
+                {{filter}}
             </button>
 
         </div>
@@ -58,6 +58,23 @@
                 {{/each}}
             </tbody>
         </table>
+    </div>
+    <div class="pagination__inner">
+        <div class="pagination-container">
+            <button class="page-btn prev-btn" disabled>Previous</button>
+            <div class="pagination">
+                <input
+                    type="number"
+                    class="current-page"
+                    value="{{currentPage}}"
+                    min="1"
+                    max="{{pages}}"
+                />
+                <span class="separator">/</span>
+                <span class="total-pages">{{pages}}</span>
+            </div>
+            <button class="page-btn next-btn">Next</button>
+        </div>
     </div>
 </main>
 

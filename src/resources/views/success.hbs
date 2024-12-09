@@ -1,0 +1,15 @@
+{{#extends "layout"}}
+
+{{#block "content"}}
+    {{#if code}}
+        {{#if code "00"}}
+        <p style="text-align: center">GD thành công</p>
+        {{else}}
+        <p style="text-align: center; color: red">GD thất bại</p>
+        {{/if}}
+    {{/if}}
+    
+    <p style="text-align: center">
+        <a class="btn btn-default" href="/order">Về danh sách</a>
+    </p>
+{{/block}}

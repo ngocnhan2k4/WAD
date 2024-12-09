@@ -79,6 +79,14 @@
                     <button
                         class="view__product__search__button"
                     >Search</button>
+                    <div class="select__product" name="" id="select__product">
+                        {{#each products}}
+                            <div
+                                class="option__product"
+                                value={{product_id}}
+                            >{{product_name}}</div>
+                        {{/each}}
+                    </div>
                 </div>
             </div>
             <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">

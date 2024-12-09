@@ -291,6 +291,16 @@ const Admin = {
         const products_Id = products.map((product) => product.product_id);
         res.json(products_Id);
     },
+    searchProductsAllAttribute: async (req, res) => {
+        const search = req.body.search;
+        const id = Number(req.body.id);
+        if (search === undefined || id === undefined) {
+            res.json([]);
+            return;
+        }
+        const products = await User.searchProductsAllAttribute(search);
+        res.json(products);
+    },
     viewCateManu: async (req, res) => {
         const categories = await User.getCategories();
         const manufacturers = await User.getManufacturers();
@@ -517,7 +527,13 @@ const Admin = {
         }
     },
     Product: async (req, res) => {
-        const products = await User.getAllProducts();
+        let page = req.query.page ? req.query.page : 1;
+        const countPage = await User.countProductsPage();
+        if (Number.isNaN(page) || page < 1 || page > countPage) {
+            page = 1;
+        }
+        const products = await User.getProducts(page);
+        const pages = Math.ceil(countPage / 9);
         const categories = await User.getCategoriesWithoutCount();
         const manufacturers = await User.getManufacturersWithoutCount();
 
@@ -526,6 +542,8 @@ const Admin = {
             products: products,
             categories: categories,
             manufacturers: manufacturers,
+            currentPage: page,
+            pages: pages,
         });
     },
     createProduct: async (req, res) => {
@@ -721,13 +739,37 @@ const Admin = {
         }
     },
     viewOrder: async (req, res) => {
-        const orders = await User.getAllOrders();
+        let page = req.query.page ? req.query.page : 1;
+
+        if (Number.isNaN(page) || page < 1) {
+            page = 1;
+        }
+        let filter = req.query.filter ? req.query.filter : "";
+        const filters = [
+            "Completed",
+            "Processing",
+            "Pending",
+            "Cancelled",
+            "Shipped",
+            "No Filter",
+        ];
+        if (!filters.includes(filter)) {
+            filter = "No Filter";
+        }
+        const countPage = await User.countOrders(filter);
+        if (page > Math.ceil(countPage / 10)) {
+            page = Math.ceil(countPage / 10);
+        }
+        const orders = await User.getOrders(Number(page), filter);
         orders.forEach((order) => {
             order.creation_time = formatDateSimple(order.creation_time);
         });
         res.render("view_order", {
             page_style: "/css/view_order.css",
             orders: orders,
+            currentPage: page,
+            pages: Math.ceil(countPage / 10),
+            filter: filter,
         });
     },
     updateOrderStatus: async (req, res) => {
@@ -847,6 +889,9 @@ const Admin = {
         } else {
             res.json({ status: "fail" });
         }
+    },
+    index: async (req, res) => {
+        res.render("admin", { page_style: "/css/admin.css" });
     },
 };
 

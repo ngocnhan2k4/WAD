@@ -64,16 +64,33 @@
         <div class="float-right mt-4 text-right">
           <h4 class="font-weight-bold">Subtotal:</h4>
           <h1 class="font-weight-bold">${{subtotal}}</h1>
+          <!-- Nút Checkout bên dưới Subtotal -->
+          <button id="checkout-button" 
+                  class="mt-3 btn"
+                  style="
+                      background-color: #28a745; /* Màu xanh lá */
+                      color: #fff; /* Chữ trắng */
+                      font-size: 1.2rem; /* Phông chữ to */
+                      padding: 15px 30px; /* Kích thước nút */
+                      border-radius: 30px; /* Bo góc */
+                      border: none; /* Loại bỏ đường viền */
+                      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+                      cursor: pointer; /* Con trỏ chuột */
+                      transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng hover */
+                  "
+                  onmouseover="this.style.backgroundColor='#218838'; this.style.transform='scale(1.05)';"
+                  onmouseout="this.style.backgroundColor='#28a745'; this.style.transform='scale(1)';"
+          >
+              Checkout
+          </button>
         </div>
-      </div>
-    </div>
-    <div class="mt-4 row d-flex align-items-center">
-      <div class="text-right col-sm-6 order-md-2">
-        <button id="checkout-button" class="pl-5 pr-5 mb-4 btn btn-primary btn-lg rounded-pill">
-            Checkout
-        </button>
-      </div>
     </div>
   </div>
 </section>
-<script src="/js/cart.js"></script>
+<script type="module" src="/js/cart.js"></script>
+<script>
+    const orderData = {
+        subtotalVND: {{subtotalVND}}, 
+        orderID: {{orderID}}
+    };
+</script>

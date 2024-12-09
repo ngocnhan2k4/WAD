@@ -633,6 +633,71 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
+.pagination__inner {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+.pagination-container {
+    margin-top: 36px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-size: 16px;
+}
+.page-btn {
+    min-width: 100px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.page-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.page-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+.current-page {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+}
+.separator {
+    font-size: 18px;
+    color: #333;
+}
+
+.total-pages {
+    font-weight: bold;
+    color: #555;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Đối với Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 @media (max-width: 768px) {
     .image-upload-preview {
         width: 47%;

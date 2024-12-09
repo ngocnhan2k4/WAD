@@ -25,6 +25,63 @@ const dialogStatus = document.getElementById("dialog__status");
 const closeDialogStatus = document.getElementById("close-dialog__status");
 const dialogStatusMessage = document.getElementById("dialog__status-message");
 
+let pages = document.querySelector(".total-pages").textContent;
+const currentPageInput = document.querySelector(".current-page");
+const prev_btn = document.querySelector(".prev-btn");
+const next_btn = document.querySelector(".next-btn");
+let currentPage = currentPageInput.value;
+
+function makePagination(currentPage) {
+    if (currentPage == 1) {
+        prev_btn.setAttribute("disabled", "true");
+    } else {
+        prev_btn.removeAttribute("disabled");
+    }
+
+    if (currentPage == pages) {
+        console.log("pages", pages);
+        next_btn.setAttribute("disabled", "true");
+    } else {
+        next_btn.removeAttribute("disabled");
+    }
+    currentPageInput.value = currentPage;
+}
+makePagination(currentPage);
+
+prev_btn.addEventListener("click", async () => {
+    window.location.href = `/admin/product?page=${Number(currentPage) - 1}`;
+});
+
+next_btn.addEventListener("click", async () => {
+    window.location.href = `/admin/product?page=${Number(currentPage) + 1}`;
+});
+
+window.addEventListener("beforeunload", () => {
+    localStorage.setItem("scrollPosition", window.scrollY);
+});
+
+// Khôi phục vị trí cuộn sau khi tải trang
+window.addEventListener("load", () => {
+    const scrollPosition = localStorage.getItem("scrollPosition");
+    if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition, 10));
+        localStorage.removeItem("scrollPosition"); // Xóa sau khi dùng
+    }
+});
+currentPageInput.addEventListener("keypress", async (e) => {
+    if (e.key === "Enter") {
+        if (currentPageInput.value === "" || isNaN(currentPageInput.value)) {
+            currentPageInput.value = currentPage;
+        }
+        const page = currentPageInput.value;
+        if (page > 0 && page <= pages) {
+            window.location.href = `/admin/product?page=${page}`;
+        } else {
+            window.location.href = `/admin/product?page=1`;
+        }
+    }
+});
+
 let type_edit = "";
 
 // Hàm để bật dialog
@@ -124,15 +181,15 @@ delete_btn_dialog.addEventListener("click", async () => {
     }
 });
 
-function displayProductItems(ids) {
-    product__items.forEach((product__item) => {
-        const id = Number(product__item.getAttribute("id"));
-        if (!ids.includes(id)) {
-            product__item.style.display = "none";
-        } else {
-            product__item.style.display = "flex";
-        }
+function displayProductItems(products) {
+    document.querySelector(".view__product").innerHTML = "";
+    products.forEach((product) => {
+        createProduct(product);
     });
+    currentPage = 1;
+    pages = 1;
+    document.querySelector(".total-pages").textContent = pages;
+    makePagination(currentPage);
 }
 
 product__items.forEach((product__item) => {
@@ -215,7 +272,11 @@ search__button.addEventListener("click", async () => {
     const search = document.querySelector(
         ".view__product__search__input"
     ).value;
-    const products_Id = await fetch("/admin/searchproducts", {
+    if (search === "") {
+        window.location.href = "/admin/product";
+        return;
+    }
+    const products = await fetch("/admin/searchproductsallattribute", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -223,7 +284,7 @@ search__button.addEventListener("click", async () => {
         body: JSON.stringify({ search, id: 10 }),
     }).then((res) => res.json());
 
-    displayProductItems(products_Id);
+    displayProductItems(products);
     search__button.disable = false;
 });
 delete__products.forEach((delete__product) => {
@@ -574,7 +635,9 @@ save__btn.addEventListener("click", async () => {
     if (result.status === "success") {
         if (type_edit === "create") {
             showDialogStatus("Create product successfully", true);
-            createProduct(result.product);
+            if (currentPage == pages) {
+                createProduct(result.product);
+            }
             clearAll();
         } else {
             showDialogStatus("Update product successfully", true);
