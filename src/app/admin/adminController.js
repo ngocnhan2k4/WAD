@@ -225,6 +225,7 @@ const Admin = {
         const pages = Math.ceil(count_users / 10);
         res.json(pages);
     },
+
     updateUser: async (req, res) => {
         let { id, role, state } = req.body;
         if (role === undefined || state === undefined) {
