@@ -3,8 +3,13 @@ const app = require("../src/app");
 jest.mock("../src/app/admin/middleware.js", () => (req, res, next) => {
     next();
 });
+
 jest.setTimeout(10000);
+
 describe("Test admin route", () => {
+    afterAll(() => {
+        console.log("Cleanup after tests");
+    });
     it("GET /admin/viewaccount", async () => {
         const response = await request(app).get("/admin/viewaccount");
         expect(response.statusCode).toBe(200);

@@ -52,13 +52,13 @@ app.use(
 
 app.use(notification);
 
-
-app.use(session({
-    secret: 'shippingAddress',
-    resave: false, 
-    saveUninitialized: true, 
-}));
-
+app.use(
+    session({
+        secret: "shippingAddress",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
@@ -68,11 +68,12 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something broke!");
 });
-
-app.listen(process.env.PORT, () => {
-    console.log(
-        `Example app listening at http://localhost:${process.env.port}`
-    );
-});
+if (process.env.NODE_ENV !== "test") {
+    app.listen(process.env.PORT, () => {
+        console.log(
+            `Example app listening at http://localhost:${process.env.port}`
+        );
+    });
+}
 
 module.exports = app;
