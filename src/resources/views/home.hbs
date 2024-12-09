@@ -13,7 +13,17 @@
     </div>
 </div>
 <!-- ./banner -->
-
+{{#if check}}
+<!-- Modal -->
+<div id="updateInfoModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Update Your Information</h2>
+        <p class="mb-4">Please update your information to continue using our services.</p>
+        <a href="/userprofile" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update Now</a>
+        <button id="closeModal" class="ml-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">Close</button>
+    </div>
+</div>
+{{/if}}
 <!-- features -->
 <div class="container py-16">
     <div class="grid justify-center w-10/12 grid-cols-1 gap-6 mx-auto md:grid-cols-3">
@@ -87,7 +97,7 @@
         {{#each newArrival}}
         <div class="overflow-hidden bg-white rounded shadow group">
             <div class="relative">
-                <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
+                <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full h-48 object-contain"></a>
             </div>
             <div class="px-4 pt-4 pb-3">
                 <a href="/product/productDetail?id={{this.product_id}}">
@@ -115,7 +125,7 @@
         {{#each recomended}}
         <div class="overflow-hidden bg-white rounded shadow group">
             <div class="relative">
-                <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
+                <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full h-48 object-contain"></a>
             </div>
             <div class="px-4 pt-4 pb-3">
                 <a href="/product/productDetail?id={{this.product_id}}">
@@ -136,5 +146,6 @@
     </div>
 </div>
 <script type="module" src="/js/addCart.js"></script>
+<script type="module" src="/js/home.js"></script>
 <!-- ./product -->
 

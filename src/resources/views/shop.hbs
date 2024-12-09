@@ -93,7 +93,7 @@
                 {{#each products}}
                 <div class="overflow-hidden bg-white rounded shadow group">
                     <div class="relative">
-                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
+                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full h-48 object-contain"></a>
                     </div>
                     <div class="px-4 pt-4 pb-3">
                         <a href="/product/productDetail?id={{this.product_id}}">

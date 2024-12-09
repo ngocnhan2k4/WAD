@@ -13,6 +13,7 @@ const app = express();
 // Đăng ký các helper Handlebars
 require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
+require("./app/helpers/dateHelper");
 
 app.use(express.static("./src/public"));
 app.use(express.json());

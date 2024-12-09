@@ -95,10 +95,10 @@
                     0
                 </div>
             </a>
-          <a {{#unless isAuthen}} href="/user/login" {{/unless}}class="relative text-center text-gray-700 transition hover:text-primary" >
+          <a {{#unless isAuthen}} href="/user/login" {{/unless}}class="relative text-center text-gray-700 transition hover:text-primary flex justify-center items-center flex-col" >
             <div class="text-2xl">
             {{#if isAuthen}}
-               <img src="{{userAvatar}}" alt="This is userAvatar" class="w-8 h-8 ml-4 rounded-full" onclick="toggleMenu()">
+               <img src="{{userAvatar}}" alt="This is userAvatar" class="w-8 h-8 rounded-full" onclick="toggleMenu()">
             {{else}}
               <i class="fa-regular fa-user"></i>
             {{/if}}
@@ -197,6 +197,9 @@
                     <a href="/product" class="text-gray-200 transition hover:text-white">Shop</a>
                     <a href="#" class="text-gray-200 transition hover:text-white">About us</a>
                     <a href="#" class="text-gray-200 transition hover:text-white">Contact us</a>
+                    {{#if ADMIN}}
+                    <a href="#" class="text-gray-200 transition hover:text-white">Admin</a>
+                    {{/if}}
                 </div>
                 {{#if isAuthen}}
                 <a href="/auth/logout" class="text-gray-200 transition hover:text-white">Logout</a>

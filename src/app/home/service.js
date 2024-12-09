@@ -38,6 +38,12 @@ const Home = {
             return [];
         }
     },
+    findUserId: (id) =>
+        prisma.userdetail.findUnique({
+            where: {
+                user_id: id,
+            },
+        }),
 };
 
 module.exports = Home;

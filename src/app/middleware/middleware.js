@@ -31,6 +31,15 @@ const middleware = {
         res.locals.userAvatar = userAvatar;
         res.locals.fullName = fullName;
         next();
+    },
+    checkIsAdmin: (req, res, next) =>{
+        let ADMIN = false;
+        if(req.user && req.user.role=='admin')
+        {
+            ADMIN = true;
+        }
+        res.locals.ADMIN = ADMIN;
+        next();
     }
 };
 

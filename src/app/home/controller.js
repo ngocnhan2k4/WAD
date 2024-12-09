@@ -2,7 +2,7 @@ const Home = require("./service");
 
 const homeController = {
     home: async (req, res) => {
-        try {
+        try { 
             const newArrival = await Home.getNewArrival(); 
             const recomended = await Home.getRecomended();
             res.render("home", {
@@ -10,6 +10,7 @@ const homeController = {
                 notAJAX: true,
                 newArrival, 
                 recomended,
+                check: req.user && !await Home.findUserId(req.user.id)
             });
         } catch (error) {
             console.error("Error rendering home page:", error);
