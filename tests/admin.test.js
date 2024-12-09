@@ -3,6 +3,7 @@ const app = require("../src/app");
 jest.mock("../src/app/admin/middleware.js", () => (req, res, next) => {
     next();
 });
+//test
 
 jest.setTimeout(10000);
 
