@@ -21,6 +21,7 @@ body {
 .view__product__search {
     display: flex;
     gap: 10px;
+    position: relative;
 }
 .view__product__search__input {
     padding: 10px;
@@ -246,6 +247,57 @@ body {
 }
 .quatity__product strong {
     color: #0056b3;
+}
+
+.select__product {
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    z-index: 101;
+}
+
+.option__product {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option__product:hover {
+    background-color: #f7fafc;
+}
+
+.option__product:not(:last-child) {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Add a subtle hover effect */
+.select__product:hover {
+    border-color: #cbd5e0;
+}
+
+/* Style for when an option is selected/active */
+.option__product.active {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+}
+@media (max-width: 575.99px) {
+    .view__product__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+    .view__product__search {
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .view__product__search__input {
+        width: 100%;
+    }
 }
 
 @media (max-width: 470px) {

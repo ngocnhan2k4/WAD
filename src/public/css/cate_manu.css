@@ -266,3 +266,17 @@ nav {
         width: 30%;
     }
 }
+
+@media (max-width: 575.99px) {
+    .search-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .search-input {
+        width: 100%;
+    }
+    .search-button {
+        width: 100%;
+    }
+}

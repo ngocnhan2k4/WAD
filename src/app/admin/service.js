@@ -430,6 +430,21 @@ const User = {
             },
         });
     },
+    searchProductsAllAttribute: async (search) => {
+        if (!search) search = "";
+        return prisma.Product.findMany({
+            where: {
+                product_name: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            },
+            include: {
+                Images: true,
+            },
+        });
+    },
+
     getCategories: async () => {
         const categories = await prisma.Categories.findMany();
         for (let i = 0; i < categories.length; i++) {
@@ -810,12 +825,18 @@ const User = {
             return false;
         }
     },
-    getAllProducts: () =>
+    getProducts: (page) =>
         prisma.Product.findMany({
+            take: 9,
+            skip: (page - 1) * 9,
             include: {
                 Images: true,
             },
         }),
+    countProductsPage: async () => {
+        const count = await prisma.Product.count();
+        return count;
+    },
     createProduct: async (
         product_name,
         product_price,
@@ -970,12 +991,41 @@ const User = {
             return false;
         }
     },
-    getAllOrders: () =>
-        prisma.Orders.findMany({
-            orderBy: {
-                creation_time: "desc",
-            },
-        }),
+    getOrders: (page, filter) => {
+        if (filter === "No Filter") {
+            return prisma.Orders.findMany({
+                take: 10,
+                skip: (page - 1) * 10,
+                orderBy: {
+                    creation_time: "desc",
+                },
+            });
+        } else {
+            return prisma.Orders.findMany({
+                take: 10,
+                skip: (page - 1) * 10,
+                orderBy: {
+                    creation_time: "desc",
+                },
+                where: {
+                    status: filter,
+                },
+            });
+        }
+    },
+    countOrders: async (filter) => {
+        let count = 0;
+        if (filter === "No Filter") {
+            count = await prisma.Orders.count();
+        } else {
+            count = await prisma.Orders.count({
+                where: {
+                    status: filter,
+                },
+            });
+        }
+        return count;
+    },
     updateOrderStatus: async (orderID, status) => {
         try {
             orderID = Number(orderID);

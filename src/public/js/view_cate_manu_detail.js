@@ -168,3 +168,36 @@ delete_btn_dialog.addEventListener("click", async () => {
     document.body.style.overflow = "auto";
     dialog.style.display = "none";
 });
+const select__product = document.querySelector(".select__product");
+const search__input = document.querySelector(".view__product__search__input");
+select__product.style.display = "none";
+
+select__product.style.width = search__input.offsetWidth + "px";
+select__product.style.top = search__input.offsetHeight + "px";
+
+search__input.addEventListener("input", () => {
+    const filter = search__input.value.toLowerCase();
+    const options = select__product.children;
+    select__product.style.display = "block";
+    select__product.click();
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].textContent.toLowerCase().indexOf(filter) > -1) {
+            options[i].style.display = "";
+        } else {
+            options[i].style.display = "none";
+        }
+    }
+});
+
+const options = select__product.children;
+for (let i = 0; i < options.length; i++) {
+    options[i].addEventListener("click", () => {
+        search__input.value = options[i].textContent;
+        select__product.style.display = "none";
+    });
+}
+search__input.addEventListener("blur", () => {
+    setTimeout(() => {
+        select__product.style.display = "none"; // Ẩn thẻ select khi mất focus
+    }, 200);
+});
