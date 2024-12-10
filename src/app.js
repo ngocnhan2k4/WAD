@@ -15,6 +15,7 @@ require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
 require("./app/helpers/dateHelper");
 
+
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
