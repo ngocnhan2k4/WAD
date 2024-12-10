@@ -78,31 +78,45 @@ describe("Test admin route", () => {
         const requestBody = {
             search: "Iphone 17",
         };
-        const data = [
+        const expectedData = [
             {
+                product_id: 27,
+                product_name: "Iphone 17",
+                category_id: 7,
+                manufacturer: 8,
+                original_price: 9998,
+                current_price: 9998,
+                creation_time: "2024-11-29T17:21:01.671Z",
+                description:
+                    "Apple iPhone 17 smartphone. Announced Sep 2023. Features 6.1″ display, Apple A16 Bionic chipset, 3349 mAh battery, 512 GB storage, 6 GB RAM, Ceramic Shield",
+                stock_quantity: 100,
+                total_purchase: 0,
                 Images: [
                     {
-                        directory_path: "/images/products/1732900861025.png",
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736011/product/hho0vmliafuytkpu2dcd.png",
                         ordinal_numbers: 1,
                         product_id: 27,
                     },
                     {
-                        directory_path: "/images/products/1732900861029.jpg",
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736011/product/z4yze63ys7xs8ee9zft1.jpg",
                         ordinal_numbers: 2,
                         product_id: 27,
                     },
+                    {
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736012/product/oniwdrragnsl7esrohls.jpg",
+                        ordinal_numbers: 3,
+                        product_id: 27,
+                    },
+                    {
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736012/product/skhferkpggdopby54f05.jpg",
+                        ordinal_numbers: 4,
+                        product_id: 27,
+                    },
                 ],
-                category_id: 7,
-                creation_time: "2024-11-29T17:21:01.671Z",
-                current_price: 9998,
-                description:
-                    "Apple iPhone 17 smartphone. Announced Sep 2023. Features 6.1″ display, Apple A16 Bionic chipset, 3349 mAh battery, 512 GB storage, 6 GB RAM, Ceramic Shield",
-                manufacturer: 8,
-                original_price: 9998,
-                product_id: 27,
-                product_name: "Iphone 17",
-                stock_quantity: 100,
-                total_purchase: 0,
             },
         ];
         const response = await request(app)
@@ -110,7 +124,7 @@ describe("Test admin route", () => {
             .send(requestBody)
             .set("Content-Type", "application/json"); // Đặt header nếu cần
         expect(response.statusCode).toBe(200);
-        expect(response.body).toStrictEqual(data);
+        expect(response.body).toStrictEqual(expectedData);
     });
     it("POST /admin/getproduct/:id", async () => {
         const response = await request(app).get("/admin/getproduct/27");
@@ -118,15 +132,40 @@ describe("Test admin route", () => {
         expect(response.body).toStrictEqual({
             status: "success",
             product: {
+                product_id: 27,
+                product_name: "Iphone 17",
+                category_id: 7,
+                manufacturer: 8,
+                original_price: 9998,
+                current_price: 9998,
+                creation_time: "2024-11-29T17:21:01.671Z",
+                description:
+                    "Apple iPhone 17 smartphone. Announced Sep 2023. Features 6.1″ display, Apple A16 Bionic chipset, 3349 mAh battery, 512 GB storage, 6 GB RAM, Ceramic Shield",
+                stock_quantity: 100,
+                total_purchase: 0,
                 Images: [
                     {
-                        directory_path: "/images/products/1732900861025.png",
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736011/product/hho0vmliafuytkpu2dcd.png",
                         ordinal_numbers: 1,
                         product_id: 27,
                     },
                     {
-                        directory_path: "/images/products/1732900861029.jpg",
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736011/product/z4yze63ys7xs8ee9zft1.jpg",
                         ordinal_numbers: 2,
+                        product_id: 27,
+                    },
+                    {
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736012/product/oniwdrragnsl7esrohls.jpg",
+                        ordinal_numbers: 3,
+                        product_id: 27,
+                    },
+                    {
+                        directory_path:
+                            "https://res.cloudinary.com/dier6msgg/image/upload/v1733736012/product/skhferkpggdopby54f05.jpg",
+                        ordinal_numbers: 4,
                         product_id: 27,
                     },
                 ],
@@ -135,20 +174,9 @@ describe("Test admin route", () => {
                     category_name: "Bathroom Essentials",
                 },
                 Suppliers: {
-                    brand: "OutdoorLiving",
                     supplier_id: 8,
+                    brand: "OutdoorLiving",
                 },
-                category_id: 7,
-                creation_time: "2024-11-29T17:21:01.671Z",
-                current_price: 9998,
-                description:
-                    "Apple iPhone 17 smartphone. Announced Sep 2023. Features 6.1″ display, Apple A16 Bionic chipset, 3349 mAh battery, 512 GB storage, 6 GB RAM, Ceramic Shield",
-                manufacturer: 8,
-                original_price: 9998,
-                product_id: 27,
-                product_name: "Iphone 17",
-                stock_quantity: 100,
-                total_purchase: 0,
             },
         });
     });
