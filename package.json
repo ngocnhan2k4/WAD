@@ -4,7 +4,7 @@
     "scripts": {
         "start": "node src/app.js",
         "dev": "nodemon src/app.js",
-        "test": "jest",
+        "test": "cross-env NODE_ENV=test jest",
         "build-tail": "set NODE_ENV=production &&  tailwindcss build -i src/public/css/tailwindcss.css -o src/public/css/style.css"
     },
     "prisma": {
@@ -43,6 +43,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
+        "cross-env": "^7.0.3",
         "jest": "^29.7.0",
         "nodemon": "^3.1.7",
         "postcss": "^8.4.47",

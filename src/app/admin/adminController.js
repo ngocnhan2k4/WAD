@@ -225,6 +225,7 @@ const Admin = {
         const pages = Math.ceil(count_users / 10);
         res.json(pages);
     },
+
     updateUser: async (req, res) => {
         let { id, role, state } = req.body;
         if (role === undefined || state === undefined) {
@@ -380,10 +381,11 @@ const Admin = {
             img: "/images/img/cate01.png",
             type: "category",
         };
-
-        const total_pay = await User.getTotalPayCate(id);
-        const users_favorite = await User.getUsersFavoriteCate(id);
-        const products = await User.getProductsCate(id);
+        const [total_pay, users_favorite, products] = await Promise.all([
+            User.getTotalPayCate(id),
+            User.getUsersFavoriteCate(id),
+            User.getProductsCate(id),
+        ]);
         CM.total_pay = total_pay;
         CM.users_favorite = users_favorite;
         res.render("view_cate_manu_detail", {
@@ -411,9 +413,11 @@ const Admin = {
             type: "manufacturer",
         };
 
-        const total_pay = await User.getTotalPayManu(id);
-        const users_favorite = await User.getUsersFavoriteManu(id);
-        const products = await User.getProductsManu(id);
+        const [total_pay, users_favorite, products] = await Promise.all([
+            User.getTotalPayManu(id),
+            User.getUsersFavoriteManu(id),
+            User.getProductsManu(id),
+        ]);
         CM.total_pay = total_pay;
         CM.users_favorite = users_favorite;
         res.render("view_cate_manu_detail", {
@@ -598,8 +602,12 @@ const Admin = {
         }
         const filePaths = [];
         for (let i = 0; i < product_images.length; i++) {
-            const filePath = `/images/products/${product_images[i].filename}`;
+            //const filePath = `${/images/products/product_images[i].filename}`;
+            const filePath = `${product_images[i].path}`;
             filePaths.push(filePath);
+        }
+        if (product_images.length === 0) {
+            filePaths.push("/images/products/1732899568032.jpg");
         }
         try {
             const result = await User.createProduct(
@@ -697,8 +705,12 @@ const Admin = {
         }
         const filePaths = [];
         for (let i = 0; i < product_images.length; i++) {
-            const filePath = `/images/products/${product_images[i].filename}`;
+            //const filePath = `${/images/products/product_images[i].filename}`;
+            const filePath = `${product_images[i].path}`;
             filePaths.push(filePath);
+        }
+        if (product_images.length === 0) {
+            filePaths.push("/images/products/1732899568032.jpg");
         }
         try {
             const result = await User.updateProduct(
