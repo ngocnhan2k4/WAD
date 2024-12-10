@@ -23,6 +23,7 @@ const Profile ={
             where: {
                 Orders: {
                     user_id: userID, // Điều kiện lọc theo user_id
+                    status:'Completed',
                 },
             },
             
@@ -35,6 +36,7 @@ const Profile ={
             where: {
                 Orders: {
                     user_id: userID, 
+                    status:'Completed',
                 },
             },
             include: {

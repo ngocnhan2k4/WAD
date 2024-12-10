@@ -1,6 +1,6 @@
 const userProfile = require('./service');
-const PRODUCTS_PER_PAGE = 2;
-const ORDERS_PER_PAGE = 1;
+const PRODUCTS_PER_PAGE = 3;
+const ORDERS_PER_PAGE = 3;
 const bcrypt = require("bcrypt");
 
 const userProfileController = {
