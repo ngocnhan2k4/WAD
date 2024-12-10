@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             productElement.innerHTML = `
                 <div class="relative">
                 <a href="/product/productDetail?id=${product.product_id}">
-                    <img src="${product.Images[0].directory_path}" alt="product${product.product_id}" class="w-full">
+                    <img src="${product.Images[0].directory_path}" alt="product${product.product_id}" class="w-full h-48 object-contain">
                 </a>
                 </div>
                 <div class="px-4 pt-4 pb-3">
