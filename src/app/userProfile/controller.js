@@ -8,11 +8,13 @@ const userProfileController = {
         try{
             if(!req.user)
                 return res.redirect("/user/login");
+            console.log(req.user.id);
+            
             const pageOrders = parseInt(req.query.pageOrders) || 1;
-            const totalOrders = await userProfile.getNumOfOrders(req.user.id );//req.user.id 
+            const totalOrders = await userProfile.getNumOfOrders(1 );//req.user.id 
             const totalOrderPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
             const startOrderIndex = (pageOrders - 1) * ORDERS_PER_PAGE;
-            const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, req.user.id );//req.user.id
+            const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, 1 );//req.user.id
             // const local = req.user.type == "local";
             // const check = await userProfile.findUserId(req.user.id);
             // let profile = null;
