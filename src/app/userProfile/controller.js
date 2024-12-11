@@ -59,7 +59,8 @@ const userProfileController = {
                                             Productpages: Array.from({ length: totalProductPages }, (_, index) => index + 1),
                                         
                                         });
-        }catch{
+        }catch(err){
+            console.log(err);
             res.status(500).send("Internal Server Error");
         }
     },
