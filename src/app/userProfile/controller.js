@@ -11,10 +11,10 @@ const userProfileController = {
             
             console.log(req.user.id);
             const pageOrders = parseInt(req.query.pageOrders) || 1;
-            const totalOrders = await userProfile.getNumOfOrders(1);//req.user.id 
+            const totalOrders = await userProfile.getNumOfOrders(req.user.id);//req.user.id 
             const totalOrderPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
             const startOrderIndex = (pageOrders - 1) * ORDERS_PER_PAGE;
-            const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, 1 );//req.user.id
+            const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, req.user.id );//req.user.id
             const local = req.user.type == "local";
             const check = await userProfile.findUserId(req.user.id);
             let profile = null;
@@ -32,10 +32,10 @@ const userProfileController = {
             }
 
             const pageProducts = parseInt(req.query.pageProducts) || 1;
-            const totalProducts = await userProfile.getNumOfProducts(1);//req.user.id 
+            const totalProducts = await userProfile.getNumOfProducts(req.user.id);//req.user.id 
             const totalProductPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
             const startProductIndex = (pageProducts - 1) * PRODUCTS_PER_PAGE;
-            const paginatedProducts = await userProfile.getProducts(startProductIndex, PRODUCTS_PER_PAGE, 1);//req.user.id
+            const paginatedProducts = await userProfile.getProducts(startProductIndex, PRODUCTS_PER_PAGE, req.user.id);//req.user.id
 
             const activeTab = req.query.activeTab || 'orders';
             return res.render("userprofile",{

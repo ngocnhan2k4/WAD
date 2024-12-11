@@ -5,21 +5,12 @@ const homeController = {
         try { 
             const newArrival = await Home.getNewArrival(); 
             const recomended = await Home.getRecomended();
-            let userCheck = false;
-            if(!req.user)
-                userCheck = false;
-            else{
-                if(!req.user.id)
-                    userCheck = false;
-                else
-                userCheck = await Home.findUserId(req.user.id);
-            }
             res.render("home", {
                 page_style: "/css/tailwindcss.css",
                 notAJAX: true,
                 newArrival, 
                 recomended,
-                check: userCheck
+                check: req.user && !await Home.findUserId(req.user.id)
             });
         } catch (error) {
             console.error("Error rendering home page:", error);
