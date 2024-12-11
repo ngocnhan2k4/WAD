@@ -9,7 +9,7 @@ const userProfileController = {
             if(!req.user)
                 return res.redirect("/user/login");
             const pageOrders = parseInt(req.query.pageOrders) || 1;
-            const totalOrders = await userProfile.getNumOfOrders(1);//req.user.id 
+            const totalOrders = await userProfile.getNumOfOrders(req.user.id );//req.user.id 
             const totalOrderPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
             const startOrderIndex = (pageOrders - 1) * ORDERS_PER_PAGE;
             const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, 1);//req.user.id
