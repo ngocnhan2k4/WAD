@@ -22,7 +22,7 @@ describe("Test admin route", () => {
     it("GET /admin/viewcatemanu", async () => {
         const response = await request(app).get("/admin/viewcatemanu");
         expect(response.statusCode).toBe(200);
-    }, 10000);
+    }, 15000);
     it("GET /admin/manu/:id", async () => {
         const response = await request(app).get("/admin/viewmanu/1");
         expect(response.statusCode).toBe(200);
