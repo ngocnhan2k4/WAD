@@ -13,21 +13,21 @@ const userProfileController = {
             const totalOrderPages = Math.ceil(totalOrders / ORDERS_PER_PAGE);
             const startOrderIndex = (pageOrders - 1) * ORDERS_PER_PAGE;
             const paginatedOrders = await userProfile.getOrders(startOrderIndex, ORDERS_PER_PAGE, req.user.id);//req.user.id
-            const local = req.user.type == "local";
-            const check = await userProfile.findUserId(req.user.id);
-            let profile = null;
-            if(check){
-                profile = await userProfile.getUserDetail(req.user.id);
-            }
-            else{
-                profile = {
-                    name: "",
-                    gender: "",
-                    phone: "",
-                    address: "",
-                    birthday: ""
-                }
-            }
+            // const local = req.user.type == "local";
+            // const check = await userProfile.findUserId(req.user.id);
+            // let profile = null;
+            // if(check){
+            //     profile = await userProfile.getUserDetail(req.user.id);
+            // }
+            // else{
+            //     profile = {
+            //         name: "",
+            //         gender: "",
+            //         phone: "",
+            //         address: "",
+            //         birthday: ""
+            //     }
+            // }
 
             const pageProducts = parseInt(req.query.pageProducts) || 1;
             const totalProducts = await userProfile.getNumOfProducts(req.user.id);//req.user.id 
@@ -46,8 +46,8 @@ const userProfileController = {
                                             previousOrderPage: pageOrders - 1,
                                             nextOrderPage: pageOrders + 1,
                                             Orderpages: Array.from({ length: totalOrderPages }, (_, index) => index + 1),
-                                            profile,
-                                            local,
+                                            // profile,
+                                            // local,
                                             activeTab,
                                             paginatedProducts,
                                             currentProductPage: pageProducts,
