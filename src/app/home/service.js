@@ -39,14 +39,6 @@ const Home = {
         }
     },
     findUserId: async (id) => {
-        try {
-            // Kiểm tra nếu id bị null hoặc undefined
-            if (!id) {
-                console.error("Invalid ID: ID is null or undefined");
-                return null;
-            }
-    
-            // Thực hiện truy vấn với Prisma
             const userDetail = await prisma.userdetail.findUnique({
                 where: {
                     user_id: id,
@@ -56,12 +48,8 @@ const Home = {
             if (!userDetail) {
                 console.warn(`No user details found for user_id: ${id}`);
             }
-    
             return userDetail;
-        } catch (error) {
-            console.error("Error in findUserId:", error);
-            throw new Error("Database query failed");
-        }
+       
     },
     
 };
