@@ -5,9 +5,15 @@ const homeController = {
         try { 
             const newArrival = await Home.getNewArrival(); 
             const recomended = await Home.getRecomended();
-            const userCheck = req.user 
-            ? !await Home.findUserId(req.user.id) 
-            : false;
+            let userCheck = false;
+            if(!req.user)
+                userCheck = false;
+            else{
+                if(!req.user.id)
+                    userCheck = false;
+                else
+                userCheck = await Home.findUserId(req.user.id);
+            }
             res.render("home", {
                 page_style: "/css/tailwindcss.css",
                 notAJAX: true,
