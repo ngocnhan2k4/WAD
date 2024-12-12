@@ -7,6 +7,8 @@ const axios = require('axios');
 
 const paymentService = {
     createPayment: async (clientIp, reqData) => {
+        process.env.TZ = 'Asia/Ho_Chi_Minh';
+
         const date = new Date();
         const orderId = moment(date).format('DDHHmmss'); // Định dạng orderId
         const ipv4Address = clientIp.includes(':') ? '127.0.0.1' : clientIp;
@@ -30,10 +32,10 @@ const paymentService = {
             vnp_IpAddr: ipv4Address,
             vnp_CreateDate: createDate,
             vnp_ExpireDate: expiredDate,
-        };
-        if (reqData.bank && reqData.bank.trim() !== '') {
-            vnpParams['vnp_BankCode'] = reqData.bank;
-        }    
+        };   
+        if(reqData.paymentMethod !== null && reqData.paymentMethod !== ''){
+            vnpParams['vnp_BankCode'] = reqData.paymentMethod;
+        }
     
         // Sắp xếp tham số
         const sortedParams = sortObject(vnpParams);
@@ -72,7 +74,7 @@ const paymentService = {
         const signData = querystring.stringify(sortedParams, { encode: false });
         const hmac = crypto.createHmac('sha512', vnpayConfig.vnp_HashSecret);
         const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
-        console.log(signed);
+        //console.log(signed);
 
         // So sánh chữ ký
         if (secureHash === signed) {

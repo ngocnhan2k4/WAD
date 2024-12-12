@@ -4,8 +4,9 @@ const moment = require('moment');
 const paymentController = {
     createPayment: async (req, res) => {
         try {
-            // console.log(req.body);
             const reqData = req.body
+            //console.log("reqData");
+            console.log(reqData);
 
             req.session.shippingAddress = reqData.shippingAddress;
 

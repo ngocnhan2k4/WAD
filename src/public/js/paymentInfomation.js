@@ -55,13 +55,12 @@ export function showPaymentPopup(orderId) {
                         required></textarea>
                 </div>
                 <div class="popup-form-group">
-                    <label for="popup-bank">Select Bank</label>
+                    <label for="popup-bank">Select Payment Method</label>
                     <select id="popup-bank" name="bank">
-                        <option value="">-- Select your bank --</option>
-                        <option value="vnpay">VNPAY</option>
-                        <option value="vietcombank">Vietcombank</option>
-                        <option value="techcombank">Techcombank</option>
-                        <option value="sacombank">Sacombank</option>
+                        <option value="">-- Select your payment method --</option>
+                        <option value="VNPAYQR">VNPAYQR</option>
+                        <option value="VNBANK">VNBANK</option>
+                        <option value="INTCARD">INTCARD</option>
                     </select>
                 </div>
                 <div class="popup-form-group">
