@@ -1,8 +1,23 @@
 const User = require("../admin/service");
+const { DateTime } = require("luxon");
 
 function formatDateSimple(date) {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(date).toLocaleDateString("en-US", options);
+    if (!date) return "Invalid DateTime";
+
+    try {
+        const jsDate = new Date(date);
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" });
+
+        if (!parsedDate.isValid) {
+            console.error("Invalid DateTime:", date);
+            return "Invalid DateTime";
+        }
+
+        return parsedDate.toFormat("dd/MM/yyyy");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return "Invalid DateTime";
+    }
 }
 function isEmptyObject(obj) {
     return Object.keys(obj).length === 0;
