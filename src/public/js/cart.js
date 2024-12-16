@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/cart/update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId: parseInt(productId, 10), quantity, rowSubtotal }), // Gửi thêm rowSubtotal
+            body: JSON.stringify({ productId: parseInt(productId, 10), quantity, rowSubtotal }),
         })
             .then(res => res.json())
             .then(data => {
@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.', 'error');
                 return; // Dừng lại nếu giỏ hàng trống
             }
-            console.log("1");
+
             showPaymentPopup();
-            console.log("2");
+
             // // Gọi API để tạo URL thanh toán VNPay
             // const response = await fetch('/payment/checkout', {
             //     method: 'POST',
