@@ -95,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.updatedSubtotal !== undefined) {
                     // Cập nhật subtotal hiển thị
                     document.querySelector('.float-right h1').textContent = `$${data.updatedSubtotal}`;
+                    window.orderData.subtotalVND = data.updatedSubtotal * 25400; // Ví dụ giá trị mới
+                    console.log(orderData)
                 }
             })
             .catch(console.error);
@@ -117,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
             subtotal += parseFloat(price.textContent.replace('$', ''));
         });
         document.querySelector('.float-right h1').textContent = `$${subtotal}`;
+        window.orderData.subtotalVND = subtotal * 25400; // Ví dụ giá trị mới
+        console.log(orderData)
     }
 
 
@@ -144,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return; // Dừng lại nếu giỏ hàng trống
             }
 
-            showPaymentPopup();
+            showPaymentPopup(window.orderData.subtotalVND);
 
             // // Gọi API để tạo URL thanh toán VNPay
             // const response = await fetch('/payment/checkout', {

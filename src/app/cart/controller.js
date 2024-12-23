@@ -52,7 +52,7 @@ const cartController = {
     
             // Tính toán lại subtotal
             const subtotalData = await Cart.getCartTotal(userId);
-            const subtotal = subtotalData._sum.price || 0;
+            const subtotal = subtotalData;
     
             res.json({ updatedSubtotal: subtotal }); // Trả về subtotal đã cập nhật
         } catch (err) {
@@ -100,7 +100,7 @@ const cartController = {
 
             // Tính toán lại subtotal sau khi xóa
             const subtotalData = await Cart.getCartTotal(userId);
-            const subtotal = subtotalData._sum.price || 0;
+            const subtotal = subtotalData;
 
             // Trả về response với subtotal cập nhật
             res.json({ message: "Product removed from cart", updatedSubtotal: subtotal });

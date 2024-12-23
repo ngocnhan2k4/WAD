@@ -23,6 +23,8 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     animation: popupAnimation 0.3s ease-out;
+    max-height: 80vh; /* Giới hạn chiều cao của popup */
+    overflow-y: auto;
 }
 
 /* Tiêu đề của popup */

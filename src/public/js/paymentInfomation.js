@@ -1,7 +1,7 @@
-const { subtotalVND, orderID } = orderData;
+const { orderID } = window.orderData;
 
 // Hàm hiển thị popup thanh toán
-export function showPaymentPopup(orderId) {
+export function showPaymentPopup(subtotalVND) {
     // Tạo overlay
     const overlay = document.createElement('div');
     overlay.id = 'payment-overlay';
@@ -58,7 +58,6 @@ export function showPaymentPopup(orderId) {
                     <label for="popup-bank">Select Payment Method</label>
                     <select id="popup-bank" name="bank">
                         <option value="">-- Select your payment method --</option>
-                        <option value="VNPAYQR">VNPAYQR</option>
                         <option value="VNBANK">VNBANK</option>
                         <option value="INTCARD">INTCARD</option>
                     </select>
