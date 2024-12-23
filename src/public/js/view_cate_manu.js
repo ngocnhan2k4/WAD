@@ -1,4 +1,4 @@
-const menu__navs = document.querySelectorAll(".menu__nav");
+const menu__navs = document.querySelectorAll(".menu__navv");
 const decor__nav = document.querySelector(".decor__nav");
 const cate__content = document.querySelector(".cate__content");
 const manu__content = document.querySelector(".manu__content");

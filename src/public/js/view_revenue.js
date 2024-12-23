@@ -1,5 +1,5 @@
 const ctx = document.getElementById("revenueChart").getContext("2d");
-const menu__navs = document.querySelectorAll(".menu__nav");
+const menu__navs = document.querySelectorAll(".menu__navv");
 const decor__nav = document.querySelector(".decor__nav");
 const revenue__report = document.querySelector(".revenue__report");
 const revenue__top = document.querySelector(".revenue__top");
@@ -175,6 +175,7 @@ menu__navs.forEach((menu__nav) => {
         }
     });
 });
+
 search__button.addEventListener("click", async () => {
     search__button.disable = true;
     const search = document.querySelector(
