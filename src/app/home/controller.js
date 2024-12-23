@@ -3,8 +3,15 @@ const Home = require("./service");
 const homeController = {
     home: async (req, res) => {
         try { 
+            if (req.user) {
+                const userId = req.user.id;
+
+                await Home.moveCartItems(userId);
+            }
+
             const newArrival = await Home.getNewArrival(); 
             const recomended = await Home.getRecomended();
+            
             res.render("home", {
                 page_style: "/css/tailwindcss.css",
                 notAJAX: true,

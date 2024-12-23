@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/userprofile.css">
     <link rel="stylesheet" href="/css/notification.css">
     <link rel="stylesheet" href="/css/paymentPopup.css">
+    <link rel="stylesheet" href="/css/menu__sm.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,6 +43,29 @@
         <header class="py-4 bg-white shadow-sm">
             <div class="container flex items-center justify-between">
                 <!--logo-->
+                <div class="menu__sm hidden">
+                    <img class="menu__img menu__img-outner" src="/images/icons/menu-bar_7990377.png" alt="">
+                    <div class="overlay__main"></div>
+                    <div class="menu__nav">
+                        <img class="menu__img menu__img-inner" src="/images/icons/menu-bar_7990377.png" alt="">
+                        <div class="menu__inner">
+                            <div class="menu__main flex">
+                                <a href="/" class="menu__item menu__home">Home</a>
+                                <a href="/product" class="menu__item menu__shop">Shop</a>
+                                {{#if ADMIN}}
+                                <a href="/admin/main" class="menu__item menu__admin">Admin</a>
+                                {{/if}}
+                                {{#if isAuthen}}
+                                <a href="/auth/logout" class="menu__item menu__logout">Logout</a>
+                                {{else}}
+                                <a href="/user/login" class="menu__item menu__login">Login</a>
+                                {{/if}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
                 <a href="/">
                     <img src="/images/logo.svg" alt="Logo" class="w-32" />
                 </a>
@@ -50,7 +74,7 @@
                     <form
                         metod="GET"
                         action="/product"
-                        class="flex w-full"
+                        class="flex w-full main__search"
                         id="search-form"
                     >
                         {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
@@ -192,7 +216,7 @@
                 </div> }}
                 </div>
 
-            <div class="flex items-center justify-between flex-grow py-5 md:pl-12">
+            <div class="menu__outner flex items-center justify-between flex-grow py-5 md:pl-12">
                 <div class="flex items-center space-x-6 capitalize">
                     <a href="/" class="text-gray-200 transition hover:text-white">Home</a>
                     <a href="/product" class="text-gray-200 transition hover:text-white">Shop</a>
@@ -237,8 +261,8 @@
                 </div>
             </div>
 
-                <div class="grid grid-cols-2 col-span-2 gap-4">
-                    <div class="grid grid-cols-2 gap-4 md:gap-8">
+                <div class="row row__footer row-cols-2 gy-3 row-cols-md-4">
+                    
                         <div>
                             <h3
                                 class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
@@ -283,8 +307,8 @@
                                 >API Status</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-8">
+                    
+                    
                         <div>
                             <h3
                                 class="text-sm font-semibold tracking-wider text-gray-400 uppercase"
@@ -329,7 +353,7 @@
                                 >API Status</a>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </footer>
@@ -387,5 +411,6 @@
             subMenu.classList.toggle("open-menu");
         }
     </script>
+    <script src="/js/menu__sm.js"></script>
 </body>
 </html>

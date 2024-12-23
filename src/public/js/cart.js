@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td colspan="5" class="text-center">Your cart is empty.</td>
         </tr>`;
         document.querySelector('.float-right h1').textContent = `$0`;
+        updateItemCounts();
     }
 
     function updateEventListeners() {
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteButton.addEventListener('click', function () {
                 item.remove();
                 updateTotalSubtotal();
+                updateItemCounts()
                 deleteProductOnServer(productId);
                 if (document.querySelectorAll('[id^="row-"]').length === 0) {
                     document.querySelector('#shoppingCart tbody').innerHTML = `
@@ -88,13 +90,16 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/cart/update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId: parseInt(productId, 10), quantity, rowSubtotal }), // Gửi thêm rowSubtotal
+            body: JSON.stringify({ productId: parseInt(productId, 10), quantity, rowSubtotal }),
         })
             .then(res => res.json())
             .then(data => {
                 if (data.updatedSubtotal !== undefined) {
                     // Cập nhật subtotal hiển thị
                     document.querySelector('.float-right h1').textContent = `$${data.updatedSubtotal}`;
+                    window.orderData.subtotalVND = data.updatedSubtotal * 25400; // Ví dụ giá trị mới
+                    updateItemCounts();
+                    //console.log(orderData)
                 }
             })
             .catch(console.error);
@@ -117,6 +122,17 @@ document.addEventListener('DOMContentLoaded', function () {
             subtotal += parseFloat(price.textContent.replace('$', ''));
         });
         document.querySelector('.float-right h1').textContent = `$${subtotal}`;
+        window.orderData.subtotalVND = subtotal * 25400; // Ví dụ giá trị mới
+        // console.log(orderData)
+    }
+
+    function updateItemCounts() {
+        let itemCounts = 0;
+        const itemQuantity = document.querySelectorAll('[id^="quantity-"]');
+        itemQuantity.forEach(quantity => {
+            itemCounts += parseFloat(quantity.value);
+        });
+        document.querySelector('.text-info').textContent = `${itemCounts}`;
     }
 
 
@@ -143,9 +159,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.', 'error');
                 return; // Dừng lại nếu giỏ hàng trống
             }
-            console.log("1");
-            showPaymentPopup();
-            console.log("2");
+
+            showPaymentPopup(window.orderData.subtotalVND);
+
             // // Gọi API để tạo URL thanh toán VNPay
             // const response = await fetch('/payment/checkout', {
             //     method: 'POST',

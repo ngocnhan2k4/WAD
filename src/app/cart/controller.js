@@ -3,20 +3,17 @@ const Cart = require('./service')
 const cartController = {
     getCart: async (req, res) => {
         try {
-            if (!req.user) {
-                // Nếu không có người dùng, chuyển hướng về trang đăng nhập
-                return res.redirect("/user/login");
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
             }
-
-            const userId = req.user.id;
 
             // Lấy dữ liệu từ service
             const cartItems = await Cart.getUserCart(userId);
-            const subtotalData = await Cart.getCartTotal(userId);
+            const subtotal = await Cart.getCartTotal(userId);
             const itemCount = await Cart.getNumOfCartItems(userId);
             const orderID = await Cart.getNextOrderId();
 
-            const subtotal = subtotalData._sum.price || 0;
             const subtotalVND = subtotal * 25400;
 
             const renderData = {
@@ -45,10 +42,9 @@ const cartController = {
     updateCartItemQuantity: async (req, res) => {
         try {
             const { productId, quantity, rowSubtotal } = req.body; // Nhận thêm rowSubtotal
-            const userId = req.user.id;
-    
-            if (!userId) {
-                return res.status(400).send("User ID is required");
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
             }
     
             // Cập nhật số lượng sản phẩm trong giỏ hàng
@@ -56,7 +52,7 @@ const cartController = {
     
             // Tính toán lại subtotal
             const subtotalData = await Cart.getCartTotal(userId);
-            const subtotal = subtotalData._sum.price || 0;
+            const subtotal = subtotalData;
     
             res.json({ updatedSubtotal: subtotal }); // Trả về subtotal đã cập nhật
         } catch (err) {
@@ -68,11 +64,10 @@ const cartController = {
     addToCart: async (req, res) => {
         try {
             const { productId, quantity } = req.body; // Nhận `productId` và `quantity` từ yêu cầu
-            const userId = req.user.id; // Thay bằng logic lấy `userId` từ phiên đăng nhập hoặc yêu cầu
-    
-            if (!userId) {
-                return res.status(400).send("User ID is required");
-            }
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
+            } 
     
             // Gọi service để thêm sản phẩm
             const result = await Cart.addProductToCart(userId, productId, quantity);
@@ -91,7 +86,10 @@ const cartController = {
     deleteCartItem: async (req, res) => {
         try {
             const { productId } = req.body; // Lấy productId từ request body
-            const userId = req.user.id; // Đảm bảo lấy đúng userId (nên lấy từ session hoặc auth)
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
+            }
 
             if (!userId) {
                 return res.status(400).send("User ID is required");
@@ -102,7 +100,7 @@ const cartController = {
 
             // Tính toán lại subtotal sau khi xóa
             const subtotalData = await Cart.getCartTotal(userId);
-            const subtotal = subtotalData._sum.price || 0;
+            const subtotal = subtotalData;
 
             // Trả về response với subtotal cập nhật
             res.json({ message: "Product removed from cart", updatedSubtotal: subtotal });
@@ -113,13 +111,11 @@ const cartController = {
     },
 
     getCartCount: async (req, res) => {
-        try {
-            if (!req.user) {
-                // Nếu người dùng chưa đăng nhập, trả về loggedIn: false
-                return res.json({ loggedIn: false, cartCount: 0 });
+        try {    
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
             }
-    
-            const userId = req.user.id;
     
             // Lấy tổng số lượng sản phẩm trong giỏ hàng từ service
             const itemCount = await Cart.getNumOfCartItems(userId);
@@ -133,7 +129,10 @@ const cartController = {
 
     checkCart: async (req, res) => {
         try {
-            const userId = req.user.id;
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
+            }
 
             // Gọi service để kiểm tra giỏ hàng
             const cartItems = await Cart.checkCart(userId);
@@ -153,7 +152,10 @@ const cartController = {
 
     getTotal: async (req, res) => {
         try {
-            const userId = req.user.id;
+            let userId = null;
+            if (req.user) {
+                userId = req.user.id;
+            }
 
             const subtotalData = await Cart.getCartTotal(userId);
             return subtotalData;

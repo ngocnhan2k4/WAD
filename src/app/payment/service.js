@@ -22,7 +22,7 @@ const paymentService = {
             vnp_Version: '2.1.1',
             vnp_Command: 'pay',
             vnp_TmnCode: vnpayConfig.vnp_TmnCode,
-            vnp_Amount: amount, // VNPay yêu cầu đơn vị là đồng
+            vnp_Amount: amount * 100, // VNPay yêu cầu đơn vị là đồng
             vnp_CurrCode: 'VND',
             vnp_TxnRef: orderId,
             vnp_OrderInfo: reqData.paymentDescription, // Mô tả đơn hàng

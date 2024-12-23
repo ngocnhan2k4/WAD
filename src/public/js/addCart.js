@@ -35,45 +35,88 @@ document.addEventListener('DOMContentLoaded', () => {
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
-
-            // Kiểm tra người dùng đã đăng nhập chưa
-            fetch('/auth/check-login')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.loggedIn) {
-                        // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                        window.location.href = '/user/login';
-                        return; // Dừng thực thi mã còn lại
-                    }
-
-                    // Nếu đã đăng nhập, tiếp tục thêm sản phẩm vào giỏ
-                    const productId = this.getAttribute('data-product-id');
-                    const quantity = 1;
-                    console.log("k");
-
-                    fetch('/cart/add', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ productId: parseInt(productId, 10), quantity }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message) {
-                            showNotification(data.message, data.type);
-                            updateCartCount();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert(error.message || 'An error occurred while adding the item to the cart.');
-                    });
-                })
-                .catch(error => {
-                    console.error('Error checking login:', error);
-                    showNotification('An error occurred while adding the item to the cart.', 'error');
-                });
+    
+            const productId = this.getAttribute('data-product-id'); // Lấy ID sản phẩm từ thuộc tính
+            const quantity = 1;
+    
+            // Fetch trực tiếp tới endpoint
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId: parseInt(productId, 10), quantity }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    showNotification(data.message, data.type); // Hiển thị thông báo
+                    updateCartCount(); // Cập nhật số lượng trong giỏ
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Unable to add item to cart.');
+            });
         });
-    });
+    });    
+    // addToCartButtons.forEach(button => {
+    //     button.addEventListener('click', function (event) {
+    //         event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
+
+    //         // Kiểm tra người dùng đã đăng nhập chưa
+    //         fetch('/auth/check-login')
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 if (!data.loggedIn) {
+    //                     fetch('/cart/addTemp', {
+    //                         method: 'POST',
+    //                         headers: {
+    //                             'Content-Type': 'application/json',
+    //                         },
+    //                         body: JSON.stringify({ productId: parseInt(productId, 10), quantity }),
+    //                     })
+    //                     .then(response => response.json())
+    //                     .then(data => {
+    //                         if (data.message) {
+    //                             showNotification(data.message, data.type);
+    //                         }
+    //                     })
+    //                     .catch(error => {
+    //                         console.error('Error:', error);
+    //                         alert('Unable to save item to session.');
+    //                     });
+    
+    //                     return; // Dừng thực thi mã còn lại
+    //                 }
+
+    //                 // Nếu đã đăng nhập, tiếp tục thêm sản phẩm vào giỏ
+    //                 const productId = this.getAttribute('data-product-id');
+    //                 const quantity = 1;
+
+    //                 fetch('/cart/add', {
+    //                     method: 'POST',
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                     },
+    //                     body: JSON.stringify({ productId: parseInt(productId, 10), quantity }),
+    //                 })
+    //                 .then(response => response.json())
+    //                 .then(data => {
+    //                     if (data.message) {
+    //                         showNotification(data.message, data.type);
+    //                         updateCartCount();
+    //                     }
+    //                 })
+    //                 .catch(error => {
+    //                     console.error('Error:', error);
+    //                     alert(error.message || 'An error occurred while adding the item to the cart.');
+    //                 });
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error checking login:', error);
+    //                 showNotification('An error occurred while adding the item to the cart.', 'error');
+    //             });
+    //     });
+    // });
 });

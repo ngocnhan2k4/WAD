@@ -1,85 +1,234 @@
+.container-cart {
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+}
+
 /* Tạo khoảng cách giữa thead và tbody */
 #shoppingCart {
-    border-spacing: 0 15px; /* Tạo khoảng cách 15px giữa các hàng */
-    border-collapse: separate; /* Giữ các ô tách rời để khoảng cách hiệu quả */
+  border-spacing: 0 15px; /* Tạo khoảng cách 15px giữa các hàng */
+  border-collapse: separate; /* Giữ các ô tách rời để khoảng cách hiệu quả */
+}
+
+.shopping-cart-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.text-muted {
+  font-size: 18px; /* Kích thước chữ vừa */
+  color: #6c757d; /* Màu xám nhạt */
+}
+
+.text-info {
+  font-size: 20px; /* Làm nổi bật số lượng */
+  color: #17a2b8; /* Màu xanh thông tin */
+  font-weight: 700; /* Đậm chữ */
+  padding-bottom: 2px;
+}
+
+/* Căn giữa tổng thể */
+.text-center {
+  text-align: center;
 }
 
 /* Header của bảng */
 #shoppingCart thead th {
-    padding: 15px 0;
-    border-bottom: 2px solid #ddd;
-    border-top: 2px solid #ddd;
-    background-color: #f8f9fa; /* Màu nền nhạt */
-    color: #343a40; /* Màu chữ đậm */
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  padding: 15px 1px;
+  border-bottom: 2px solid #ddd;
+  border-top: 2px solid #ddd;
+  background-color: #f8f9fa; /* Màu nền nhạt */
+  color: #343a40; /* Màu chữ đậm */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Nội dung bảng */
 #shoppingCart tbody td {
-    vertical-align: middle;
-    background-color: #fff;
+  vertical-align: middle;
+  background-color: #fff;
 }
 
 /* Hình ảnh sản phẩm */
 #shoppingCart tbody img {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 /* Tiêu đề sản phẩm */
 #shoppingCart h4 {
-    font-size: 18px;
-    color: #212529;
-    font-weight: 700;
+  font-size: 18px;
+  color: #212529;
+  font-weight: 700;
 }
 
 /* Mô tả sản phẩm */
 #shoppingCart p {
-    font-size: 14px;
-    color: #6c757d;
+  font-size: 14px;
+  color: #6c757d;
 }
 
 /* Nút hành động */
 .actions button {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    color: #6c757d;
-    transition: all 0.3s ease-in-out;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #6c757d;
+  transition: all 0.3s ease-in-out;
 }
 
 .actions button:hover {
-    background-color: #007bff; /* Màu nền xanh */
-    color: #fff; /* Màu chữ trắng */
-    border-color: #007bff;
+  background-color: #007bff; /* Màu nền xanh */
+  color: #fff; /* Màu chữ trắng */
+  border-color: #007bff;
 }
 
 a.btn-primary {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    color: #fff;
-    border: none;
-    padding: 10px 40px; /* Tăng padding để nút lớn hơn */
-    font-size: 20px; /* Tăng font size */
-    border-radius: 10px; /* Làm nút bo tròn hơn */
-    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: #fff;
+  border: none;
+  padding: 10px 40px; /* Tăng padding để nút lớn hơn */
+  font-size: 20px; /* Tăng font size */
+  border-radius: 10px; /* Làm nút bo tròn hơn */
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 a.btn-primary:hover {
-    background: linear-gradient(45deg, #0056b3, #003f88);
-    transform: translateY(-2px);
-    color: #fff;
+  background: linear-gradient(45deg, #0056b3, #003f88);
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 /* Subtotal */
 .float-right h4 {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 .float-right h1 {
-    color: #212529;
-    font-size: 28px;
+  color: #212529;
+  font-size: 28px;
+}
+
+.cart-product-image {
+  max-width: 40%;
+}
+
+.subtotal-text {
+    font-size: 25px;
+}
+
+#checkout-button {
+  background-color: #28a745; /* Màu xanh lá */
+  color: #fff; /* Chữ trắng */
+  font-size: 1.2rem; /* Phông chữ to */
+  padding: 15px 30px; /* Kích thước nút */
+  border-radius: 30px; /* Bo góc */
+  border: none; /* Loại bỏ đường viền */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  cursor: pointer; /* Con trỏ chuột */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng hover */
+}
+
+@media (max-width: 992px) {
+  #shoppingCart thead th {
+    padding: 12px 1px;
+    font-size: 11.5px;
+  }
+
+  #shoppingCart p {
+    font-size: 14px;
+  }
+
+  #shoppingCart h4 {
+    font-size: 14px;
+  }
+
+  td * {
+    font-size: 14px; /* Thay đổi kích thước chữ */
+  }
+
+  .quantity-input {
+    max-width: 80px !important;
+    font-size: 14px !important;
+    padding: 3px !important;
+  }
+
+    .subtotal-text {
+        font-size: 21px;
+    }
+    .subtotal-value {
+        font-size: 21px !important;
+    }
+
+    #checkout-button {
+    font-size: 1rem; /* Phông chữ to */
+    padding: 12px 25px; /* Kích thước nút */
+    border-radius: 30px; /* Bo góc */
+    }
+
+    .shopping-cart-title {
+      font-size: 25px;
+      padding-bottom: 18px;
+    }
+    
+    .text-muted {
+      font-size: 17px; /* Kích thước chữ vừa */
+    }
+}
+
+@media (max-width: 768px) {
+  #shoppingCart thead th {
+    padding: 8px 1px;
+    font-size: 10px;
+  }
+
+  .cart-product-image {
+    max-width: 30%;
+  }
+
+  #shoppingCart p {
+    font-size: 10px;
+  }
+
+  #shoppingCart h4 {
+    font-size: 10px;
+  }
+
+  td * {
+    font-size: 10px; /* Thay đổi kích thước chữ */
+  }
+
+  .quantity-input {
+    max-width: 60px !important;
+    font-size: 10px !important;
+    padding: 1px !important;
+  }
+
+    .subtotal-text {
+        font-size: 16px;
+    }
+    .subtotal-value {
+        font-size: 16px !important;
+    }
+
+    #checkout-button {
+    font-size: 0.7rem; /* Phông chữ to */
+    padding: 6px 18px; /* Kích thước nút */
+    border-radius: 30px; /* Bo góc */
+    }
+
+    .shopping-cart-title {
+      font-size: 22px;
+      padding-bottom: 14px;
+    }
+    
+    .text-muted {
+      font-size: 14px; /* Kích thước chữ vừa */
+    }
 }
