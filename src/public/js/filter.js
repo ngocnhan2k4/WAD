@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="px-4 pt-4 pb-3">
                 <a href="/product/productDetail?id=${product.product_id}">
-                    <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
+                    <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary h-16">
                         ${product.product_name}
                     </h4>
                 </a>

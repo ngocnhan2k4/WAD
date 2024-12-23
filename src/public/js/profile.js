@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hiển thị modal
     changePasswordButton.addEventListener("click", () => {
         modal.style.display = "block";
+        document.body.classList.add("no-scroll");
     });
 
     // Đóng modal
@@ -98,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formMessage.textContent = "";
         formMessage.classList.add("hidden");
         formMessage.classList.remove("bg-green-100", "text-green-500", "bg-red-100", "text-red-500");
+        document.body.classList.remove("no-scroll");
     });
 
     // Ẩn modal khi click bên ngoài
@@ -107,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formMessage.textContent = "";
             formMessage.classList.add("hidden");
             formMessage.classList.remove("bg-green-100", "text-green-500", "bg-red-100", "text-red-500");
+            document.body.classList.remove("no-scroll");
         }
     });
 });
@@ -302,6 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hiển thị modal
     changePasswordButton.addEventListener("click", () => {
         profileModal.style.display = "block";
+        document.body.classList.add("no-scroll");
     });
 
     // Đóng modal
@@ -310,6 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formMessage.textContent = "";
         formMessage.classList.add("hidden");
         formMessage.classList.remove("bg-green-100", "text-green-500", "bg-red-100", "text-red-500");
+        document.body.classList.remove("no-scroll");
     });
 
     // Ẩn modal khi click bên ngoài
@@ -319,6 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formMessage.textContent = "";
             formMessage.classList.add("hidden");
             formMessage.classList.remove("bg-green-100", "text-green-500", "bg-red-100", "text-red-500");
+            document.body.classList.remove("no-scroll");
         }
     });
 });

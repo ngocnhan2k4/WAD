@@ -1,8 +1,8 @@
-<div class="container grid items-start grid-cols-2 gap-6 pt-4 pb-16 md:grid-cols-4">
+<div class="container grid items-start grid-cols-2 pb-0 pt-10 md:grid-cols-4">
 
     <!-- ./sidebar lọc sản phẩm -->
     <form method="GET" action="/product" id="filter-form">
-        <div class="hidden col-span-1 px-4 pb-6 bg-white rounded shadow overflow-hiddenb md:block">
+        <div class="col-span-1 px-4 pb-6 bg-white rounded overflow-hiddenb md:block">
             <div class="space-y-5 divide-y divide-gray-200">
                 <!-- Lọc theo category -->
                 <div>
@@ -58,6 +58,30 @@
     </form>
     <!-- products -->
     <div class="col-span-3">
+        <div class="relative flex w-full max-w-xl mb-5 md:hidden">
+            <form metod="GET" action="/product" class="flex w-full" id="search-form">
+                {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
+                    <i class="fa-solid fa-search"></i>
+                </span> --}}
+                {{#each category}}
+                <input type="hidden" name="category" value="{{this}}">
+                {{/each}}
+                {{#each brand}}
+                <input type="hidden" name="brand" value="{{this}}">
+                {{/each}}
+                <input type="hidden" name="minPrice" value="{{minPrice}}">
+                <input type="hidden" name="maxPrice" value="{{maxPrice}}">
+                {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
+                <input type="hidden" name="sort" value="{{sort}}">
+                <input type="text" name="search" id="search"
+                    class="w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
+                    placeholder="search" value="{{search}}">
+                <button
+                    class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
+                    Search
+                </button>
+            </form>
+        </div>
         <!--sắp xếp-->
         <div class="flex items-center mb-4">
             <form method="GET" action="/product" id="sort-form">
@@ -85,7 +109,7 @@
                     {{/if}}
                 </select>
             </form>
-        </div>
+        </div>  
 
         <!--danh sách sản phẩm-->
         <div id="product-list">
@@ -97,7 +121,7 @@
                     </div>
                     <div class="px-4 pt-4 pb-3">
                         <a href="/product/productDetail?id={{this.product_id}}">
-                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
+                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary h-16">
                                 {{product_name}}</h4>
                         </a>
                         <div class="flex items-baseline mb-1 space-x-2 g">
