@@ -70,35 +70,7 @@
                     <img src="/images/logo.svg" alt="Logo" class="w-32" />
                 </a>
                 <!--searchbar-->
-                <div class="relative flex w-full max-w-xl">
-                    <form
-                        metod="GET"
-                        action="/product"
-                        class="flex w-full main__search"
-                        id="search-form"
-                    >
-                        {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
-                <i class="fa-solid fa-search"></i>
-            </span> --}}
-           {{#each category}}
-                <input type="hidden" name="category" value="{{this}}">
-            {{/each}}
-            {{#each brand}}
-                <input type="hidden" name="brand" value="{{this}}">
-            {{/each}}
-            <input type="hidden" name="minPrice" value="{{minPrice}}">
-            <input type="hidden" name="maxPrice" value="{{maxPrice}}">
-            {{!-- <input type="hidden" name="page" value="{{currentPage}}"> --}}
-            <input type="hidden" name="sort" value="{{sort}}">
-            <input type="text" name="search" id="search"
-                class="hidden w-full py-3 pr-3 border border-r-0 border-primary pl-14 rounded-l-md focus:outline-none md:flex"
-                placeholder="search" value="{{search}}">
-            <button
-                class="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition <!--md:flex hidden-->">
-                Search
-            </button>
-          </form>
-        </div>
+                
     
         <div class="flex items-center space-x-4">
           <a href="#" class="relative text-center text-gray-700 transition hover:text-primary">
