@@ -14,7 +14,7 @@ export function showPaymentPopup(subtotalVND) {
     // Nội dung của popup
     paymentPopup.innerHTML = `
         <div class="popup-content">
-            <h2>Payment Information</h2>
+            <h2 class="popup-title">Payment Information</h2>
             <form id="popup-paymentForm" action="/payment/checkout" method="POST">
                 <div class="popup-form-group">
                     <label for="popup-paymentType">Payment Type</label>

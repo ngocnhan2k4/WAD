@@ -1,15 +1,64 @@
-<div class="result-box" style="padding: 20px; border: 1px solid #ccc; width: 50%; margin: 0 auto; text-align: center;">
-    <h2 style="font-family: Arial, sans-serif;">Transaction Status</h2>
-    {{#if transactionDetails.success}}
-        <p style="color: green; font-family: Arial, sans-serif;">Payment Successful!</p>
-    {{else}}
-        <p style="color: red; font-family: Arial, sans-serif;">Payment Failed!</p>
-    {{/if}}
-
-    <p style="font-family: Arial, sans-serif; font-weight: bold;">Transaction ID: {{transactionDetails.transactionId}}</p>
-    <p style="font-family: Arial, sans-serif; font-weight: bold;">Order Info: {{transactionDetails.orderInfo}}</p>
-    <p style="font-family: Arial, sans-serif; font-weight: bold;">Amount Paid: {{transactionDetails.amount}} VND</p>
-    <p style="font-family: Arial, sans-serif; font-weight: bold;">Payment Date: {{transactionDetails.payDate}}</p>
-
-    <a href="/" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif;">Back to Homepage</a>
+<div class="container-payment-result">
+    <div class="success-card">
+        {{#if transactionDetails.success}}
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
+                    <path d="M8 12l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+        {{else}}
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="#FF5252"/>
+                    <path d="M8 8l8 8m0-8l-8 8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+        {{/if}}
+        
+        {{#if transactionDetails.success}}
+            <h1 style="color: #4CAF50;">Payment Successful!</h1>
+            {{!-- <p style="color: green; font-family: Arial, sans-serif;">Payment Successful!</p> --}}
+        {{else}}
+            <h1 style="color: #FF5252;">Payment Failed!</h1>
+            {{!-- <p style="color: red; font-family: Arial, sans-serif;">Payment Failed!</p> --}}
+        {{/if}}
+        
+        <div class="transaction-details">
+            <div class="detail-row">
+                <span class="label">Transaction id</span>
+                <span class="value">{{transactionDetails.transactionId}}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Date</span>
+                <span class="value">{{transactionDetails.payDate}}</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Mode of Payment</span>
+                <span class="value">VNPAY</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Order Info</span>
+                <span class="value">{{transactionDetails.orderInfo}}</span>
+            </div>
+            {{#if transactionDetails.success}}
+                <div class="detail-row">
+                    <span class="label">Transaction Status</span>
+                    <span class="value success">Success</span>
+                </div>
+            {{else}}
+                <div class="detail-row">
+                    <span class="label">Transaction Status</span>
+                    <span class="value failed">Failed</span>
+                </div>
+            {{/if}}
+            <div class="detail-row">
+                <span class="label">Payment Amount</span>
+                <span class="value">{{transactionDetails.amount}} VND</span>
+            </div>
+        </div>
+        <div class="homepage-btn">
+            <a href="/" class="recharge-btn">Back to Homepage</a>
+        </div>
+    </div>
 </div>

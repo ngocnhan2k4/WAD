@@ -30,7 +30,7 @@ const paymentController = {
             const { vnp_TxnRef, vnp_ResponseCode, vnp_OrderInfo, vnp_Amount, vnp_PayDate } = req.query;
             // console.log(req.query);
 
-            const payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').toDate();
+            let payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').toDate();
             // console.log(payDate);
     
             // Xác thực chữ ký bảo mật
@@ -61,11 +61,12 @@ const paymentController = {
             if (transactionDetails.success) {
                 // Chuyển dữ liệu từ UserCart sang Orders, OrderDetails, và Payments
                 const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
-    
+                transactionDetails.payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').format('DD/MM/YYYY');
                 console.log('Transaction successful:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             } else {
                 const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
+                transactionDetails.payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').format('DD/MM/YYYY');
                 console.error('Transaction failed:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             }

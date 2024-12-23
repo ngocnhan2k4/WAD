@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td colspan="5" class="text-center">Your cart is empty.</td>
         </tr>`;
         document.querySelector('.float-right h1').textContent = `$0`;
+        updateItemCounts();
     }
 
     function updateEventListeners() {
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteButton.addEventListener('click', function () {
                 item.remove();
                 updateTotalSubtotal();
+                updateItemCounts()
                 deleteProductOnServer(productId);
                 if (document.querySelectorAll('[id^="row-"]').length === 0) {
                     document.querySelector('#shoppingCart tbody').innerHTML = `
@@ -96,7 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Cập nhật subtotal hiển thị
                     document.querySelector('.float-right h1').textContent = `$${data.updatedSubtotal}`;
                     window.orderData.subtotalVND = data.updatedSubtotal * 25400; // Ví dụ giá trị mới
-                    console.log(orderData)
+                    updateItemCounts();
+                    //console.log(orderData)
                 }
             })
             .catch(console.error);
@@ -120,7 +123,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector('.float-right h1').textContent = `$${subtotal}`;
         window.orderData.subtotalVND = subtotal * 25400; // Ví dụ giá trị mới
-        console.log(orderData)
+        // console.log(orderData)
+    }
+
+    function updateItemCounts() {
+        let itemCounts = 0;
+        const itemQuantity = document.querySelectorAll('[id^="quantity-"]');
+        itemQuantity.forEach(quantity => {
+            itemCounts += parseFloat(quantity.value);
+        });
+        document.querySelector('.text-info').textContent = `${itemCounts}`;
     }
 
 
