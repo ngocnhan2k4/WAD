@@ -82,13 +82,17 @@ function createDataForChart(dataDate, type) {
         return data;
     }
     if (type === "day" || type === "week") {
+        //đổi ngược mảng
+        dataDate = Object.entries(dataDate).reverse();
+        let labels = dataDate.map((date) => date[0]);
+        let datas = dataDate.map((date) => date[1]);
         let label = "Daily Revenue ($)";
         const data = {
-            labels: Object.keys(dataDate),
+            labels: labels,
             datasets: [
                 {
                     label: label,
-                    data: Object.values(dataDate),
+                    data: datas,
                     backgroundColor: "rgba(76, 175, 80, 0.2)",
                     borderColor: "rgba(76, 175, 80, 1)",
                     borderWidth: 2,
@@ -278,11 +282,19 @@ const Admin = {
         if (user.username === null && user.type === "google") {
             user.username = "Google account";
         }
-        const total_pay = await User.getTotalPayment(id);
-        const categories_favorite = await User.getCateFavorite(id);
-        const products_favorite = await User.getProductFavorite(id);
-        const manufac_favorite = await User.getManufacFavorite(id);
-        const bought_products = await User.getBoughtProducts(id);
+        const [
+            total_pay,
+            categories_favorite,
+            products_favorite,
+            manufac_favorite,
+            bought_products,
+        ] = await Promise.all([
+            User.getTotalPayment(id),
+            User.getCateFavorite(id),
+            User.getProductFavorite(id),
+            User.getManufacFavorite(id),
+            User.getBoughtProducts(id),
+        ]);
         user.categories_favorite = categories_favorite;
         user.manufac_favorite = manufac_favorite;
         user.products_favorite = products_favorite;
@@ -318,8 +330,10 @@ const Admin = {
         res.json(products);
     },
     viewCateManu: async (req, res) => {
-        const categories = await User.getCategories();
-        const manufacturers = await User.getManufacturers();
+        const [categories, manufacturers] = await Promise.all([
+            User.getCategories(),
+            User.getManufacturers(),
+        ]);
         categories.forEach((cate, index) => {
             const i = index % 3;
             cate.img = `/images/img/cate0${i + 1}.png`;

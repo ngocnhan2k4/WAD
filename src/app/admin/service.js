@@ -1117,7 +1117,7 @@ const User = {
         });
 
         const result = {};
-        for (let i = 0; i < 5 && i < keys.length; i++) {
+        for (let i = keys.length - 1; i >= keys.length - 5 && i >= 0; i--) {
             result[keys[i]] = data[keys[i]];
         }
         return result;
@@ -1154,7 +1154,7 @@ const User = {
         });
 
         const result = {};
-        for (let i = 0; i < 5 && i < keys.length; i++) {
+        for (let i = keys.length - 1; i >= keys.length - 5 && i >= 0; i--) {
             result[keys[i]] = data[keys[i]];
         }
         return result;
