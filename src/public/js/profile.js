@@ -330,8 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const PROVINCE_API = "https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1";
-
+//const PROVINCE_API = "https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1";
+const PROVINCE_API = "https://esgoo.net/api-tinhthanh/1/0.htm";
 
 // DOM Elements
 const provinceSelect = document.getElementById("province");
@@ -343,9 +343,10 @@ async function loadProvinces() {
     const response = await fetch(PROVINCE_API);
     const provinces = await response.json();
     
-    provinces.data.data.forEach(province => {
+    provinces.data.forEach(province => {
         const option = document.createElement("option");
-        option.value = province.code; 
+        //option.value = province.code; 
+        option.value = province.id;
         option.textContent = province.name; 
         provinceSelect.appendChild(option);
     });
@@ -356,11 +357,12 @@ async function loadDistricts(provinceCode) {
     districtSelect.innerHTML = '<option value="" disabled selected>Chọn Quận/Huyện</option>';
     wardSelect.innerHTML = '<option value="" disabled selected>Chọn Phường/Xã</option>'; // Làm sạch danh sách phường/xã
 
-    const response = await fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provinceCode}&limit=-1`);
+    //const response = await fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provinceCode}&limit=-1`);
+    const response = await fetch(`https://esgoo.net/api-tinhthanh/2/${provinceCode}.htm`);
     const districts = await response.json();
-    districts.data.data.forEach(district => {
+    districts.data.forEach(district => {
         const option = document.createElement("option");
-        option.value = district.code; 
+        option.value = district.id; 
         option.textContent = district.name; 
         districtSelect.appendChild(option);
     });
@@ -370,11 +372,12 @@ async function loadDistricts(provinceCode) {
 async function loadWards(districtCode) {
     wardSelect.innerHTML = '<option value="" disabled selected>Chọn Phường/Xã</option>';
 
-    const response = await fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtCode}&limit=-1`);
+    //const response = await fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtCode}&limit=-1`);
+    const response = await fetch(`https://esgoo.net/api-tinhthanh/3/${districtCode}.htm`);
     const wards = await response.json();
-    wards.data.data.forEach(ward => {
+    wards.data.forEach(ward => {
         const option = document.createElement("option");
-        option.value = ward.code; 
+        option.value = ward.id; 
         option.textContent = ward.name;
         wardSelect.appendChild(option);
     });
@@ -666,3 +669,103 @@ profileForm.addEventListener("submit", async (event) => {
         }
     }
 });
+
+
+function toggleModal(orderId) {
+    const modal = document.getElementById(`change-status-modal-${orderId}`);
+    if (modal.style.display === "none" || modal.style.display === "") {
+        modal.style.display = "flex";
+        document.body.classList.add("no-scroll");
+    } else {
+        modal.style.display = "none";
+        document.body.classList.remove("no-scroll");
+        hideMessage();
+    }
+}
+
+function selectStatus(orderId, status) {
+    hideMessage();
+    const form = document.getElementById(`change-status-form-${orderId}`);
+    form.dataset.selectedStatus = status;
+    const buttons = form.querySelectorAll(".double-input button");
+    buttons.forEach(button => {
+        button.classList.remove("selected", "unselected");
+        if (button.textContent === status) {
+            button.classList.add("selected");
+        } else {
+            button.classList.add("unselected");
+        }
+    });
+}
+
+async function submitStatusChange(event, orderId) {
+    event.preventDefault();
+    const form = event.target;
+    const selectedStatus = form.dataset.selectedStatus;
+
+    if (!selectedStatus) {
+        alert("Please select a status.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/userprofile/updatestatus`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderId, newStatus: selectedStatus }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showMessage("Status updated successfully!", "success");
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            showMessage(data.error || "Failed to update status1. Please try again.", "error");
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showMessage("Failed to update status. Please try again.", "error");
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const statusButtons = document.querySelectorAll(".double-input button");
+
+    statusButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            statusButtons.forEach(btn => btn.classList.remove("selected", "unselected"));
+            button.classList.add("selected");
+            statusButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.add("unselected");
+                }
+            });
+        });
+    });
+});
+
+function showMessage(message, type) {
+    const formMessage = document.getElementById("status-message");
+    formMessage.textContent = message;
+    formMessage.classList.remove("hidden", "text-red-500", "text-green-500");
+
+    if (type === "error") {
+        formMessage.classList.add("text-red-500");
+    } else if (type === "success") {
+        formMessage.classList.add("text-green-500");
+    }
+    formMessage.classList.remove("hidden");
+}
+
+function hideMessage() {
+    const formMessage = document.getElementById("status-message");
+    formMessage.classList.add("hidden");
+}

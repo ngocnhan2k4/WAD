@@ -106,7 +106,17 @@ const Profile ={
             where: {
                 user_id: userid,
             },
-        })
+        }),
+    updateStatus: (userid, orderId, newStatus) =>
+        prisma.Orders.update({
+            where: {
+                order_id: orderId,
+                user_id: userid,
+            },
+            data: {
+                status: newStatus,
+            },
+        }),
 
 }
 

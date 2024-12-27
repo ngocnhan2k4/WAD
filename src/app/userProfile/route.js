@@ -31,4 +31,5 @@ router.post('/update-avatar', upload.single('avatar'), userProfileController.upd
 router.post("/updatepassword", userProfileController.updatePassword);
 router.post("/verifyoldpassword", userProfileController.verifyOldPassword);
 router.post("/updateprofile", userProfileController.updateProfile);
+router.post("/updatestatus", userProfileController.updateStatus);
 module.exports = router;

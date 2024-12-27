@@ -123,7 +123,17 @@ const userProfileController = {
         console.log(err);
         res.status(500).send("An error occurred");
     }
-    }
+    },
+    updateStatus: async (req, res) => {
+        const { orderId, newStatus } = req.body;
+        try {
+            await userProfile.updateStatus(req.user.id, parseInt(orderId,10), newStatus);
+            res.status(200).json({ message: "Status updated" });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("An error occurred");
+        }
+    },
     
     
 }

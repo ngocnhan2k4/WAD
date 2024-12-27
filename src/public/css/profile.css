@@ -181,6 +181,14 @@
     background-color: #dc3545; 
 }
 
+.status.Processing {
+    background-color: #007bff; 
+}
+
+.status.Shipped {
+    background-color: #B637D4; 
+}
+
 
 .product-card {
   background-color: white;
@@ -462,4 +470,8 @@
     margin-top: 10px;
     width: 100%; 
   }
+}
+
+.status.unselected {
+  opacity: 0.5;
 }
