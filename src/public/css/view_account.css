@@ -239,7 +239,7 @@ tr:hover {
     flex-grow: 1;
     max-width: 600px;
     line-height: 250%;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 20px 0 0 20px;
     padding: 0 15px;
     font-size: 16px;
@@ -253,7 +253,6 @@ tr:hover {
     background-color: #007bff;
     color: white;
     font-size: 16px;
-    font-weight: bold;
     border-radius: 0 20px 20px 0;
     padding: 0 20px;
     cursor: pointer;

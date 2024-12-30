@@ -1,8 +1,26 @@
-<div class="container grid items-start grid-cols-2 pb-0 pt-10 md:grid-cols-4">
+
+<div class="container grid items-start grid-cols-1 pb-0 pt-10 md:grid-cols-4">
 
     <!-- ./sidebar lọc sản phẩm -->
     <form method="GET" action="/product" id="filter-form">
-        <div class="col-span-1 px-4 pb-6 bg-white rounded overflow-hiddenb md:block">
+        <div class="cus col-span-1 px-4 pb-6 bg-white rounded overflow-hiddenb md:block">
+            <script>
+                const cus = document.querySelector(".cus");
+                if (window.innerWidth < 768) {
+                    cus.style.padding = "0px 0px 20px 0px";
+                }
+                else{
+                    cus.style.padding = "0px 25px 0px 0px";
+                }
+                window.addEventListener("resize", () => {
+                    if (window.innerWidth < 768) {
+                        cus.style.padding = "0px 0px 20px 0px";
+                    }
+                    else{
+                        cus.style.padding = "0px 25px 0px 0px";
+                    }
+                });
+            </script>
             <div class="space-y-5 divide-y divide-gray-200">
                 <!-- Lọc theo category -->
                 <div>
@@ -57,7 +75,24 @@
         </div>
     </form>
     <!-- products -->
-    <div class="col-span-3">
+    <div id="cus" class="col-span-3">
+        <script>
+            const cus2 = document.querySelector("#cus");
+            if (window.innerWidth < 768) {
+                cus2.style.padding = "0px";
+            }
+            else{
+                cus2.style.padding = "0px 0px 0px 25px";
+            }
+            window.addEventListener("resize", () => {
+                if (window.innerWidth < 768) {
+                    cus2.style.padding = "0px";
+                }
+                else{
+                    cus2.style.padding = "0px 0px 0px 25px";
+                }
+            });
+        </script>
         <div class="relative flex w-full max-w-xl mb-5 ">
             <form metod="GET" action="/product" class="flex w-full" id="search-form">
                 {{! <span class="absolute text-lg text-gray-400 left-4 top-3">
@@ -113,7 +148,7 @@
 
         <!--danh sách sản phẩm-->
         <div id="product-list">
-            <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
+            <div class="grid grid-cols-2 gap-6 lg:grid-cols-3">
                 {{#each products}}
                 <div class="overflow-hidden bg-white rounded shadow group">
                     <div class="relative">
