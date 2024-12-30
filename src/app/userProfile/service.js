@@ -117,7 +117,14 @@ const Profile ={
                 status: newStatus,
             },
         }),
-
+    
+    getUserDetailsById: (userId) => {
+        return prisma.userdetail.findUnique({
+            where: {
+                user_id: userId,
+            },
+        });
+    },
 }
 
 module.exports = Profile;

@@ -1,7 +1,9 @@
 const { orderID } = window.orderData;
 
 // Hàm hiển thị popup thanh toán
-export function showPaymentPopup(subtotalVND) {
+export async function showPaymentPopup(subtotalVND) {
+    const userProfile = await fetchUserProfile();
+    
     // Tạo overlay
     const overlay = document.createElement('div');
     overlay.id = 'payment-overlay';
@@ -45,6 +47,26 @@ export function showPaymentPopup(subtotalVND) {
                         rows="2" 
                         required>Payment for order: ${orderID}</textarea>
                 </div>
+                
+                <div class="popup-form-group">
+                    <label for="popup-province">Province</label>
+                    <select id="popup-province" name="province" required>
+                        <option value="">-- Select Province --</option>
+                    </select>
+                </div>
+                <div class="popup-form-group">
+                    <label for="popup-district">District</label>
+                    <select id="popup-district" name="district" required>
+                        <option value="">-- Select District --</option>
+                    </select>
+                </div>
+                <div class="popup-form-group">
+                    <label for="popup-ward">Ward</label>
+                    <select id="popup-ward" name="ward" required>
+                        <option value="">-- Select Ward --</option>
+                    </select>
+                </div>
+                
                 <div class="popup-form-group">
                     <label for="popup-shippingAddress">Shipping Address</label>
                     <textarea 
@@ -80,6 +102,46 @@ export function showPaymentPopup(subtotalVND) {
     // Chèn overlay và popup vào body
     document.body.appendChild(overlay);
     overlay.appendChild(paymentPopup);
+
+    if (userProfile && userProfile.province && userProfile.district && userProfile.ward && userProfile.shippingAddress) {
+        clearDropdown('popup-province');
+        clearDropdown('popup-district');
+        clearDropdown('popup-ward');
+
+        // await loadProvinces();
+        // await loadDistricts();
+        // await loadWards();
+    
+        let { province, district, ward, shippingAddress } = userProfile;
+        console.log(province, district, ward, shippingAddress)
+    
+        await loadProvinces();
+        // Tìm code của province
+        const provinceCode = provincesData.find(p => p.name.includes(province))?.code;
+        document.getElementById('popup-province').value = provinceCode; // Gán code tỉnh
+        document.getElementById('popup-shippingAddress').value = shippingAddress;
+    
+        await loadDistricts(); // Dữ liệu quận/huyện sẽ được tự động dựa trên code tỉnh
+        // Tìm code của district
+        const districtCode = districtsData.find(d => d.name.includes(district))?.code;
+        document.getElementById('popup-district').value = districtCode; // Gán code quận/huyện
+    
+        await loadWards(); // Dữ liệu xã/phường sẽ được tự động dựa trên code quận/huyện
+        // Tìm code của ward
+        const wardCode = wardsData.find(w => w.name.includes(ward))?.code;
+        document.getElementById('popup-ward').value = wardCode; // Gán code xã/phường
+
+        console.log("user profile:", userProfile)
+        console.log("province data:",provincesData)
+        console.log("district data:",districtsData)
+        console.log("ward data:",wardsData)
+
+        console.log("provinceCode:",provinceCode)
+        console.log("districtCode:",districtCode)
+        console.log("wardCode:",wardCode)
+    } else {
+        await loadProvinces();
+    }
 
     const cancelButton = paymentPopup.querySelector('.popup-btn-secondary');
     cancelButton.addEventListener('click', closePaymentPopup);
@@ -135,10 +197,21 @@ export async function handlePaymentFormSubmission(event) {
     const paymentDescription = document.getElementById('popup-paymentDescription').value; // Lấy mô tả thanh toán
     const language = document.getElementById('popup-language').value; // Lấy ngôn ngữ
 
+    const province = document.getElementById('popup-province').options[document.getElementById('popup-province').selectedIndex].text;
+    const district = document.getElementById('popup-district').options[document.getElementById('popup-district').selectedIndex].text;
+    const ward = document.getElementById('popup-ward').options[document.getElementById('popup-ward').selectedIndex].text;
+
+    if (!province || !district || !ward) {
+        event.preventDefault(); // Ngăn gửi form
+        alert('Please select your Province, District, and Ward.');
+    }
+
+    const fullShippingAddress = `${shippingAddress}, ${ward}, ${district}, ${province}`;
+
     // Tạo đối tượng chứa tất cả thông tin thanh toán
     const paymentDetails = {
         paymentMethod,
-        shippingAddress,
+        shippingAddress: fullShippingAddress,
         amount,
         paymentDescription,
         language
@@ -168,4 +241,115 @@ export async function handlePaymentFormSubmission(event) {
     }
 }
 
+export let provincesData = [];
+export let districtsData = [];
+export let wardsData = [];
 
+export async function loadProvinces() {
+    const provinceSelect = document.getElementById('popup-province');
+    const response = await fetch('https://provinces.open-api.vn/api/p/');
+    provincesData = await response.json(); // Lưu toàn bộ dữ liệu các tỉnh
+
+    provincesData.forEach(province => {
+        const option = document.createElement('option');
+        option.value = province.code; // Sử dụng code cho value
+        option.textContent = province.name;
+        provinceSelect.appendChild(option);
+    });
+
+    provinceSelect.addEventListener('change', loadDistricts);
+}
+
+// Hàm tải dữ liệu cho District
+export async function loadDistricts() {
+    const districtSelect = document.getElementById('popup-district');
+    const provinceCode = document.getElementById('popup-province').value;
+
+    // Xóa các tùy chọn cũ
+    districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+    if (!provinceCode) return;
+
+    const response = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+    const provinceData = await response.json();
+
+    districtsData = provinceData.districts; // Lưu danh sách quận
+    console.log(districtsData)
+
+    districtsData.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district.code; // Sử dụng code cho value
+        option.textContent = district.name;
+        districtSelect.appendChild(option);
+    });
+
+    districtSelect.addEventListener('change', loadWards);
+}
+
+// Hàm tải dữ liệu cho Ward
+export async function loadWards() {
+    const wardSelect = document.getElementById('popup-ward');
+    const districtCode = document.getElementById('popup-district').value;
+
+    // Xóa các tùy chọn cũ
+    wardSelect.innerHTML = '<option value="">-- Select Ward --</option>';
+    if (!districtCode) return;
+
+    const response = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+    const districtData = await response.json();
+
+    wardsData = districtData.wards; // Lưu danh sách xã/phường
+
+    wardsData.forEach(ward => {
+        const option = document.createElement('option');
+        option.value = ward.code; // Sử dụng code cho value
+        option.textContent = ward.name;
+        wardSelect.appendChild(option);
+    });
+}
+
+export function updateShippingAddress() {
+    const province = document.getElementById('popup-province').selectedOptions[0]?.text || '';
+    const district = document.getElementById('popup-district').selectedOptions[0]?.text || '';
+    const ward = document.getElementById('popup-ward').selectedOptions[0]?.text || '';
+
+    const addressTextarea = document.getElementById('popup-shippingAddress');
+    addressTextarea.value = `${ward}, ${district}, ${province}`;
+}
+
+export function parseAddress(address) {
+    const parts = address.split(',');
+    const length = parts.length;
+
+    if (length < 4) {
+        throw new Error('Address is incomplete!');
+    }
+
+    const province = parts[length - 1].trim();
+    const district = parts[length - 2].trim();
+    const ward = parts[length - 3].trim();
+    const shippingAddress = parts.slice(0, length - 3).join(',').trim();
+
+    return { shippingAddress, ward, district, province };
+}
+
+export async function fetchUserProfile() {
+    try {
+        const response = await fetch('/userprofile/getprofile');
+        if (!response.ok) {
+            throw new Error('Failed to fetch user profile');
+        }
+        const data = await response.json();
+        console.log(data)
+        const { address } = data;
+
+        return parseAddress(address); // Tách địa chỉ
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return null; // Trả về null nếu có lỗi
+    }
+}
+
+export function clearDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.innerHTML = '<option value="">-- Select --</option>';
+}

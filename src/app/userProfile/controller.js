@@ -135,7 +135,19 @@ const userProfileController = {
         }
     },
     
-    
+    getProfile: async (req, res) => {
+        const userId = req.user.id; // Lấy userId từ URL
+        try {
+            const userDetails = await userProfile.getUserDetailsById(parseInt(userId, 10)); // Gọi service
+            if (!userDetails) {
+                return res.status(404).json({ message: 'User details not found' });
+            }
+            res.status(200).json(userDetails); // Trả về JSON
+        } catch (err) {
+            console.error('Error in getUserDetails:', err);
+            res.status(500).send('An error occurred');
+        }
+    },
 }
 
 module.exports = userProfileController;
