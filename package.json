@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "start": "node src/app.js",
-        "dev": "nodemon src/app.js",
+        "dev": "cross-env NODE_ENV=development nodemon src/app.js",
         "test": "cross-env NODE_ENV=test jest",
         "install-and-generate": "npm install && npx prisma generate",
         "build-tail": "set NODE_ENV=production &&  tailwindcss build -i src/public/css/tailwindcss.css -o src/public/css/style.css"

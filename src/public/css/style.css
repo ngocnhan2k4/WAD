@@ -2094,4 +2094,32 @@ textarea {
     .row__footer {
         margin-top: 24px !important;
     }
+
+    .button-area {
+        flex-direction: column;
+    }
+
+    .add-to-cart-detail {
+        font-size: 15px;
+        width: 200px;
+    }
+
+    .wishlist-detail {
+        width: 200px;
+    }
+
+    .product-detail-name {
+        font-size: 1.6rem !important;
+    }
+}
+
+@media (max-width: 767.99px) {
+    .product-detail-name {
+        font-size: 1.5rem !important;
+    }
+
+    .detail-box {
+        display: flex !important;
+        flex-direction: column !important;
+    }
 }

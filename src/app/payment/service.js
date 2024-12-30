@@ -119,7 +119,7 @@ const paymentService = {
 
     createOrder: async (userId, orderId, totalAmount, success, shippingAddress) => {
         if (success){
-            stat = 'Completed';
+            stat = 'Processing';
         }
         else{
             stat = 'Cancelled';
@@ -159,6 +159,7 @@ const paymentService = {
         try {
             // 1. Lấy danh sách sản phẩm trong giỏ hàng
             const cartItems = await paymentService.fetchCartItems(userId);
+            amount = amount / 25400;
     
             if (!cartItems || cartItems.length === 0) {
                 throw new Error('Cart is empty');

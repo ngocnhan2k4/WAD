@@ -3,7 +3,11 @@ const vnpayConfig = {
     vnp_HashSecret: 'KBQBSSJRVOVOLR7WPO7JZ5RG31KFUI14', // Chuỗi bí mật
     vnp_Url: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html', // URL VNPay
     // vnp_ReturnUrl: process.env.PUBLIC_ROUTE + 'payment/vnpay_return', // URL xử lý kết quả
-    vnp_ReturnUrl: 'http://localhost:4000/payment/vnpay_return', // URL xử lý kết quả
+    // vnp_ReturnUrl: 'http://localhost:4000/payment/vnpay_return', // URL xử lý kết quả
+
+    vnp_ReturnUrl: process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000/payment/vnpay_return'  // URL cho môi trường phát triển
+        : process.env.PUBLIC_ROUTE + 'payment/vnpay_return',
 };
 
 module.exports = vnpayConfig;
