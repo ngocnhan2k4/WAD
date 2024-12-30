@@ -1,22 +1,22 @@
 <!-- product-detail -->
 {{#if product}}
-<div class="container grid grid-cols-2 gap-6 mt-10">
+<div class="container grid grid-cols-2 gap-6 mt-10 detail-box">
     <div>
         <img src={{product.Images.[0].directory_path}} alt="product" class="w-full">
         <div class="grid grid-cols-5 gap-4 mt-4">
             
             {{#each product.Images}}
             {{#if (eq @index 0)}}
-            <img src="{{directory_path}}" alt="product" class="w-full object-contain h-full border cursor-pointer border-primary">
+            <img src="{{directory_path}}" alt="product" class="object-contain w-full h-full border cursor-pointer border-primary">
             {{else}}
-            <img src="{{directory_path}}" alt="product" class="w-full object-contain h-full border cursor-pointer">
+            <img src="{{directory_path}}" alt="product" class="object-contain w-full h-full border cursor-pointer">
             {{/if}}
             {{/each}}
         </div>
     </div>
 
     <div>
-        <h2 class="mb-2 text-3xl font-medium uppercase">{{product.product_name}}</h2>
+        <h2 class="mb-2 text-3xl font-medium uppercase product-detail-name">{{product.product_name}}</h2>
         <div class="space-y-2">
             <p class="space-x-2 font-semibold text-gray-800">
                 <span>Availability: </span>
@@ -104,16 +104,16 @@
             </div>
         </div>
 
-        <div class="flex gap-3 pt-5 pb-5 mt-6 border-b border-gray-200">
+        <div class="flex gap-3 pt-5 pb-5 mt-6 border-b border-gray-200 button-area">
             
             <button id="add-to-cart-{{product.product_id}}" 
                     data-product-id="{{product.product_id}}" 
-                    class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
-                <i class="fa-solid fa-bag-shopping"></i> Add to cart
+                    class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded add-to-cart-detail bg-primary border-primary hover:bg-transparent hover:text-primary">
+                <i class="fa-solid fa-bag-shopping add-to-cart"></i> Add to cart
             </button>
             <a href="#"
-                class="flex items-center gap-2 px-8 py-2 font-medium text-gray-600 uppercase transition border border-gray-300 rounded hover:text-primary">
-                <i class="fa-solid fa-heart"></i> Wishlist
+                class="flex items-center gap-2 px-8 py-2 font-medium text-gray-600 uppercase transition border border-gray-300 rounded hover:text-primary wishlist-detail">
+                <i class="fa-solid fa-heart wishlist-icon"></i> Wishlist
             </a>
         </div>
 
@@ -212,9 +212,9 @@
 <!-- related product -->
 <div class="container pb-16">
     <h2 class="mb-6 text-2xl font-medium text-gray-800 uppercase">Related products</h2>
-    <div class="grid grid-cols-4 gap-6">
+    <div class="grid max-w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {{#each relatedProducts}}
-        <div class="overflow-hidden bg-white rounded shadow group">
+        <div class="bg-white rounded shadow group">
             <div class="relative">
                 <a href="/product/productDetail?id={{this.product_id}}"><img src={{this.Images.[0].directory_path}} alt="product{{@index}}" class="w-full"></a>
             </div>
