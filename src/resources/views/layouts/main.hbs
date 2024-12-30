@@ -88,7 +88,7 @@
           <a {{#unless isAuthen}} href="/user/login" {{/unless}}class="relative text-center text-gray-700 transition hover:text-primary flex justify-center items-center flex-col" >
             <div class="text-2xl">
             {{#if isAuthen}}
-               <img src="{{userAvatar}}" alt="This is userAvatar" class="w-8 h-8 rounded-full" onclick="toggleMenu()">
+               <img src="{{userAvatar}}" alt="This is userAvatar" class="object-contain w-8 h-8 rounded-full" onclick="toggleMenu()">
             {{else}}
               <i class="fa-regular fa-user"></i>
             {{/if}}
@@ -102,7 +102,7 @@
           <div class="sub-menu-wrap" id="subMenu">
             <div class="sub-menu">
                 <div class="user-info">
-                    <img src="{{userAvatar}}">
+                    <img class="object-contain" src="{{userAvatar}}">
                     <h3>{{fullName}}</h3>
                 </div>
                 <hr>
