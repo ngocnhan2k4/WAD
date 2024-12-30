@@ -708,10 +708,16 @@ input[type="number"] {
         width: 100%;
     }
 }
-@media (max-width: 450px) {
-    .create__inner {
+@media (max-width: 575px) {
+    .view__product__search {
         flex-direction: column;
-        gap: 20px;
         align-items: start;
+        row-gap: 20px;
+    }
+    .view__product__search__input {
+        width: 100%;
+    }
+    .view__product__search__button {
+        width: 30%;
     }
 }
