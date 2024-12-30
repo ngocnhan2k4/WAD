@@ -222,9 +222,6 @@
 }
 
 @media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
     .row-cols-sm-1 > * {
         width: 100%;
     }
@@ -365,9 +362,6 @@
     }
 }
 @media (min-width: 768px) {
-    .container {
-        max-width: 720px;
-    }
     .row-cols-md-1 > * {
         width: 100%;
     }

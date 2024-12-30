@@ -1,14 +1,13 @@
 body {
     background: #f8f9fb;
 }
-.order__container {
-    padding: 60px 0;
-}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 60px;
+    margin-top: 60px;
 }
 
 .title {
@@ -357,6 +356,10 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 @media (max-width: 767.99px) {
+    .header {
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
     th:nth-child(3),
     td:nth-child(3) {
         display: none;
