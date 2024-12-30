@@ -8,7 +8,6 @@ module.exports = {
       md: "768px",
       lg: "992px",
       xl: "1200px",
-      maxsm: "576.99px",
     },
     container: {
       center: true,
