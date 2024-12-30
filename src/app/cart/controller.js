@@ -90,10 +90,8 @@ const cartController = {
             if (req.user) {
                 userId = req.user.id;
             }
-
-            if (!userId) {
-                return res.status(400).send("User ID is required");
-            }
+            console.log(productId)
+            console.log(userId)
 
             // Gọi service để xóa sản phẩm khỏi giỏ hàng
             await Cart.deleteProductFromCart(userId, productId);
