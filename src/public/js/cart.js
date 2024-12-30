@@ -141,6 +141,25 @@ document.addEventListener('DOMContentLoaded', function () {
     checkoutButton.addEventListener('click', async () => {
         try {
             console.log("check");
+
+            const checkLogin = await fetch('/auth/check-login', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!checkLogin.ok) {
+                throw new Error('Failed to check login.');
+            }
+
+            const loginData = await checkLogin.json();
+
+            if (loginData.loggedIn == false){
+                showNotification('Bạn cần đăng nhập trước khi thanh toán.', 'error');
+                return;
+            }
+
             const cartResponse = await fetch('/cart/check', {
                 method: 'GET',
                 headers: {
@@ -161,27 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             showPaymentPopup(window.orderData.subtotalVND);
-
-            // // Gọi API để tạo URL thanh toán VNPay
-            // const response = await fetch('/payment/checkout', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // });
-
-            // if (!response.ok) {
-            //     throw new Error('Failed to process checkout.');
-            // }
-
-            // const { paymentUrl } = await response.json();
-
-            // if (paymentUrl) {
-            //     // Chuyển hướng người dùng tới URL thanh toán của VNPay
-            //     window.location.href = paymentUrl;
-            // } else {
-            //     alert('Failed to get payment URL. Please try again later.');
-            // }
         } catch (error) {
             console.error('Checkout error:', error.message);
             alert('An error occurred during checkout. Please try again.');

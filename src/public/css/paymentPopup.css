@@ -66,6 +66,7 @@ textarea {
 .popup-button-group {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .popup-btn {

@@ -56,7 +56,7 @@ const paymentController = {
             const userId = req.user.id; // Lấy `userId` từ middleware xác thực
             const orderId = await paymentService.getNextOrderId();
 
-            transactionDetails.amount = parseInt(transactionDetails.amount, 10)
+            transactionDetails.amount = parseInt(transactionDetails.amount, 10) / 100;
 
             if (transactionDetails.success) {
                 // Chuyển dữ liệu từ UserCart sang Orders, OrderDetails, và Payments
