@@ -2084,6 +2084,9 @@ h6 {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
+textarea {
+    resize: none !important;
+}
 @media (max-width: 991.99px) {
     .main__search {
         display: none !important;

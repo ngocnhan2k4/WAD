@@ -4,20 +4,19 @@
     <div>
         <img src={{product.Images.[0].directory_path}} alt="product" class="w-full">
         <div class="grid grid-cols-5 gap-4 mt-4">
-            {{!-- {{#each product.Images}}
-                <img src="{{directory_path}}" alt="product" class="w-full border cursor-pointer">
-            {{/each}} --}}
-            <img src={{product.Images.[1].directory_path}} alt="product2"
-                class="w-full border cursor-pointer border-primary">
-            <img src={{product.Images.[2].directory_path}} alt="product2" class="w-full border cursor-pointer">
-            <img src={{product.Images.[3].directory_path}} alt="product2" class="w-full border cursor-pointer">
-            <img src={{product.Images.[4].directory_path}} alt="product2" class="w-full border cursor-pointer">
-            <img src={{product.Images.[5].directory_path}} alt="product2" class="w-full border cursor-pointer">
+            
+            {{#each product.Images}}
+            {{#if (eq @index 0)}}
+            <img src="{{directory_path}}" alt="product" class="w-full object-contain h-full border cursor-pointer border-primary">
+            {{else}}
+            <img src="{{directory_path}}" alt="product" class="w-full object-contain h-full border cursor-pointer">
+            {{/if}}
+            {{/each}}
         </div>
     </div>
 
     <div>
-        <h2 class="mb-2 text-3xl font-medium uppercase">{{product_name}}</h2>
+        <h2 class="mb-2 text-3xl font-medium uppercase">{{product.product_name}}</h2>
         <div class="space-y-2">
             <p class="space-x-2 font-semibold text-gray-800">
                 <span>Availability: </span>
@@ -31,10 +30,7 @@
                 <span class="font-semibold text-gray-800">Category: </span>
                 <span class="text-gray-600">{{product.Categories.category_name}}</span>
             </p>
-            <p class="space-x-2">
-                <span class="font-semibold text-gray-800">SKU: </span>
-                <span class="text-gray-600">BE45VGRT</span>
-            </p>
+            
         </div>
         <div class="flex items-baseline mt-4 mb-1 space-x-2 font-roboto">
             <p class="text-xl font-semibold text-primary">${{product.current_price}}</p>
