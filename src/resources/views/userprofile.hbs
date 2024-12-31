@@ -40,7 +40,7 @@
                 <tr>
                     <th>Order ID</th>
                     <th>Total Amount</th>
-                    <th>Creation Time</th>
+                    <th class="creation-time">Creation Time</th>
                     <th>STATUS</th>
                 </tr>
             </thead>
@@ -49,7 +49,7 @@
                 <tr>
                     <td>{{this.order_id}}</td>
                     <td>{{this.total_amount}}</td>
-                    <td>{{formatDate this.creation_time}}</td>
+                    <td class="creation-time">{{formatDate this.creation_time}}</td>
                     {{#if (eq this.status "Completed")}}
                     <td><span class="status Completed">{{this.status}}</span></td>
                     {{/if}}
@@ -65,21 +65,15 @@
                         <div id="change-status-modal-{{this.order_id}}" class="modal flex items-center justify-center"
                             style="display: none;">
                             <div class="modal-content bg-white rounded-lg shadow-lg p-8 w-full max-w-md mx-8">
-                                <h2 class="text-center mb-6 font-bold text-3xl text-gray-800">Change Status Order #{{this.order_id}}</h2>
+                                <h2 class="text-center mb-6 font-bold text-2xl text-gray-800">Confirm order cancellation #{{this.order_id}}</h2>
                                 <p id="status-message" class="hidden px-4 py-2 rounded-md text-sm mb-6"></p>
                                 <form id="change-status-form-{{this.order_id}}" onsubmit="submitStatusChange(event, '{{this.order_id}}')">
-                                    <div class="flex flex-row justify-center items-center gap-5 double-input">
-                                        <button type="button" class="status Completed"
-                                            onclick="selectStatus('{{this.order_id}}', 'Completed')">Completed</button>
-                                        <button type="button" class="status Cancelled"
-                                            onclick="selectStatus('{{this.order_id}}', 'Cancelled')">Cancelled</button>
-                                    </div>
                                     <div class="flex justify-between items-center mt-6">
                                         <button type="button"
                                             class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition close-button"
                                             onclick="toggleModal('{{this.order_id}}')">Back</button>
                                         <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition">Change</button>
+                                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition">Confirm</button>
                                     </div>
                                 </form>
                             </div>

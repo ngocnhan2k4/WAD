@@ -439,6 +439,16 @@
     height: 100%;
 }
 
+.creation-time{
+  display: table-cell;
+}
+
+@media (max-width: 665px){
+    .creation-time{
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .container-user {
         grid-template-columns: 1fr;
@@ -477,6 +487,8 @@
         width: 100%;
         margin-bottom: 20px;
     }
+
+  
 }
 
 .status.unselected {

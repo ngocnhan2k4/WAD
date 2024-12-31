@@ -683,30 +683,10 @@ function toggleModal(orderId) {
     }
 }
 
-function selectStatus(orderId, status) {
-    hideMessage();
-    const form = document.getElementById(`change-status-form-${orderId}`);
-    form.dataset.selectedStatus = status;
-    const buttons = form.querySelectorAll(".double-input button");
-    buttons.forEach(button => {
-        button.classList.remove("selected", "unselected");
-        if (button.textContent === status) {
-            button.classList.add("selected");
-        } else {
-            button.classList.add("unselected");
-        }
-    });
-}
-
 async function submitStatusChange(event, orderId) {
     event.preventDefault();
     const form = event.target;
-    const selectedStatus = form.dataset.selectedStatus;
-
-    if (!selectedStatus) {
-        alert("Please select a status.");
-        return;
-    }
+    
 
     try {
         const response = await fetch(`/userprofile/updatestatus`, {
@@ -714,7 +694,7 @@ async function submitStatusChange(event, orderId) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ orderId, newStatus: selectedStatus }),
+            body: JSON.stringify({ orderId, newStatus: "Cancelled" }),
         });
 
         if (!response.ok) {
@@ -735,22 +715,6 @@ async function submitStatusChange(event, orderId) {
     }
 }
 
-
-document.addEventListener("DOMContentLoaded", () => {
-    const statusButtons = document.querySelectorAll(".double-input button");
-
-    statusButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            statusButtons.forEach(btn => btn.classList.remove("selected", "unselected"));
-            button.classList.add("selected");
-            statusButtons.forEach(btn => {
-                if (btn !== button) {
-                    btn.classList.add("unselected");
-                }
-            });
-        });
-    });
-});
 
 function showMessage(message, type) {
     const formMessage = document.getElementById("status-message");
