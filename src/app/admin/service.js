@@ -1,6 +1,8 @@
 const prisma = require("../../config/database/db.config");
 const { DateTime } = require("luxon");
 
+const location = process.env.LOCATION || location;
+
 function funcountSearch(user_search) {
     return prisma.User.count({
         where: user_search
@@ -44,7 +46,9 @@ function formatDateSimpleDay(date) {
 
     try {
         const jsDate = new Date(date);
-        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" });
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" }).setZone(
+            location
+        );
         if (!parsedDate.isValid) {
             console.error("Invalid DateTime:", date);
             return "Invalid DateTime";
@@ -58,55 +62,86 @@ function formatDateSimpleDay(date) {
 function formatWeekWithJS(date) {
     if (!date) return "Invalid DateTime";
 
-    const jsDate = new Date(date);
-    if (isNaN(jsDate)) {
-        console.error("Invalid DateTime:", date);
+    try {
+        const jsDate = new Date(date);
+        if (isNaN(jsDate)) {
+            console.error("Invalid DateTime:", date);
+            return "Invalid DateTime";
+        }
+
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" }).setZone(
+            location
+        );
+        if (!parsedDate.isValid) {
+            console.error("Invalid DateTime:", date);
+            return "Invalid DateTime";
+        }
+
+        const firstDayOfYear = DateTime.fromObject(
+            { year: parsedDate.year, month: 1, day: 1 },
+            { zone: location }
+        );
+        const pastDaysOfYear = parsedDate.diff(firstDayOfYear, "days").days;
+        const weekNumber = Math.ceil(
+            (pastDaysOfYear + firstDayOfYear.weekday) / 7
+        );
+
+        return `Week ${weekNumber} of ${parsedDate.year}`;
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
         return "Invalid DateTime";
     }
+}
 
-    // Lấy tuần và năm
-    const firstDayOfYear = new Date(jsDate.getFullYear(), 0, 1);
-    const pastDaysOfYear = (jsDate - firstDayOfYear) / 86400000;
-    const weekNumber = Math.ceil(
-        (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
-    );
+function isInCurrentDay(date) {
+    try {
+        const dateNow = DateTime.now().setZone(location);
+        const jsDate = new Date(date);
+        const dateOrder = DateTime.fromJSDate(jsDate, { zone: location });
 
-    return `Week ${weekNumber} of ${jsDate.getFullYear()}`;
+        if (!dateOrder.isValid) {
+            console.error("Invalid DateTime:", dateOrder.invalidExplanation);
+            return false;
+        }
+        return dateOrder.hasSame(dateNow, "day");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return false;
+    }
 }
-function getMonthNow() {
-    const date = new Date();
-    return date.getMonth() + 1;
+
+function isInCurrentWeek(date) {
+    try {
+        const dateNow = DateTime.now().setZone(location);
+        const jsDate = new Date(date);
+        const dateOrder = DateTime.fromJSDate(jsDate, { zone: location });
+        if (!dateOrder.isValid) {
+            console.error("Invalid DateTime:", dateOrder.invalidExplanation);
+            return false;
+        }
+        return dateOrder.hasSame(dateNow, "week");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return false;
+    }
 }
-function getWeekNow() {
-    const date = new Date();
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-    const weekNumber = Math.ceil(
-        (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
-    );
-    return weekNumber;
+
+function isInCurrentMonth(date) {
+    try {
+        const dateNow = DateTime.now().setZone(location);
+        const jsDate = new Date(date);
+        const dateOrder = DateTime.fromJSDate(jsDate, { zone: location });
+        if (!dateOrder.isValid) {
+            console.error("Invalid DateTime:", dateOrder.invalidExplanation);
+            return false;
+        }
+        return dateOrder.hasSame(dateNow, "month");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return false;
+    }
 }
-function getDayNow() {
-    const date = new Date();
-    return date.getDate();
-}
-function getWeekFrom(date) {
-    //timestamp(3) của Postgres
-    const dateNow = new Date();
-    const dateOrder = new Date(date);
-    const oneDay = 24 * 60 * 60 * 1000;
-    const diffDays = Math.round(Math.abs((dateOrder - dateNow) / oneDay));
-    const week = Math.ceil(diffDays / 7);
-    return week;
-}
-function getDayFrom(date) {
-    //timestamp(3) của Postgres
-    const dateNow = new Date();
-    const dateOrder = new Date(date);
-    const oneDay = 24 * 60 * 60 * 1000;
-    const diffDays = Math.round(Math.abs((dateOrder - dateNow) / oneDay));
-    return diffDays;
-}
+
 const User = {
     getAll: () => prisma.User.findMany(),
     getAllUser: () => prisma.User.findMany(),
@@ -847,7 +882,7 @@ const User = {
         filePaths
     ) => {
         try {
-            const gmt7 = DateTime.now().setZone("Asia/Bangkok").toJSDate();
+            const gmt7 = DateTime.now().setZone(location).toJSDate();
             const product = await prisma.Product.create({
                 data: {
                     creation_time: gmt7,
@@ -1071,20 +1106,23 @@ const User = {
         });
         const data = {};
         orders.forEach((order) => {
-            const month = DateTime.fromJSDate(order.creation_time).toFormat(
-                "MM"
-            );
+            const month = DateTime.fromJSDate(order.creation_time, {
+                zone: location,
+            }).toFormat("yyyy-MM");
             if (data[month] === undefined) {
                 data[month] = order.total_amount;
             } else {
                 data[month] += order.total_amount;
             }
         });
-        const keys = Object.keys(data);
-        keys.sort((a, b) => (a > b ? -1 : 1));
+        const sortedKeys = Object.keys(data)
+            .map((key) => DateTime.fromFormat(key, "yyyy-MM"))
+            .sort((a, b) => a - b)
+            .map((date) => date.toFormat("yyyy-MM"));
+
         const result = {};
-        for (let i = 0; i < 5 && i < keys.length; i++) {
-            result[Number(keys[i])] = data[keys[i]];
+        for (let i = 0; i < 5 && i < sortedKeys.length; i++) {
+            result[sortedKeys[i]] = data[sortedKeys[i]];
         }
         return result;
     },
@@ -1170,13 +1208,12 @@ const User = {
                 },
             },
         });
-        const month_now = getMonthNow();
+
         products.forEach((product) => {
             product.total = 0;
             product.OrderDetail.forEach((detail) => {
                 if (
-                    DateTime.fromJSDate(detail.Orders.creation_time).month ==
-                        month_now &&
+                    isInCurrentMonth(detail.Orders.creation_time) &&
                     detail.Orders.status === "Completed"
                 ) {
                     product.total += detail.quantity * product.current_price;
@@ -1197,12 +1234,11 @@ const User = {
                 },
             },
         });
-        const week_now = getWeekNow();
         products.forEach((product) => {
             product.total = 0;
             product.OrderDetail.forEach((detail) => {
                 if (
-                    getWeekFrom(detail.Orders.creation_time) == week_now &&
+                    isInCurrentWeek(detail.Orders.creation_time) &&
                     detail.Orders.status === "Completed"
                 ) {
                     product.total += detail.quantity * product.current_price;
@@ -1223,12 +1259,11 @@ const User = {
                 },
             },
         });
-        const day_now = getDayNow();
         products.forEach((product) => {
             product.total = 0;
             product.OrderDetail.forEach((detail) => {
                 if (
-                    getDayFrom(detail.Orders.creation_time) == day_now &&
+                    isInCurrentDay(detail.Orders.creation_time) &&
                     detail.Orders.status === "Completed"
                 ) {
                     product.total += detail.quantity * product.current_price;

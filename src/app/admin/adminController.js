@@ -1,13 +1,15 @@
 const User = require("../admin/service");
 const { DateTime } = require("luxon");
 
+const location = process.env.LOCATION || location;
 function formatDateSimple(date) {
     if (!date) return "Invalid DateTime";
 
     try {
         const jsDate = new Date(date);
-        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" });
-
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" }).setZone(
+            location
+        );
         if (!parsedDate.isValid) {
             console.error("Invalid DateTime:", date);
             return "Invalid DateTime";
@@ -25,26 +27,21 @@ function isEmptyObject(obj) {
 function standardizeDate(label_and_data, type) {
     if (type === "month") {
         const arrayofDate = Object.entries(label_and_data);
+
         arrayofDate.sort((a, b) => {
-            return a[0] - b[0];
+            const dateA = DateTime.fromFormat(a[0], "yyyy-MM");
+            const dateB = DateTime.fromFormat(b[0], "yyyy-MM");
+            return dateA - dateB;
         });
+
         const labels = [];
         const data = [];
         arrayofDate.forEach((date) => {
-            if (Number(date[0]) === 1) labels.push("January");
-            if (Number(date[0]) === 2) labels.push("February");
-            if (Number(date[0]) === 3) labels.push("March");
-            if (Number(date[0]) === 4) labels.push("April");
-            if (Number(date[0]) === 5) labels.push("May");
-            if (Number(date[0]) === 6) labels.push("June");
-            if (Number(date[0]) === 7) labels.push("July");
-            if (Number(date[0]) === 8) labels.push("August");
-            if (Number(date[0]) === 9) labels.push("September");
-            if (Number(date[0]) === 10) labels.push("October");
-            if (Number(date[0]) === 11) labels.push("November");
-            if (Number(date[0]) === 12) labels.push("December");
+            const dateTime = DateTime.fromFormat(date[0], "yyyy-MM");
+            labels.push(dateTime.toFormat("MMMM yyyy"));
             data.push(date[1]);
         });
+
         return { labels: labels, data: data };
     }
 }
