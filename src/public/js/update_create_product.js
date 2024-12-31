@@ -86,6 +86,7 @@ let type_edit = "";
 
 // Hàm để bật dialog
 function showDialogStatus(message, isSuccess) {
+    overlay.style.zIndex = 1001;
     dialogStatusMessage.textContent = message; // Đặt thông điệp
     dialogStatus.classList.remove("hidden__status", "success", "failure"); // Xóa các class hiện tại
     dialogStatus.classList.add(isSuccess ? "success" : "failure"); // Thêm class success hoặc failure
@@ -98,7 +99,10 @@ function hideDialogStatus() {
 }
 
 // Gán sự kiện click cho nút đóng
-closeDialogStatus.addEventListener("click", hideDialogStatus);
+closeDialogStatus.addEventListener("click", async () => {
+    overlay.style.zIndex = 500;
+    hideDialogStatus();
+});
 
 const parent = document.querySelector(".parent");
 const floating__btn = document.querySelector(".floating__btn");
@@ -147,11 +151,7 @@ function showOverlay(this_dialog) {
         dialog.style.display = "block";
     }
 }
-overlay.addEventListener("click", function () {
-    overlay.classList.remove("overlay-active");
-    document.body.style.overflow = "auto";
-    dialog.style.display = "none";
-});
+
 cancel_btn_dialog.addEventListener("click", () => {
     console.log(create__product_inner.style.display);
     if (create__product_inner.style.display == "none") {
