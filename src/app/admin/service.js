@@ -1,7 +1,7 @@
 const prisma = require("../../config/database/db.config");
 const { DateTime } = require("luxon");
 
-const location = process.env.LOCATION || location;
+const location = process.env.LOCATION || "Asia/Bangkok";
 
 function funcountSearch(user_search) {
     return prisma.User.count({

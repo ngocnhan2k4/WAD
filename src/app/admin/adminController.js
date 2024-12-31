@@ -1,7 +1,7 @@
 const User = require("../admin/service");
 const { DateTime } = require("luxon");
 
-const location = process.env.LOCATION || location;
+const location = process.env.LOCATION || "Asia/Bangkok";
 function formatDateSimple(date) {
     if (!date) return "Invalid DateTime";
 
