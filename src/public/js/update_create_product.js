@@ -101,6 +101,10 @@ function hideDialogStatus() {
 // Gán sự kiện click cho nút đóng
 closeDialogStatus.addEventListener("click", async () => {
     overlay.style.zIndex = 500;
+    if (create__product_inner.style.display === "none") {
+        overlay.classList.remove("overlay-active");
+        document.body.style.overflow = "auto";
+    }
     hideDialogStatus();
 });
 

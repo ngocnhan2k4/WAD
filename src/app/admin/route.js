@@ -40,7 +40,7 @@ const storage = new CloudinaryStorage({
 // Tạo middleware Multer
 const upload = multer({ storage: storage });
 
-// router.use(isAdmin);
+router.use(isAdmin);
 router.use("/viewaccount/:id", adminController.viewDetail);
 router.use("/viewaccount", adminController.viewAccount);
 router.use("/sortview", adminController.sortView);
