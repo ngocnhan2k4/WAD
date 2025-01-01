@@ -1,16 +1,23 @@
 <div class="container-user">
 
-    <div class="column-user column-user-4 bg-gray-600 md:rounded-l-lg">
+    <div class="column-user column-user-4  {{#if ADMIN}}bg-blue-800{{else}}bg-gray-600 {{/if}} md:rounded-l-lg">
+        {{#if ADMIN}}
+        <h1 style="color:#40ebeb" id="profileh1">Admin Profile</h1>
+        {{else}}
         <h1 style="color:#40ebeb" id="profileh1">Profile</h1>
+        {{/if}}
         <img class="object-cover" src="{{userAvatar}}" id="avatar-preview">
         <h2>{{fullName}}</h2>
         <button id="update-avatar-btn">Update Avatar</button>
         <input type="file" id="avatar-input" accept="image/*" style="display: none;">
     </div>
 
-    <div class="column-user column-user-8 bg-gray-600 md:rounded-r-lg">
+    <div class="column-user column-user-8 {{#if ADMIN}}bg-blue-800{{else}}bg-gray-600 {{/if}} md:rounded-r-lg">
         <div class="user-info1">
             <p><strong>Name:</strong> {{profile.full_name}}</p>
+            {{#if ADMIN}}
+            <p style="color:yellow"><strong>Role:</strong> Admin</p>
+            {{/if}}
             <p><strong>Phone:</strong> {{profile.phone}}</p>
             <p><strong>Address:</strong> {{profile.address}}</p>
             <p><strong>Birthday:</strong>{{formatBirthday profile.birthday}}</p>
