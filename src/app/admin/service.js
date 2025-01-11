@@ -53,7 +53,7 @@ function formatDateSimpleDay(date) {
             console.error("Invalid DateTime:", date);
             return "Invalid DateTime";
         }
-        return parsedDate.toFormat("dd/MM");
+        return parsedDate.toFormat("dd/MM/yyyy");
     } catch (err) {
         console.error("Error parsing date:", date, err);
         return "Invalid DateTime";
@@ -1145,11 +1145,17 @@ const User = {
 
         // Sắp xếp theo ngày/tháng
         keys.sort((a, b) => {
-            const [dayA, monthA] = a.split("/").map(Number);
-            const [dayB, monthB] = b.split("/").map(Number);
+            const [dayA, monthA, yearA] = a.split("/").map(Number);
+            const [dayB, monthB, yearB] = b.split("/").map(Number);
 
-            const dateA = new Date(2024, monthA - 1, dayA);
-            const dateB = new Date(2024, monthB - 1, dayB);
+            const dateA = DateTime.fromObject(
+                { year: yearA, month: monthA, day: dayA },
+                { zone: location }
+            );
+            const dateB = DateTime.fromObject(
+                { year: yearB, month: monthB, day: dayB },
+                { zone: location }
+            );
 
             return dateA - dateB;
         });
