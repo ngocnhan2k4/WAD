@@ -2,8 +2,8 @@ import { showNotification } from './notification.js';
 import { showPaymentPopup} from './paymentInfomation.js';
 
 document.addEventListener('DOMContentLoaded', function () {
-
     updateEventListeners();
+    updateTotalSubtotal();
 
     const cartItems = document.querySelectorAll('[id^="row-"]');
     if (cartItems.length === 0) {
@@ -22,6 +22,38 @@ document.addEventListener('DOMContentLoaded', function () {
             const productId = item.id.replace('row-', '');
             const quantityInput = document.getElementById(`quantity-${productId}`);
             const deleteButton = document.getElementById(`delete-${productId}`);
+            const plusButton = item.querySelector('.quantity-btn.plus');
+            const minusButton = item.querySelector('.quantity-btn.minus');
+
+            // Sự kiện tăng số lượng
+            plusButton.addEventListener('click', function () {
+                const currentQuantity = parseInt(quantityInput.value, 10) || 1;
+                const newQuantity = currentQuantity + 1;
+                quantityInput.value = newQuantity;
+                
+                const parsedQuantity = parseInt(newQuantity, 10);
+                const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
+                const rowSubtotal = unitPrice * parsedQuantity;
+                updateRowSubtotal(productId, parsedQuantity);
+                updateCartItem(productId, parsedQuantity, rowSubtotal);
+            });
+
+            // Sự kiện giảm số lượng
+            minusButton.addEventListener('click', function () {
+                const currentQuantity = parseInt(quantityInput.value, 10) || 1;
+                if (currentQuantity > 1) {
+                    const newQuantity = currentQuantity - 1;
+                    quantityInput.value = newQuantity;
+                    
+                    const parsedQuantity = parseInt(newQuantity, 10);
+                    const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
+                    const rowSubtotal = unitPrice * parsedQuantity;
+                    updateRowSubtotal(productId, parsedQuantity);
+                    updateCartItem(productId, parsedQuantity, rowSubtotal);
+                }
+            });
+
+            updateRowSubtotal(productId, quantityInput.value.trim())
     
             // Sự kiện thay đổi số lượng
             quantityInput.addEventListener('input', function () {
@@ -34,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 // Nếu giá trị không hợp lệ (không phải số hoặc nhỏ hơn 1), tự động đặt về 1
                 if (isNaN(parseInt(newQuantity, 10)) || parseInt(newQuantity, 10) < 1) {
-                    alert('Quantity must be a positive integer. Defaulting to 1.');
+                    // alert('Quantity must be a positive integer. Defaulting to 1.');
                     this.value = 1;
                 } else {
                     // Nếu giá trị hợp lệ, tính lại rowSubtotal và cập nhật
@@ -78,15 +110,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
-    }      
+    }    
 
     function updateRowSubtotal(productId, quantity) {
         const unitPrice = parseFloat(document.getElementById(`price-${productId}`).textContent.replace('$', ''));
         const rowSubtotal = unitPrice * quantity;
+        console.log(productId, quantity, unitPrice, rowSubtotal)
         document.getElementById(`total-price-${productId}`).textContent = `$${rowSubtotal}`;
     }
 
     function updateCartItem(productId, quantity, rowSubtotal) {
+        updateTotalSubtotal();
+
         fetch('/cart/update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -95,10 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => res.json())
             .then(data => {
                 if (data.updatedSubtotal !== undefined) {
-                    // Cập nhật subtotal hiển thị
-                    document.querySelector('.float-right h1').textContent = `$${data.updatedSubtotal}`;
-                    window.orderData.subtotalVND = data.updatedSubtotal * 25400; // Ví dụ giá trị mới
-                    updateItemCounts();
+                    // // Cập nhật subtotal hiển thị
+                    // document.querySelector('.float-right h1').textContent = `$${data.updatedSubtotal}`;
+                    // window.orderData.subtotalVND = data.updatedSubtotal * 25400; // Ví dụ giá trị mới
+                    // updateItemCounts();
                     //console.log(orderData)
                 }
             })

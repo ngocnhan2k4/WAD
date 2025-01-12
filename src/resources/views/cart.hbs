@@ -4,7 +4,7 @@
       <div class="col-lg-12 col-md-12 col-12">
         <h3 class="text-center shopping-cart-title smb-4 display-5 font-weight-bold">Shopping Cart</h3>
         <p class="mb-5 text-center text-muted">
-          <b class="text-info">{{itemCount}}</b>  items in your cart
+          <b class="text-info">{{itemCount}}</b> items in your cart
         </p>
         <table id="shoppingCart" class="table table-condensed" style="width: 100%;">
           <thead>
@@ -38,18 +38,24 @@
                   class="font-weight-bold">${{this.Product.current_price}}</span>
               </td>
               <td data-th="Quantity" style="justify-content: center; text-align: center;">
-                <input type="number" id="quantity-{{this.Product.product_id}}"
-                  class="text-center form-control form-control-lg quantity-input" value="{{this.quantity}}" min="1" step="1"
-                  style="max-width: 100px; display: inline-block; padding: 10px; font-size: 16px;">
+                <div class="quantity-selector">
+                  <button class="quantity-btn minus">−</button>
+                  <input type="number" id="quantity-{{this.Product.product_id}}" class="quantity-input" value="{{this.quantity}}" min="1">
+                  <button class="quantity-btn plus">+</button>
+                </div>
+                
+                {{!-- <input type="number" id="quantity-{{this.Product.product_id}}"
+                  class="text-center form-control form-control-lg quantity-input" value="{{this.quantity}}" min="1"
+                  step="1" style="max-width: 100px; display: inline-block; padding: 10px; font-size: 16px;"> --}}
               </td>
               <td style="text-align: center">
                 <span id="total-price-{{this.Product.product_id}}" class="font-weight-bold">${{this.price}}</span>
               </td>
               <td class="actions" data-th="">
                 <div class="text-center">
-                  <button id="delete-{{this.Product.product_id}}"
+                  <button id="delete-{{this.Product.product_id}}" class="trash-button"
                     class="mb-2 bg-white btn btn-white border-secondary btn-md rounded-circle">
-                    <i class="fas fa-trash"></i>
+                    <i class="fas fa-trash trash-icon"></i>
                   </button>
                 </div>
               </td>
@@ -64,7 +70,8 @@
           <h4 class="font-weight-bold subtotal-text">Subtotal:</h4>
           <h1 class="font-weight-bold subtotal-value">${{subtotal}}</h1>
           <!-- Nút Checkout bên dưới Subtotal -->
-          <button id="checkout-button" class="mt-3 btn" onmouseover="this.style.backgroundColor='#218838'; this.style.transform='scale(1.05)';"
+          <button id="checkout-button" class="mt-3 btn"
+            onmouseover="this.style.backgroundColor='#218838'; this.style.transform='scale(1.05)';"
             onmouseout="this.style.backgroundColor='#28a745'; this.style.transform='scale(1)';">
             Checkout
           </button>
@@ -75,7 +82,7 @@
 <script>
   window.orderData = {
     subtotalVND: {{ subtotalVND }},
-    orderID: {{ orderID }}
+  orderID: {{ orderID }}
     };
 </script>
 <script type="module" src="/js/cart.js"></script>

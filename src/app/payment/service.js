@@ -1,19 +1,18 @@
 const querystring = require('qs');
 const crypto = require('crypto');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const vnpayConfig = require("../../config/vnpayConfig");
 const prisma = require("../../config/database/db.config");
 const axios = require('axios');
 
 const paymentService = {
     createPayment: async (clientIp, reqData) => {
-        process.env.TZ = 'Asia/Ho_Chi_Minh';
 
         const date = new Date();
-        const orderId = moment(date).format('DDHHmmss'); // Định dạng orderId
+        const orderId = moment.tz(date, 'Asia/Ho_Chi_Minh').format('DDHHmmss'); // Định dạng orderId
         const ipv4Address = clientIp.includes(':') ? '127.0.0.1' : clientIp;
-        let createDate = moment(date).format('YYYYMMDDHHmmss');
-        let expiredDate = moment(date).add(5, 'minutes').format('YYYYMMDDHHmmss');
+        let createDate = moment.tz(date, 'Asia/Ho_Chi_Minh').format('YYYYMMDDHHmmss');
+        let expiredDate = moment.tz(date, 'Asia/Ho_Chi_Minh').add(5, 'minutes').format('YYYYMMDDHHmmss');
 
         let amountNumber = reqData.amount.replace(/[^\d]/g, '');  // Loại bỏ mọi ký tự không phải số
         let amount = parseInt(amountNumber, 10);

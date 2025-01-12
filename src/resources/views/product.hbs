@@ -97,9 +97,9 @@
 
         <div class="mt-4">
             <h3 class="mb-1 text-sm text-gray-800 uppercase">Quantity</h3>
-            <div class="flex text-gray-600 border border-gray-300 divide-x divide-gray-300 w-max">
+            <div class="flex text-gray-600 border border-gray-300 divide-x divide-gray-300 w-max quantity-ajust">
                 <div class="flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none">-</div>
-                <div class="flex items-center justify-center w-8 h-8 text-base">4</div>
+                <div class="flex items-center justify-center w-8 h-8 text-base" value="1">1</div>
                 <div class="flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none">+</div>
             </div>
         </div>
@@ -109,7 +109,7 @@
             <button id="add-to-cart-{{product.product_id}}" 
                     data-product-id="{{product.product_id}}" 
                     class="flex items-center gap-2 px-8 py-2 font-medium text-white uppercase transition border rounded add-to-cart-detail bg-primary border-primary hover:bg-transparent hover:text-primary">
-                <i class="fa-solid fa-bag-shopping add-to-cart"></i> Add to cart
+                <i class="fa-solid fa-bag-shopping"></i> Add to cart
             </button>
             <a href="#"
                 class="flex items-center gap-2 px-8 py-2 font-medium text-gray-600 uppercase transition border border-gray-300 rounded hover:text-primary wishlist-detail">

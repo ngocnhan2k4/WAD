@@ -1,8 +1,11 @@
+import { showNotification } from './notification.js';
 const { orderID } = window.orderData;
 
 // Hàm hiển thị popup thanh toán
 export async function showPaymentPopup(subtotalVND) {
-    const userProfile = await fetchUserProfile();
+    const userProfileTemp = await fetchUserProfile();
+    const userProfile = parseAddress(userProfileTemp.address)
+    // console.log(userProfileTemp.phone)
     
     // Tạo overlay
     const overlay = document.createElement('div');
@@ -66,6 +69,16 @@ export async function showPaymentPopup(subtotalVND) {
                         <option value="">-- Select Ward --</option>
                     </select>
                 </div>
+                <div class="popup-form-group">
+                    <label for="popup-paymentType">Phone Number</label>
+                    <input 
+                        type="text" 
+                        id="popup-phoneNumber" 
+                        name="phoneNumber" 
+                        value="Phone Number" 
+                        required>
+                    <small id="phone-error" style="color: red; display: none;">Phone number must be 10 digits.</small>
+                </div>
                 
                 <div class="popup-form-group">
                     <label for="popup-shippingAddress">Shipping Address</label>
@@ -108,12 +121,11 @@ export async function showPaymentPopup(subtotalVND) {
         clearDropdown('popup-district');
         clearDropdown('popup-ward');
 
-        // await loadProvinces();
-        // await loadDistricts();
-        // await loadWards();
     
         let { province, district, ward, shippingAddress } = userProfile;
-        console.log(province, district, ward, shippingAddress)
+        // console.log(province, district, ward, shippingAddress)
+
+        document.getElementById('popup-phoneNumber').value = userProfileTemp.phone; 
     
         await loadProvinces();
         // Tìm code của province
@@ -200,10 +212,16 @@ export async function handlePaymentFormSubmission(event) {
     const province = document.getElementById('popup-province').options[document.getElementById('popup-province').selectedIndex].text;
     const district = document.getElementById('popup-district').options[document.getElementById('popup-district').selectedIndex].text;
     const ward = document.getElementById('popup-ward').options[document.getElementById('popup-ward').selectedIndex].text;
+    const phoneNumber = document.getElementById('popup-phoneNumber').value;
+
+    if (!/^\d{10}$/.test(phoneNumber)) {
+        showNotification('Phone number must be exactly 10 digits.', "error");
+        return; // Ngăn gửi yêu cầu nếu số điện thoại không hợp lệ
+    }
 
     if (!province || !district || !ward) {
         event.preventDefault(); // Ngăn gửi form
-        alert('Please select your Province, District, and Ward.');
+        showNotification('Please select your Province, District, and Ward.', "error");
     }
 
     const fullShippingAddress = `${shippingAddress}, ${ward}, ${district}, ${province}`;
@@ -233,11 +251,11 @@ export async function handlePaymentFormSubmission(event) {
         if (paymentUrl) {
             window.location.href = paymentUrl; // Chuyển hướng tới trang thanh toán
         } else {
-            alert('Cannot retrieve payment URL. Try again later.');
+            showNotification('Cannot retrieve payment URL. Try again later.', "error");
         }
     } catch (error) {
         console.error('Payment Error:', error.message);
-        alert('An error occurred during payment. Please try again.');
+        showNotification('An error occurred during payment. Please try again.', "error");
     }
 }
 
@@ -339,10 +357,8 @@ export async function fetchUserProfile() {
             throw new Error('Failed to fetch user profile');
         }
         const data = await response.json();
-        console.log(data)
-        const { address } = data;
 
-        return parseAddress(address); // Tách địa chỉ
+        return data; // Tách địa chỉ
     } catch (error) {
         console.error('Error fetching user profile:', error);
         return null; // Trả về null nếu có lỗi
@@ -353,3 +369,34 @@ export function clearDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
     dropdown.innerHTML = '<option value="">-- Select --</option>';
 }
+
+// // Hàm kiểm tra số điện thoại
+// export function validatePhoneNumber(inputId, errorId) {
+//     const phoneNumberInput = document.getElementById(inputId);
+//     const errorElement = document.getElementById(errorId);
+
+//     // Lắng nghe sự kiện 'input' để kiểm tra trong thời gian thực
+//     phoneNumberInput.addEventListener('input', () => {
+//         // Loại bỏ ký tự không phải số
+//         phoneNumberInput.value = phoneNumberInput.value.replace(/[^0-9]/g, '');
+
+//         // Hiển thị hoặc ẩn lỗi nếu số lượng ký tự không chính xác
+//         if (phoneNumberInput.value.length === 10) {
+//             errorElement.style.display = 'none'; // Số điện thoại hợp lệ
+//         } else {
+//             errorElement.style.display = 'block'; // Số điện thoại không hợp lệ
+//         }
+//     });
+
+//     // Ràng buộc thêm khi form được gửi
+//     const form = phoneNumberInput.closest('form');
+//     if (form) {
+//         form.addEventListener('submit', (e) => {
+//             if (phoneNumberInput.value.length !== 10) {
+//                 e.preventDefault(); // Ngăn form gửi đi nếu không hợp lệ
+//                 errorElement.style.display = 'block';
+//                 showNotification('Phone number must be exactly 10 digits.');
+//             }
+//         });
+//     }
+// }
