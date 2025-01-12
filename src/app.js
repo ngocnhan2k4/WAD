@@ -6,6 +6,9 @@ const passport = require("./config/passport");
 const session = require("express-session");
 const notification = require("./app/middleware/notification");
 
+const { v4: uuidv4 } = require("uuid");
+const cookieParser = require("cookie-parser"); // Import cookie-parser
+
 dotenv.config();
 
 const app = express();
@@ -15,7 +18,7 @@ require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
 require("./app/helpers/dateHelper");
 
-
+app.use(cookieParser());
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,13 +46,28 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-    session({
-        secret: "notification",
-        resave: false,
-        saveUninitialized: true,
-    })
-);
+// app.use(
+//     session({
+//         secret: "notification",
+//         resave: false,
+//         saveUninitialized: true,
+//     })
+// );
+
+// Middleware tạo và lưu sessionId
+app.use((req, res, next) => {
+    // Kiểm tra nếu chưa có sessionId trong cookie
+    if (!req.cookies || !req.cookies.sessionId) {
+        const sessionId = uuidv4(); // Tạo sessionId mới
+        res.cookie("sessionId", sessionId, {
+            httpOnly: true, // Chỉ server mới truy cập được cookie này
+            secure: process.env.NODE_ENV === "production", // Chỉ sử dụng HTTPS trong môi trường production
+            maxAge: 7 * 24 * 60 * 60 * 1000, // Thời gian sống 7 ngày
+        });
+        console.log(`New session created: ${sessionId}`);
+    }
+    next(); // Chuyển tiếp middleware
+});
 
 app.use(notification);
 
@@ -63,7 +81,9 @@ app.use(
 
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
+
 route(app);
+
 //Middleware handle errors
 app.use((err, req, res, next) => {
     console.error(err.stack);

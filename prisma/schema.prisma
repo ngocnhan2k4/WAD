@@ -88,7 +88,7 @@ model Product {
   Categories     Categories    @relation(fields: [category_id], references: [category_id])
   Suppliers      Suppliers     @relation(fields: [manufacturer], references: [supplier_id])
   Reviews        Reviews[]
-  TempCart       TempCart?
+  TempCart       TempCart[]
   UserCart       UserCart[]
 }
 
@@ -132,9 +132,13 @@ model userdetail {
 }
 
 model TempCart {
-  product_id Int     @id
-  quantity   Int
-  price      Float
+  id           Int      @id @default(autoincrement())
+  sessionId    String   // sessionId của người dùng
+  product_id   Int
+  quantity     Int
+  price        Float
+  createdAt    DateTime @default(now()) // Thời gian tạo
+  lastAccessed DateTime @updatedAt      // Thời gian truy cập gần nhất
   Product    Product @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product")
 }
 

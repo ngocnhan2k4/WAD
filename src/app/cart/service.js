@@ -1,7 +1,7 @@
 const prisma = require("../../config/database/db.config");
 
 const Cart = {
-    getUserCart: async (userId) =>{
+    getUserCart: async (sessionId, userId) =>{
         try {
             let cartItems;
             if (userId != null) {
@@ -18,7 +18,9 @@ const Cart = {
                     },
                 });
             } else {
-                cartItems = await prisma.TempCart.findMany({
+                // Nếu không có userId, lấy giỏ hàng từ bảng TempCart dựa trên sessionId
+                cartItems = await prisma.tempCart.findMany({
+                    where: { sessionId: sessionId },  // Sử dụng sessionId để phân biệt giỏ hàng tạm
                     include: {
                         Product: {
                             include: {
@@ -36,7 +38,7 @@ const Cart = {
         }
     },
 
-    getCartTotal: async (userId) => {
+    getCartTotal: async (sessionId, userId) => {
         try {
             let subtotalData;
             if (userId != null) {
@@ -46,8 +48,9 @@ const Cart = {
                     _sum: { price: true },
                 });
             } else {
-                // Nếu không có userId, lấy từ bảng TempCart
-                subtotalData = await prisma.TempCart.aggregate({
+                // Nếu không có userId, lấy tổng giá trị từ bảng TempCart dựa trên sessionId
+                subtotalData = await prisma.tempCart.aggregate({
+                    where: { sessionId: sessionId },  // Sử dụng sessionId để tính toán trong bảng TempCart
                     _sum: { price: true },
                 });
             }
@@ -59,7 +62,7 @@ const Cart = {
         }
     },
 
-    getNumOfCartItems: async (userId) => {
+    getNumOfCartItems: async (sessionId2, userId) => {
         try {
             let totalQuantity;
     
@@ -73,8 +76,9 @@ const Cart = {
                 });
                 totalQuantity = result._sum.quantity || 0; // Nếu không có sản phẩm nào, trả về 0
             } else {
-                // Nếu không có userId, tính tổng quantity từ bảng TempCart
+                // Nếu không có userId, tính tổng quantity từ bảng TempCart sử dụng sessionId
                 const result = await prisma.tempCart.aggregate({
+                    where: { sessionId: sessionId2 },  // Điều kiện sessionId
                     _sum: {
                         quantity: true, // Tính tổng quantity
                     },
@@ -89,7 +93,7 @@ const Cart = {
         }
     },   
 
-    updateCartItemQuantity: async (userId, productId, quantity, rowSubtotal) => {
+    updateCartItemQuantity: async (sessionId, userId, productId, quantity, rowSubtotal) => {
         try {
             let updatedItem;
     
@@ -106,10 +110,11 @@ const Cart = {
                     },
                 });
             } else {
-                // Nếu không có userId, cập nhật trên bảng TempCart
+                // Nếu không có userId, cập nhật trên bảng TempCart sử dụng sessionId
                 updatedItem = await prisma.tempCart.updateMany({
                     where: {
                         product_id: productId, // Điều kiện product_id
+                        sessionId: sessionId,  // Điều kiện sessionId
                     },
                     data: {
                         quantity: quantity, // Cập nhật số lượng mới
@@ -125,7 +130,7 @@ const Cart = {
         }
     },
 
-    addProductToCart: async (userId, productId, quantity) => {
+    addProductToCart: async (sessionId, userId, productId, quantity) => {
         try {
             // Lấy thông tin sản phẩm để lấy giá
             const product = await prisma.product.findUnique({
@@ -179,28 +184,38 @@ const Cart = {
                 // Nếu không có userId, thực hiện trên bảng TempCart
                 const existingItem = await prisma.tempCart.findUnique({
                     where: {
-                        product_id: productId,
+                        sessionId_product_id: {
+                            sessionId: sessionId,
+                            product_id: productId,
+                        },
                     },
                 });
-    
+
                 if (existingItem) {
                     // Nếu sản phẩm đã tồn tại trong giỏ tạm, cập nhật số lượng
                     return await prisma.tempCart.update({
                         where: {
-                            product_id: productId,
+                            sessionId_product_id: {
+                                sessionId: sessionId,
+                                product_id: productId,
+                            },
                         },
                         data: {
                             quantity: existingItem.quantity + quantity,
                             price: product.current_price * (existingItem.quantity + quantity), // Cập nhật giá hiện tại
+                            lastAccessed: new Date(), // Cập nhật thời gian truy cập
                         },
                     });
                 } else {
                     // Nếu sản phẩm chưa tồn tại trong giỏ tạm, thêm mới
                     return await prisma.tempCart.create({
                         data: {
+                            sessionId: sessionId,  // Thêm sessionId
                             product_id: productId,
                             quantity: quantity,
                             price: product.current_price, // Lấy giá từ bảng sản phẩm
+                            createdAt: new Date(),   // Thêm thời gian tạo
+                            lastAccessed: new Date(), // Thêm thời gian truy cập
                         },
                     });
                 }
@@ -211,7 +226,7 @@ const Cart = {
         }
     },  
 
-    deleteProductFromCart: async (userId, productId) => {
+    deleteProductFromCart: async (sessionId, userId, productId) => {
         try {
             if (userId != null) {
                 // Nếu có userId, xóa sản phẩm khỏi bảng userCart
@@ -225,6 +240,7 @@ const Cart = {
                 // Nếu không có userId, xóa sản phẩm khỏi bảng TempCart
                 await prisma.tempCart.deleteMany({
                     where: {
+                        sessionId: sessionId,  // Sử dụng sessionId để xác định giỏ hàng tạm của người dùng
                         product_id: productId,
                     },
                 });
@@ -235,7 +251,7 @@ const Cart = {
         }
     },    
 
-    checkCart: async (userId) => {
+    checkCart: async (sessionId, userId) => {
         try {
             let cartItems;
     
@@ -246,7 +262,9 @@ const Cart = {
                 });
             } else {
                 // Nếu không có userId, lấy giỏ hàng từ bảng TempCart
-                cartItems = await prisma.tempCart.findMany();
+                cartItems = await prisma.tempCart.findMany({
+                    where: { sessionId: sessionId }, // Lọc theo sessionId để xác định giỏ hàng tạm
+                });
             }
     
             return cartItems; // Trả về danh sách sản phẩm trong giỏ hàng
