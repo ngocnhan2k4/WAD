@@ -6,7 +6,6 @@ const paymentController = {
         try {
             const reqData = req.body
             //console.log("reqData");
-            console.log(reqData);
 
             req.session.shippingAddress = reqData.shippingAddress;
 
@@ -18,6 +17,7 @@ const paymentController = {
 
             // Lấy URL trang chọn phương thức thanh toán
             const paymentUrl = await paymentService.createPayment(clientIp, reqData);
+            // console.log(paymentUrl)
             res.json({ paymentUrl });
         } catch (error) {
             console.error('Error creating VNPay payment:', error.message);
