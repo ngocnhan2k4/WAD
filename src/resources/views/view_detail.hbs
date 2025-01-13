@@ -105,45 +105,32 @@
             </div>
             <div class="view__product grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {{#each products}}
-                    <div
-                        id={{product_id}}
-                        class="product__item overflow-hidden bg-white rounded shadow group"
-                    >
-                        <div class="relative">
-                            <a
-                                href="/product/productDetail?id={{this.product_id}}"
-                            ><img
-                                    src={{Images.0.directory_path}}
-                                    alt="product{{@index}}"
-                                    class="w-full"
-                                /></a>
-                        </div>
-                        <div class="product__content px-4 pt-4 pb-3">
-                            <a
-                                href="/product/productDetail?id={{this.product_id}}"
-                            >
-                                <h4
-                                    class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary"
-                                >
-                                    {{product_name}}</h4>
-                            </a>
-                            <div
-                                class="flex mt-auto items-baseline mb-1 space-x-2"
-                            >
-                                <p
-                                    class="text-xl font-semibold text-primary"
-                                >{{current_price}}</p>
-                                <p
-                                    class="text-sm text-gray-400 line-through"
-                                >{{original_price}}</p>
-                            </div>
-                        </div>
-                        <a
-                            href="#"
-                            class="block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary"
-                        >Add to cart</a>
+                <div class="overflow-hidden bg-white rounded shadow group">
+                    <div class="relative">
+                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full h-48 object-contain"></a>
                     </div>
-
+                    <div class="px-4 pt-4 pb-3">
+                        <a href="/product/productDetail?id={{this.product_id}}">
+                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary h-16">
+                                {{product_name}}</h4>
+                        </a>
+                        <div class="flex items-baseline mb-1 space-x-2 g">
+                            <p class="text-xl font-semibold text-primary">${{current_price}}</p>
+                            <p class="text-sm text-gray-400 line-through">${{original_price}}</p>
+                        </div>
+                        {{#if ../admin}}
+                        <div class="flex items-center">
+                            <h4 class="text-xl font-medium">Total Purchase: </h4>
+                            <span class="ml-2 text-xl font-semibold text-blue-600">{{total_purchase}}</span>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <button id="add-to-cart-{{this.product_id}}" 
+                            data-product-id="{{this.product_id}}" 
+                            class="block w-full py-1 text-center text-white transition border rounded-b add-to-cart bg-primary border-primary hover:bg-transparent hover:text-primary">
+                        Add to cart
+                    </button>
+                </div>
                 {{/each}}
             </div>
 
