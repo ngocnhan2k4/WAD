@@ -1,5 +1,5 @@
 const paymentService = require('./service');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const paymentController = {
     createPayment: async (req, res) => {
@@ -30,7 +30,7 @@ const paymentController = {
             const { vnp_TxnRef, vnp_ResponseCode, vnp_OrderInfo, vnp_Amount, vnp_PayDate } = req.query;
             // console.log(req.query);
 
-            let payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').toDate();
+            let payDate = moment.tz(vnp_PayDate, 'YYYYMMDDHHmmss', 'Asia/Ho_Chi_Minh').toDate();
             // console.log(payDate);
     
             // Xác thực chữ ký bảo mật
@@ -61,12 +61,12 @@ const paymentController = {
             if (transactionDetails.success) {
                 // Chuyển dữ liệu từ UserCart sang Orders, OrderDetails, và Payments
                 const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
-                transactionDetails.payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').format('DD/MM/YYYY');
+                transactionDetails.payDate = moment.tz(vnp_PayDate, 'YYYYMMDDHHmmss', 'Asia/Ho_Chi_Minh').format('DD/MM/YYYY');
                 console.log('Transaction successful:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             } else {
                 const newOrder = await paymentService.completeOrder(userId, orderId, transactionDetails.amount, transactionDetails.payDate, transactionDetails.success, shippingAddress);
-                transactionDetails.payDate = moment(vnp_PayDate, 'YYYYMMDDHHmmss').format('DD/MM/YYYY');
+                transactionDetails.payDate = moment.tz(vnp_PayDate, 'YYYYMMDDHHmmss', 'Asia/Ho_Chi_Minh').format('DD/MM/YYYY');
                 console.error('Transaction failed:', transactionDetails);
                 res.render('paymentResult', { transactionDetails, page_style: "/css/paymentResult.css", notAJAX: true});
             }
