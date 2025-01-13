@@ -6,9 +6,9 @@ const acc_accept = document.querySelector(".acc_accept");
 const acc_notaccepct = document.querySelector(".acc_notaccepct");
 const search__button = document.querySelector(".view__product__search__button");
 const product__items = document.querySelectorAll(".product__item");
-let accrole = acc__role.textContent;
-let accstate = acc__state.textContent;
-
+let accrole = acc__role.textContent.toLowerCase();
+let accstate = acc__state.textContent.toLowerCase();
+console.log(accrole, accstate);
 const select__product = document.querySelector(".select__product");
 const search__input = document.querySelector(".view__product__search__input");
 select__product.style.display = "none";
@@ -58,7 +58,7 @@ acc__role.addEventListener("click", () => {
 
 acc__state.addEventListener("click", () => {
     if (acc__state.textContent === "Ban") {
-        acc__state.textContent = "NoBan";
+        acc__state.textContent = "No Ban";
         acc__state.classList.remove("acc_ban");
         acc__state.classList.add("acc_noban");
     } else {
@@ -107,13 +107,24 @@ acc_accept.addEventListener("click", async () => {
 });
 
 acc_notaccepct.addEventListener("click", () => {
-    console.log(accrole, accstate);
-    acc__role.textContent = accrole;
-    acc__state.textContent = accstate;
+    if (accrole === "admin") {
+        acc__role.textContent = "Admin";
+    }
+    if (accrole === "customer") {
+        acc__role.textContent = "Customer";
+    }
+
+    if (accstate === "ban") {
+        acc__state.textContent = "Ban";
+    }
+    if (accstate === "noban") {
+        acc__state.textContent = "No Ban";
+    }
     acc__role.classList.remove("acc_admin", "acc_customer");
     acc__state.classList.remove("acc_ban", "acc_noban");
     acc__role.classList.add(`acc_${accrole.toLowerCase()}`);
-    if (accstate === "Ban") {
+    console.log(accrole);
+    if (accstate === "ban") {
         acc__state.classList.add("acc_ban");
     } else {
         acc__state.classList.add("acc_noban");
