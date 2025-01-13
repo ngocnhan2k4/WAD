@@ -866,6 +866,7 @@ const Admin = {
         order.creation_time = formatDateSimple(order.creation_time);
         const Payments = order.Payments[0];
         order.Payments = Payments;
+        order.Payments.payment_time = formatDateSimple(Payments.payment_time);
         res.render("order_detail", {
             page_style: "/css/order_detail.css",
             order: order,
