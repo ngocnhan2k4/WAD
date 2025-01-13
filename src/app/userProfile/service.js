@@ -125,6 +125,28 @@ const Profile ={
             },
         });
     },
+
+    getOrderById: async (orderID) => {
+        orderID = Number(orderID);
+        return prisma.Orders.findUnique({
+            where: {
+                order_id: orderID,
+            },
+            include: {
+                OrderDetail: {
+                    include: {
+                        Product: {
+                            include: {
+                                Images: true,
+                            },
+                        },
+                    },
+                },
+                Payments: true,
+                User: true,
+            },
+        });
+    },
 }
 
 module.exports = Profile;

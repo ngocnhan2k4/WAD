@@ -2,6 +2,27 @@ const userProfile = require('./service');
 const PRODUCTS_PER_PAGE = 3;
 const ORDERS_PER_PAGE = 3;
 const bcrypt = require("bcrypt");
+const { DateTime } = require("luxon");
+
+function formatDateSimple(date) {
+    if (!date) return "Invalid DateTime";
+
+    try {
+        const jsDate = new Date(date);
+        const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" }).setZone(
+            "Asia/Ho_Chi_Minh"
+        );
+        if (!parsedDate.isValid) {
+            // console.error("Invalid DateTime:", date);
+            return date;
+        }
+
+        return parsedDate.toFormat("dd/MM/yyyy");
+    } catch (err) {
+        console.error("Error parsing date:", date, err);
+        return "Invalid DateTime";
+    }
+}
 
 const userProfileController = {
     getUserProfile: async (req,res)=>{
@@ -65,6 +86,35 @@ const userProfileController = {
             console.log(err);
             res.status(500).send("Internal Server Error");
         }
+    },
+
+    getOrderDetail: async (req, res) => {
+        const id = req.params.id;
+        const order = await userProfile.getOrderById(id);
+        let count_number_product = 0;
+        order.OrderDetail.forEach((OD) => {
+            count_number_product += OD.quantity;
+        });
+        order.count_number_product = count_number_product;
+        const products = [];
+        order.OrderDetail.forEach((OD) => {
+            const product = OD.Product;
+            product.quantity = OD.quantity;
+            products.push(product);
+        });
+        order.creation_time = formatDateSimple(order.creation_time);
+        // if (order === null) {
+        //     res.redirect("/admin/vieworder");
+        //     return;
+        // }
+        order.creation_time = formatDateSimple(order.creation_time);
+        const Payments = order.Payments[0];
+        order.Payments = Payments;
+        res.render("view_order_detail", {
+            page_style: "/css/order_detail.css",
+            order: order,
+            products: products,
+        });
     },
 
     updateImage: async (req, res) => {

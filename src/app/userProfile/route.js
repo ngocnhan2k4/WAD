@@ -33,5 +33,6 @@ router.post("/verifyoldpassword", userProfileController.verifyOldPassword);
 router.post("/updateprofile", userProfileController.updateProfile);
 router.post("/updatestatus", userProfileController.updateStatus);
 router.get("/getprofile", userProfileController.getProfile);
+router.get("/getOrderDetail/:id", userProfileController.getOrderDetail);
 
 module.exports = router;
