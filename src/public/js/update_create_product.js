@@ -398,9 +398,13 @@ document.querySelector("#productCurrentPrice").addEventListener("input", () => {
 
 function clearAll() {
     document.querySelector("#productName").value = "";
+    borderNone(document.querySelector("#productName"));
     document.querySelector("#productPrice").value = "";
+    borderNone(document.querySelector("#productPrice"));
     document.querySelector("#productQuantity").value = "";
+    borderNone(document.querySelector("#productQuantity"));
     document.querySelector("#productDescription").value = "";
+    borderNone(document.querySelector("#productDescription"));
     categoryInput.value = "";
     manufacturerInput.value = "";
     image_upload_previews.forEach((image) => {
