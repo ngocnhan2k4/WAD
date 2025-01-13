@@ -161,11 +161,11 @@ function addToCartHandler() {
             fetch('/auth/check-login')
                 .then(response => response.json())
                 .then(data => {
-                    if (!data.loggedIn) {
-                        // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
-                        window.location.href = '/user/login';
-                        return;
-                    }
+                    // if (!data.loggedIn) {
+                    //     // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+                    //     window.location.href = '/user/login';
+                    //     return;
+                    // }
 
                     // Nếu đã đăng nhập, thêm sản phẩm vào giỏ hàng
                     const productId = this.getAttribute('data-product-id');
