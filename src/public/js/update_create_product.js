@@ -427,7 +427,7 @@ function createProduct(product) {
     const relative = document.createElement("div");
     relative.classList.add("relative");
     const a = document.createElement("a");
-    a.href = `/product/productDetail?id=${product.product_id}`;
+    a.href = `#!`;
     const img = document.createElement("img");
     img.src = product.Images[0].directory_path;
     img.alt = `product${product.product_id}`;
@@ -443,7 +443,7 @@ function createProduct(product) {
     const product__content = document.createElement("div");
     product__content.classList.add("product__content", "px-4", "pt-4", "pb-3");
     const a2 = document.createElement("a");
-    a2.href = `/product/productDetail?id=${product.product_id}`;
+    a2.href = `#!`;
     const h4 = document.createElement("h4");
     h4.classList.add(
         "mb-2",
