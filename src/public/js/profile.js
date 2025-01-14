@@ -392,7 +392,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             }
         }
-        //birthday là một input có id là birthday và là thẻ input có type là date
         document.querySelector("#birthday").value =
             birdthday__user.textContent.trim();
         const addressArray = address__user.textContent.split(", ");
