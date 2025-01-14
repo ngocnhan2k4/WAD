@@ -488,8 +488,10 @@ function createProduct(product) {
     a3.textContent = "Add to cart";
     product__item.appendChild(a3);
     document.querySelector(".view__product").appendChild(product__item);
-    delete__product.addEventListener("click", () => {
+    delete__product.addEventListener("click", (event) => {
+        event.stopPropagation();
         showOverlay(dialog);
+        id_product_edit = delete__product.getAttribute("id_product");
     });
     product__item.addEventListener("click", () => eventItem(product__item));
 }
