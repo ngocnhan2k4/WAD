@@ -864,9 +864,15 @@ const Admin = {
             return;
         }
         order.creation_time = formatDateSimple(order.creation_time);
-        const Payments = order.Payments[0];
-        order.Payments = Payments;
-        order.Payments.payment_time = formatDateSimple(Payments.payment_time);
+        if (order.Payments) {
+            const Payments = order.Payments[0];
+            order.Payments = Payments;
+            if (Payments && Payments.payment_date) {
+                order.Payments.payment_date = formatDateSimple(
+                    Payments.payment_date
+                );
+            }
+        }
         res.render("order_detail", {
             page_style: "/css/order_detail.css",
             order: order,
