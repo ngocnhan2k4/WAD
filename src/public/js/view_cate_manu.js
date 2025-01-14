@@ -139,9 +139,27 @@ save_btn.addEventListener("click", (e) => {
                         </div>
                     </div>
                     `;
+                    const cate__item = document.getElementById(data.id);
+                    cate__item.addEventListener("click", () => {
+                        window.location.href = `/admin/cate/${data.id}`;
+                    });
+                    cate__items.forEach((cate__item) => {
+                        cate__item.addEventListener("click", () => {
+                            const cate_id = cate__item.id;
+                            console.log(cate_id);
+                            window.location.href = `/admin/cate/${cate_id}`;
+                        });
+                    });
+
+                    manu__items.forEach((manu__item) => {
+                        manu__item.addEventListener("click", () => {
+                            const manu_id = manu__item.id;
+                            window.location.href = `/admin/manu/${manu_id}`;
+                        });
+                    });
                 } else {
                     const row = manu__content.children[1];
-                    const i = (row.childElementCount + 1) % 3;
+                    const i = (row.childElementCount % 3) + 1;
                     const img = `/images/img/manu0${i}.png`;
                     row.innerHTML += `
                         <div class="col">
@@ -159,6 +177,24 @@ save_btn.addEventListener("click", (e) => {
                         </div>
                     </div>
                     `;
+                    const manu__item = document.getElementById(data.id);
+                    manu__item.addEventListener("click", () => {
+                        window.location.href = `/admin/manu/${data.id}`;
+                    });
+                    cate__items.forEach((cate__item) => {
+                        cate__item.addEventListener("click", () => {
+                            const cate_id = cate__item.id;
+                            console.log(cate_id);
+                            window.location.href = `/admin/cate/${cate_id}`;
+                        });
+                    });
+
+                    manu__items.forEach((manu__item) => {
+                        manu__item.addEventListener("click", () => {
+                            const manu_id = manu__item.id;
+                            window.location.href = `/admin/manu/${manu_id}`;
+                        });
+                    });
                 }
             } else {
                 dialog_status.textContent = "Fail";
@@ -210,16 +246,18 @@ search__manu_btn.addEventListener("click", () => {
     });
 });
 
-cate__items.forEach((cate__item) => {
-    cate__item.addEventListener("click", () => {
-        const cate_id = cate__item.id;
+cate__content.addEventListener("click", (e) => {
+    if (e.target.closest(".cate__item")) {
+        const cate_id = e.target.closest(".cate__item").id;
+        console.log(cate_id);
         window.location.href = `/admin/cate/${cate_id}`;
-    });
+    }
 });
 
-manu__items.forEach((manu__item) => {
-    manu__item.addEventListener("click", () => {
-        const manu_id = manu__item.id;
+manu__content.addEventListener("click", (e) => {
+    if (e.target.closest(".manu__item")) {
+        const manu_id = e.target.closest(".manu__item").id;
+        console.log(manu_id);
         window.location.href = `/admin/manu/${manu_id}`;
-    });
+    }
 });
