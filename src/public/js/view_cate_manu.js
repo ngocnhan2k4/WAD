@@ -121,7 +121,7 @@ save_btn.addEventListener("click", (e) => {
                 input.value = "";
                 if (type === "category") {
                     const row = cate__content.children[1];
-                    const i = (row.childElementCount + 1) % 3;
+                    const i = (row.childElementCount % 3) + 1;
                     const img = `/images/img/cate0${i}.png`;
                     row.innerHTML += `
                         <div class="col">
