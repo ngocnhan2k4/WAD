@@ -69,24 +69,22 @@ function formatWeekWithJS(date) {
             return "Invalid DateTime";
         }
 
+        // Sử dụng Luxon để xử lý ngày
+        const { DateTime } = require("luxon");
         const parsedDate = DateTime.fromJSDate(jsDate, { zone: "utc" }).setZone(
-            location
+            "local"
         );
+
         if (!parsedDate.isValid) {
             console.error("Invalid DateTime:", date);
             return "Invalid DateTime";
         }
 
-        const firstDayOfYear = DateTime.fromObject(
-            { year: parsedDate.year, month: 1, day: 1 },
-            { zone: location }
-        );
-        const pastDaysOfYear = parsedDate.diff(firstDayOfYear, "days").days;
-        const weekNumber = Math.ceil(
-            (pastDaysOfYear + firstDayOfYear.weekday) / 7
-        );
+        // ISO tuần
+        const weekNumber = parsedDate.weekNumber;
+        const year = parsedDate.year;
 
-        return `Week ${weekNumber} of ${parsedDate.year}`;
+        return `Week ${weekNumber} of ${year}`;
     } catch (err) {
         console.error("Error parsing date:", date, err);
         return "Invalid DateTime";
