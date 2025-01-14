@@ -24,7 +24,7 @@
             <p><strong>Gender:</strong><span id="gender__user">{{profile.gender}}</span></p>
         </div>
         <div class="mt-5">
-            <button class="editProfile mr-5">Edit Profile</button>
+            <button class="mr-5 editProfile">Edit Profile</button>
             {{#if local}}
             <button class="changePassword">Change Password</button>
             {{/if}}
@@ -54,7 +54,10 @@
             <tbody>
                 {{#each paginatedOrders}}
                 <tr>
-                    <td>{{this.order_id}}</td>
+                    <td>
+                        {{!-- {{this.order_id}} --}}
+                        <a href="/userprofile/getOrderDetail/{{this.order_id}}" class="orderdetail">{{this.order_id}}</a>
+                    </td>
                     <td>{{this.total_amount}}</td>
                     <td class="creation-time">{{formatDate this.creation_time}}</td>
                     {{#if (eq this.status "Completed")}}
@@ -69,18 +72,18 @@
                     {{#if (eq this.status "Processing")}}
                     <td>
                         <button class="status Processing" onclick="toggleModal('{{this.order_id}}')">{{this.status}}</button>
-                        <div id="change-status-modal-{{this.order_id}}" class="modal flex items-center justify-center"
+                        <div id="change-status-modal-{{this.order_id}}" class="flex items-center justify-center modal"
                             style="display: none;">
-                            <div class="modal-content bg-white rounded-lg shadow-lg p-8 w-full max-w-md mx-8">
-                                <h2 class="text-center mb-6 font-bold text-2xl text-gray-800">Confirm order cancellation #{{this.order_id}}</h2>
-                                <p id="status-message" class="hidden px-4 py-2 rounded-md text-sm mb-6"></p>
+                            <div class="w-full max-w-md p-8 mx-8 bg-white rounded-lg shadow-lg modal-content">
+                                <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Confirm order cancellation #{{this.order_id}}</h2>
+                                <p id="status-message" class="hidden px-4 py-2 mb-6 text-sm rounded-md"></p>
                                 <form id="change-status-form-{{this.order_id}}" onsubmit="submitStatusChange(event, '{{this.order_id}}')">
-                                    <div class="flex justify-between items-center mt-6">
+                                    <div class="flex items-center justify-between mt-6">
                                         <button type="button"
-                                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition close-button"
+                                            class="px-4 py-2 text-gray-800 transition bg-gray-200 rounded-md hover:bg-gray-300 close-button"
                                             onclick="toggleModal('{{this.order_id}}')">Back</button>
                                         <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition">Confirm</button>
+                                            class="px-6 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600">Confirm</button>
                                     </div>
                                 </form>
                             </div>
@@ -190,70 +193,70 @@
 
 </div>
 <!-- Modal for Change Password -->
-<div id="change-password-modal" class="modal flex items-center justify-center">
-    <div class="modal-content bg-white rounded-lg shadow-lg p-8 w-full max-w-md mx-8">
-        <h2 class="text-center mb-6 font-bold text-3xl text-gray-800">Change Password</h2>
+<div id="change-password-modal" class="flex items-center justify-center modal">
+    <div class="w-full max-w-md p-8 mx-8 bg-white rounded-lg shadow-lg modal-content">
+        <h2 class="mb-6 text-3xl font-bold text-center text-gray-800">Change Password</h2>
         
         <!-- Validation Message -->
-         <p id="form-message" class="hidden px-4 py-2 rounded-md text-sm mb-6"></p>
+         <p id="form-message" class="hidden px-4 py-2 mb-6 text-sm rounded-md"></p>
     
         <!-- Form -->
         <form id="change-password-form">
             <!-- Old Password -->
-            <div class="mb-6 relative">
-                <label for="old-password" class="font-medium text-gray-700 mb-2 block">Old Password</label>
+            <div class="relative mb-6">
+                <label for="old-password" class="block mb-2 font-medium text-gray-700">Old Password</label>
                 <input 
                     type="password" 
                     id="old-password" 
                     placeholder="Enter old password"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     required>
-                <button type="button" class="absolute right-2 text-gray-500 hover:text-gray-700 show-password-btn" data-target="old-password">
+                <button type="button" class="absolute text-gray-500 right-2 hover:text-gray-700 show-password-btn" data-target="old-password">
                     👁
                 </button>
-                 <p id="old-password-error" class="text-red-500 text-sm mt-1 hidden"></p>
+                 <p id="old-password-error" class="hidden mt-1 text-sm text-red-500"></p>
             </div>
 
             <!-- New Password -->
-            <div class="mb-6 relative">
-                <label for="new-password" class="font-medium text-gray-700 mb-2 block">New Password</label>
+            <div class="relative mb-6">
+                <label for="new-password" class="block mb-2 font-medium text-gray-700">New Password</label>
                 <input 
                     type="password" 
                     id="new-password" 
                     placeholder="Enter new password"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     required>
-                <button type="button" class="absolute right-2 text-gray-500 hover:text-gray-700 show-password-btn" data-target="new-password">
+                <button type="button" class="absolute text-gray-500 right-2 hover:text-gray-700 show-password-btn" data-target="new-password">
                     👁
                 </button>
-                 <p id="new-password-error" class="text-red-500 text-sm mt-1 hidden"></p>
+                 <p id="new-password-error" class="hidden mt-1 text-sm text-red-500"></p>
             </div>
 
             <!-- Confirm New Password -->
-            <div class="mb-6 relative">
-                <label for="confirm-password" class="font-medium text-gray-700 mb-2 block">Confirm New Password</label>
+            <div class="relative mb-6">
+                <label for="confirm-password" class="block mb-2 font-medium text-gray-700">Confirm New Password</label>
                 <input 
                     type="password" 
                     id="confirm-password" 
                     placeholder="Confirm new password"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     required>
-                <button type="button" class="absolute right-2 text-gray-500 hover:text-gray-700 show-password-btn" data-target="confirm-password">
+                <button type="button" class="absolute text-gray-500 right-2 hover:text-gray-700 show-password-btn" data-target="confirm-password">
                     👁
                 </button>
-                <p id="confirm-password-error" class="text-red-500 text-sm mt-1 hidden"></p>
+                <p id="confirm-password-error" class="hidden mt-1 text-sm text-red-500"></p>
             </div>
 
             <!-- Buttons -->
-            <div class="flex justify-between items-center mt-6">
+            <div class="flex items-center justify-between mt-6">
                 <button 
                     type="button" 
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition close-button">
+                    class="px-4 py-2 text-gray-800 transition bg-gray-200 rounded-md hover:bg-gray-300 close-button">
                     Back
                 </button>
                 <button 
                     type="submit" 
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition">
+                    class="px-6 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600">
                     Change
                 </button>
             </div>
@@ -262,32 +265,32 @@
 </div>
 
 <!-- Modal for Edit profile -->
-<div id="edit-profile-modal" class="modal-profile flex items-center justify-center">
-    <div class="modal-profile-content bg-white rounded-lg shadow-lg p-8 w-full max-w-lg mx-8">
-        <h2 class="text-center mb-4 font-bold text-3xl text-gray-800">Edit Profile</h2>
+<div id="edit-profile-modal" class="flex items-center justify-center modal-profile">
+    <div class="w-full max-w-lg p-8 mx-8 bg-white rounded-lg shadow-lg modal-profile-content">
+        <h2 class="mb-4 text-3xl font-bold text-center text-gray-800">Edit Profile</h2>
         
         <!-- Validation Message -->
-         <p id="form-profile-message" class=" px-4 py-2 rounded-md text-sm mb-4"></p>
+         <p id="form-profile-message" class="px-4 py-2 mb-4 text-sm rounded-md "></p>
     
         <!-- Form -->
         <form id="edit-profile-form">
             <!-- Name -->
-            <div class=" relative inline-field">
+            <div class="relative inline-field">
                 <label for="name" class="font-medium text-gray-700">Name</label>
                 <input 
                     type="text"
                     id="name" 
                     placeholder="Enter your name"
-                    class="w-full  py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    class="w-full py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     required>
                 
                 
             </div>
-            <p id="name-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="name-error" class="hidden text-sm text-red-500 err"></p>
             
 
             <!-- Gender -->
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="gender" class="font-medium text-gray-700">Gender</label>
                 <select id="gender"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -299,10 +302,10 @@
                 </select>
                 
             </div>
-            <p id="gender-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="gender-error" class="hidden text-sm text-red-500 err"></p>
 
             <!-- Phone -->
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="phone" class="font-medium text-gray-700">Phone</label>
                 <input 
                     type="tel" 
@@ -312,11 +315,11 @@
                     required>
                 
             </div>
-            <p id="phone-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="phone-error" class="hidden text-sm text-red-500 err"></p>
 
            
 
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="province" class="font-medium text-gray-700">Province</label>
                 <select id="province"
                     class="w-full py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -325,9 +328,9 @@
                 </select>
                 
             </div>
-            <p id="province-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="province-error" class="hidden text-sm text-red-500 err"></p>
             
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="district" class="font-medium text-gray-700">District</label>
                 <select id="district"
                     class="w-full py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -336,9 +339,9 @@
                 </select>
                 
             </div>
-            <p id="district-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="district-error" class="hidden text-sm text-red-500 err"></p>
             
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="ward" class="font-medium text-gray-700">Ward</label>
                 <select id="ward"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -347,23 +350,23 @@
                 </select>
                 
             </div>
-            <p id="ward-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="ward-error" class="hidden text-sm text-red-500 err"></p>
 
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="address" class="font-medium text-gray-700">Address</label>
                 <input 
                     type="text"
                     id="address" 
                     placeholder="123 Nguyễn Huệ"
-                    class="w-full  py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    class="w-full py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     required>
                
             </div>
-             <p id="address-error" class="text-red-500 text-sm hidden err"></p>
+             <p id="address-error" class="hidden text-sm text-red-500 err"></p>
 
 
              <!-- Birthday -->
-            <div class="relative inline-field mt-3">
+            <div class="relative mt-3 inline-field">
                 <label for="birthday" class="font-medium text-gray-700">Birthday</label>
                 <input 
                     type="date" 
@@ -373,18 +376,18 @@
                     required>
                 
             </div>
-            <p id="birthday-error" class="text-red-500 text-sm hidden err"></p>
+            <p id="birthday-error" class="hidden text-sm text-red-500 err"></p>
 
             <!-- Buttons -->
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex items-center justify-between mt-4">
                 <button 
                     type="button" 
-                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition close-profile-button">
+                    class="px-4 py-2 text-gray-800 transition bg-gray-200 rounded-md hover:bg-gray-300 close-profile-button">
                     Back
                 </button>
                 <button 
                     type="submit" 
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md transition">
+                    class="px-6 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600">
                     Change
                 </button>
             </div>
