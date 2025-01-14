@@ -438,7 +438,7 @@ function createProduct(product) {
     const delete__product = document.createElement("img");
     delete__product.src = "/images/icons/close-button.png";
     delete__product.classList.add("delete__product");
-    delete__product.id = product.product_id;
+    delete__product.setAttribute("id_product", product.product_id);
     product__item.appendChild(delete__product);
     const product__content = document.createElement("div");
     product__content.classList.add("product__content", "px-4", "pt-4", "pb-3");
@@ -492,6 +492,7 @@ function createProduct(product) {
         event.stopPropagation();
         showOverlay(dialog);
         id_product_edit = delete__product.getAttribute("id_product");
+        console;
     });
     product__item.addEventListener("click", () => eventItem(product__item));
 }
