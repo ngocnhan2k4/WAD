@@ -159,7 +159,7 @@ search__button.addEventListener("click", async () => {
         },
         body: JSON.stringify({ search, id }),
     }).then((res) => res.json());
-
+    console.log(products_Id);
     displayProductItems(products_Id);
     search__button.disable = false;
 });
