@@ -14,14 +14,14 @@
 
     <div class="column-user column-user-8 {{#if ADMIN}}bg-blue-800{{else}}bg-gray-600 {{/if}} md:rounded-r-lg">
         <div class="user-info1">
-            <p><strong>Name:</strong> {{profile.full_name}}</p>
+            <p><strong>Name:</strong> <span id="name__user">{{profile.full_name}}</span></p>
             {{#if ADMIN}}
             <p style="color:yellow"><strong>Role:</strong> Admin</p>
             {{/if}}
-            <p><strong>Phone:</strong> {{profile.phone}}</p>
-            <p><strong>Address:</strong> {{profile.address}}</p>
-            <p><strong>Birthday:</strong>{{formatBirthday profile.birthday}}</p>
-            <p><strong>Gender:</strong>{{profile.gender}}</p>
+            <p><strong>Phone:</strong> <span id="phone__user">{{profile.phone}}</span></p>
+            <p><strong>Address:</strong><span id="address__user">{{profile.address}}</span></p>
+            <p><strong>Birthday:</strong><span id="birdthday__user">{{formatBirthday profile.birthday}}</span></p>
+            <p><strong>Gender:</strong><span id="gender__user">{{profile.gender}}</span></p>
         </div>
         <div class="mt-5">
             <button class="editProfile mr-5">Edit Profile</button>
