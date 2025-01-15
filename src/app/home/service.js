@@ -50,34 +50,35 @@ const Home = {
             }
             return userDetail;
     },
-    moveCartItems: async (userId) => {
-        try {
-            // Lấy tất cả sản phẩm trong TempCart
-            const tempCartItems = await prisma.tempCart.findMany();
-
-            for (const item of tempCartItems) {
-                // Kiểm tra xem sản phẩm đã có trong userCart chưa
+    moveCartItems: async (userId, cartCookie) => {
+        try {    
+            console.log(cartCookie);
+            
+            // Dùng map để xử lý từng sản phẩm trong giỏ hàng
+            const promises = cartCookie.map(async (item) => {
+                const productId = Number(item.product_id);
+    
                 const existingItem = await prisma.userCart.findUnique({
                     where: {
                         user_id_product_id: {
                             user_id: userId,
-                            product_id: item.product_id,
+                            product_id: productId,  // Sử dụng productId đã chuyển thành kiểu số
                         },
                     },
                 });
-
+    
                 if (existingItem) {
                     // Nếu sản phẩm đã có, cập nhật số lượng và giá
                     await prisma.userCart.update({
                         where: {
                             user_id_product_id: {
                                 user_id: userId,
-                                product_id: item.product_id,
+                                product_id: productId,
                             },
                         },
                         data: {
                             quantity: existingItem.quantity + item.quantity,
-                            price: existingItem.price + item.price,
+                            price: existingItem.price + (item.price * item.quantity),
                         },
                     });
                 } else {
@@ -85,25 +86,21 @@ const Home = {
                     await prisma.userCart.create({
                         data: {
                             user_id: userId,
-                            product_id: item.product_id,
+                            product_id: productId,
                             quantity: item.quantity,
-                            price: item.price,
+                            price: item.price * item.quantity,
                         },
                     });
                 }
-
-                // Xóa sản phẩm trong TempCart sau khi đã chuyển
-                await prisma.tempCart.delete({
-                    where: {
-                        product_id: item.product_id,
-                    },
-                });
-            }
+            });
+    
+            // Đợi tất cả các promises hoàn thành trước khi kết thúc
+            await Promise.all(promises);
         } catch (error) {
             console.error("Error moving cart items:", error);
             throw new Error("Error moving cart items");
         }
-    },
+    },    
 };
 
 module.exports = Home;

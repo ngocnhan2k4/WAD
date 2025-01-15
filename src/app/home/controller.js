@@ -5,10 +5,19 @@ const homeController = {
         try { 
             if (req.user) {
                 const userId = req.user.id;
-
-                await Home.moveCartItems(userId);
+    
+                // Lấy cartCookie từ cookies
+                const cartCookie = req.cookies?.cart ? JSON.parse(req.cookies.cart) : []; // Giả sử cartCookie được lưu trong cookies
+    
+                if (cartCookie.length > 0) {
+                    // Truyền cartCookie vào hàm moveCartItems
+                    await Home.moveCartItems(userId, cartCookie);
+    
+                    // Xóa cookies sau khi đã gán sản phẩm
+                    res.clearCookie('cart');
+                }
             }
-
+    
             const newArrival = await Home.getNewArrival(); 
             const recomended = await Home.getRecomended();
             
