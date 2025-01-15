@@ -1,9 +1,9 @@
 
-<div class="container grid items-start grid-cols-1 pb-0 pt-10 md:grid-cols-4">
+<div class="container grid items-start grid-cols-1 pt-10 pb-0 md:grid-cols-4">
 
     <!-- ./sidebar lọc sản phẩm -->
     <form method="GET" action="/product" id="filter-form">
-        <div class="cus col-span-1 px-4 pb-6 bg-white rounded overflow-hiddenb md:block">
+        <div class="col-span-1 px-4 pb-6 bg-white rounded cus overflow-hiddenb md:block">
             <script>
                 const cus = document.querySelector(".cus");
                 if (window.innerWidth < 768) {
@@ -152,11 +152,11 @@
                 {{#each products}}
                 <div class="overflow-hidden bg-white rounded shadow group">
                     <div class="relative">
-                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="w-full h-48 object-contain"></a>
+                        <a href="/product/productDetail?id={{this.product_id}}"><img src={{Images.[0].directory_path}} alt="product{{@index}}" class="object-contain w-full h-48"></a>
                     </div>
                     <div class="px-4 pt-4 pb-3">
                         <a href="/product/productDetail?id={{this.product_id}}">
-                            <h4 class="mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary h-16">
+                            <h4 class="h-16 mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary">
                                 {{product_name}}</h4>
                         </a>
                         <div class="flex items-baseline mb-1 space-x-2 g">

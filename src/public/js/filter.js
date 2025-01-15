@@ -209,5 +209,25 @@ function addToCartHandler() {
     });
 }
 
+function updateCartCount() {
+    fetch('/cart/count')
+        .then((response) => response.json())
+        .then((data) => {
+            const cartCountElement = document.querySelector('#cart-count');
+
+            // Nếu đã đăng nhập, hiển thị số lượng
+            if (data.cartCount > 0) {
+                cartCountElement.textContent = data.cartCount;
+                cartCountElement.classList.remove('hidden');
+            } else {
+                cartCountElement.classList.add('hidden');
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching cart count:', error);
+        });
+}
+
+updateCartCount();
 // Gọi hàm này lần đầu tiên khi tải trang
 addToCartHandler();

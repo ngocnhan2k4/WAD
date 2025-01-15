@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const passport = require("./config/passport");
 const session = require("express-session");
 const notification = require("./app/middleware/notification");
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ require("./app/helpers/paginationHelper");
 require("./app/helpers/reviewsHelper");
 require("./app/helpers/dateHelper");
 
+app.use(cookieParser());
 
 app.use(express.static("./src/public"));
 app.use(express.json());
