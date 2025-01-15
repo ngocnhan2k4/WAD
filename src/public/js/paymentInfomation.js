@@ -4,7 +4,13 @@ const { orderID } = window.orderData;
 // Hàm hiển thị popup thanh toán
 export async function showPaymentPopup(subtotalVND) {
     const userProfileTemp = await fetchUserProfile();
-    const userProfile = parseAddress(userProfileTemp.address)
+    // const userProfile = parseAddress(userProfileTemp.address)
+    
+    let userProfile;
+    if (userProfileTemp) {
+        userProfile = parseAddress(userProfileTemp.address)
+    }
+    
     // console.log(userProfileTemp.phone)
     
     // Tạo overlay
@@ -152,6 +158,7 @@ export async function showPaymentPopup(subtotalVND) {
         console.log("districtCode:",districtCode)
         console.log("wardCode:",wardCode)
     } else {
+        // console.log("else");
         await loadProvinces();
     }
 

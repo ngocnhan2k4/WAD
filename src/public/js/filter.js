@@ -105,25 +105,25 @@ document.addEventListener('DOMContentLoaded', function() {
         paginationNav.classList.add('flex', 'justify-center', 'mt-10');
         paginationNav.innerHTML = `
             <ul class="inline-flex items-center -space-x-px">
-                ${data.hasPreviousPage ? `
-                <li>
-                    <a href="?page=${data.previousPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                        class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
-                </li>` : ''}
-                ${data.pages.map(page => `
-                    <li>
-                        <a href="?page=${page}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                            class="pagination-link py-2 px-3 leading-tight text-black border border-gray-300 hover:text-gray-700 ${page === data.currentPage ? 'bg-primary text-white' : ''}">
-                            ${page}
-                        </a>
-                    </li>
-                `).join('')}
-                ${data.hasNextPage ? `
-                <li>
-                    <a href="?page=${data.nextPage}&sort=${data.sort}&category=${data.category}&brand=${data.brand}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&search=${data.search}" 
-                        class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
-                </li>` : ''}
-            </ul>
+    ${data.hasPreviousPage ? `
+    <li>
+        <a href="?page=${data.previousPage}${data.sort ? `&sort=${data.sort}` : ''}${data.category ? `&category=${data.category}` : ''}${data.brand ? `&brand=${data.brand}` : ''}${data.minPrice ? `&minPrice=${data.minPrice}` : ''}${data.maxPrice ? `&maxPrice=${data.maxPrice}` : ''}${data.search ? `&search=${data.search}` : ''}" 
+            class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg pagination-link hover:bg-primary hover:text-gray-700">Previous</a>
+    </li>` : ''}
+    ${data.pages.map(page => `
+        <li>
+            <a href="?page=${page}${data.sort ? `&sort=${data.sort}` : ''}${data.category ? `&category=${data.category}` : ''}${data.brand ? `&brand=${data.brand}` : ''}${data.minPrice ? `&minPrice=${data.minPrice}` : ''}${data.maxPrice ? `&maxPrice=${data.maxPrice}` : ''}${data.search ? `&search=${data.search}` : ''}" 
+                class="pagination-link py-2 px-3 leading-tight text-black border border-gray-300 hover:text-gray-700 ${page === data.currentPage ? 'bg-primary text-white' : ''}">
+                ${page}
+            </a>
+        </li>
+    `).join('')}
+    ${data.hasNextPage ? `
+    <li>
+        <a href="?page=${data.nextPage}${data.sort ? `&sort=${data.sort}` : ''}${data.category ? `&category=${data.category}` : ''}${data.brand ? `&brand=${data.brand}` : ''}${data.minPrice ? `&minPrice=${data.minPrice}` : ''}${data.maxPrice ? `&maxPrice=${data.maxPrice}` : ''}${data.search ? `&search=${data.search}` : ''}" 
+            class="px-3 py-2 leading-tight text-black bg-white border border-gray-300 rounded-r-lg pagination-link hover:bg-primary hover:text-gray-700">Next</a>
+    </li>` : ''}
+</ul>
         `;
             productList.appendChild(paginationNav);
             updateForms(searchParams); // Cập nhật các form với giá trị mới
